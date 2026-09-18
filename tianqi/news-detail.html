@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻详情 · 天启科技</title>
+    <link rel="stylesheet" href="css/news.css">
+</head>
+<body>
+
+    <!-- 导航栏由 site-components.js 注入 -->
+    <div id="siteHeader"></div>
+
+    <!-- 新闻详情内容 -->
+    <div class="article-container" id="articleContainer">
+        <!-- 由 JS 动态渲染 -->
+    </div>
+
+    <!-- 页脚由 site-components.js 注入 -->
+    <div id="siteFooter"></div>
+
+    <!-- 登录弹窗由 site-components.js 注入 -->
+    <div id="loginModalContainer"></div>
+
+    <!-- 工牌细节大图 lightbox -->
+    <div class="id-lightbox" id="idLightbox" onclick="closeIdLightbox()">
+        <div class="id-lightbox-inner" onclick="event.stopPropagation()">
+            <img src="image/news02_id.webp" alt="丁文倩工牌">
+            <button class="id-lightbox-close" onclick="closeIdLightbox()" title="关闭">×</button>
+        </div>
+    </div>    
+
+    <script src="data/news-data.js"></script>
+    <script src="js/site-components.js"></script>
+    <script>
+        // ========== 获取 URL 参数中的新闻 ID ==========
+        function getNewsIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        // ========== 工牌细节 lightbox ==========
+        function openIdLightbox() {
+            const lb = document.getElementById('idLightbox');
+            if (lb) lb.classList.add('active');
+        }
+
+        function closeIdLightbox() {
+            const lb = document.getElementById('idLightbox');
+            if (lb) lb.classList.remove('active');
+        }
+
+        // ESC 关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const lb = document.getElementById('idLightbox');
+                if (lb && lb.classList.contains('active')) closeIdLightbox();
+            }
+        });
+
+        // ========== 渲染新闻详情 ==========
+        function renderArticle() {
+            const container = document.getElementById('articleContainer');
+            const newsId = getNewsIdFromUrl();
+
+            if (!newsData || newsData.length === 0) {
+                container.innerHTML = `
+                    <div class="article-not-found">
+                        <h2>暂无新闻数据</h2>
+                        <p>请稍后再试</p>
+                        <a href="news.html" class="btn-back">← 返回新闻中心</a>
+                    </div>
+                `;
+                return;
+            }
+
+            // 按日期倒序排序（与列表页一致：最新的在前）
+            const sortedNews = newsData.slice().sort((a, b) => b.date.localeCompare(a.date));
+
+            const currentIndex = sortedNews.findIndex(item => item.id === newsId);
+
+            if (currentIndex === -1) {
+                container.innerHTML = `
+                    <div class="article-not-found">
+                        <h2>新闻不存在</h2>
+                        <p>您访问的新闻可能已被删除或链接有误。</p>
+                        <a href="news.html" class="btn-back">← 返回新闻中心</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const news = sortedNews[currentIndex];
+
+            // 上一篇 = 日期更新的（排序中更靠前，index 更小）
+            const prevNews = currentIndex > 0 ? sortedNews[currentIndex - 1] : null;
+            // 下一篇 = 日期更旧的（排序中更靠后，index 更大）
+            const nextNews = currentIndex < sortedNews.length - 1 ? sortedNews[currentIndex + 1] : null;
+
+            // 如果 content 为空，显示占位内容
+            let bodyHtml = news.content && news.content.trim() !== ''
+                ? news.content
+                : `
+                    <p>${news.summary}</p>
+                    <p>详细内容正在整理中，敬请期待。</p>
+                `;
+
+            // 构建上下篇导航 HTML
+            let paginationHtml = '';
+
+            if (prevNews || nextNews) {
+                paginationHtml = `
+                    <div class="article-pagination">
+                        ${prevNews ? `
+                            <a class="pagination-btn prev" href="news-detail.html?id=${prevNews.id}">
+                                <span class="pagination-label prev-label">上一篇</span>
+                                <span class="pagination-title">${prevNews.title}</span>
+                            </a>
+                        ` : '<span></span>'}
+                        ${nextNews ? `
+                            <a class="pagination-btn next" href="news-detail.html?id=${nextNews.id}">
+                                <span class="pagination-label next-label">下一篇</span>
+                                <span class="pagination-title">${nextNews.title}</span>
+                            </a>
+                        ` : '<span></span>'}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="article-card">
+                    <a href="news.html" class="btn-back">← 返回新闻中心</a>
+                    <span class="article-tag">${news.tag}</span>
+                    <h1>${news.title}</h1>
+                    <div class="article-date">${news.date}</div>
+                    <div class="article-body">
+                        ${bodyHtml}
+                    </div>
+                </div>
+                ${paginationHtml}
+            `;
+        }
+
+        // 初始化
+        renderArticle();
+    </script>
+</body>
+</html>

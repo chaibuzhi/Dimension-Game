@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片查看器</title>
+    <link rel="stylesheet" href="viewer-style.css">
+</head>
+<body>
+
+    <div class="viewer-container" id="viewerContainer">
+        <img id="viewerImage" src="" alt="图片" draggable="false">
+    </div>
+
+    <div class="viewer-toolbar">
+        <button class="tool-btn" id="zoomOut" title="缩小">−</button>
+        <span class="zoom-level" id="zoomLevel">100%</span>
+        <button class="tool-btn" id="zoomIn" title="放大">＋</button>
+        <button class="tool-btn" id="zoomReset" title="重置">⟲</button>
+    </div>
+
+    <script src="viewer-script.js"></script>
+</body>
+</html>

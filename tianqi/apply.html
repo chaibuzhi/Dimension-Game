@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加入我们 · 天启科技</title>
+    <link rel="stylesheet" href="css/apply.css">
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <div id="siteHeader"></div>
+
+    <main class="apply-page">
+
+        <!-- ===== 成功状态 ===== -->
+        <section id="applySuccess" class="apply-success hidden">
+            <div class="success-circle">
+                <svg viewBox="0 0 72 72" fill="none">
+                    <circle cx="36" cy="36" r="34" stroke="#34d399" stroke-width="2" opacity="0.7" />
+                    <circle cx="36" cy="36" r="34" stroke="#34d399" stroke-width="1" opacity="0.3">
+                        <animate attributeName="r" values="32;38;32" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <path d="M22 37l10 9 18-20" stroke="#34d399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h1>提交成功</h1>
+            <p class="success-text">
+                您的申请已进入人才初筛流程<br>
+                通过初筛后 <strong>您将收到「线上笔试」的邮件</strong> 请注意查收。
+            </p>
+            <a href="home.html" class="btn-return-home">返回首页</a>
+        </section>
+
+        <!-- ===== 报名表单 ===== -->
+        <section id="applyFormSection" class="apply-form-section">
+
+            <!-- 头部 -->
+            <div class="form-header">
+                <p class="eyebrow">Tianqi Explorer Program</p>
+                <h1>「天启探索者」全球人才招聘计划</h1>
+                <div class="form-intro-block">
+                    <p class="form-intro-accent">「天启探索者」是天启科技于 2016 年启动的高层次人才培养计划。</p>
+                    <p class="form-intro">面向全球吸纳物理、材料、勘探、工程、能源与数据领域的优秀人才。</p>
+                    <p class="form-intro">入选者将深度参与全球能源勘探、前沿技术研究与核心技术攻关，部分岗位将直接派驻一线项目现场。</p>
+                </div>
+                <p class="form-note">
+                    请填写以下信息完成报名，标记 <span class="required">*</span> 的为必填项。
+                </p>
+            </div>
+
+            <form id="applyForm" novalidate>
+
+                <!-- ===== 卡片01 申请人基本信息 ===== -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <span class="card-num">01</span>
+                        <h2 class="form-card-title">申请人信息</h2>
+                        <span class="card-line"></span>
+                    </div>
+                    <div class="form-card-body">
+
+                        <!-- 基本信息 -->
+                        <div class="form-subsection-label">基本信息</div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>姓名 <span class="required">*</span></label>
+                                <input type="text" id="name" value="韩休" readonly>
+                            </div>
+                            <div class="form-field">
+                                <div class="sub-fields-two">
+                                    <div class="form-field">
+                                        <label>性别 <span class="required">*</span></label>
+                                        <input type="text" id="gender" value="男" readonly>
+                                    </div>
+                                    <div class="form-field">
+                                        <label>现居地 <span class="required">*</span></label>
+                                        <input type="text" id="city" value="西延市" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>出生日期 <span class="required">*</span></label>
+                                <div class="date-select-group">
+                                    <div class="custom-select" id="birthYear">
+                                        <button type="button" class="select-trigger">
+                                            <span class="select-value"></span>
+                                            <span class="select-arrow">▾</span>
+                                        </button>
+                                        <div class="select-dropdown hidden"></div>
+                                    </div>
+                                    <div class="custom-select" id="birthMonth">
+                                        <button type="button" class="select-trigger">
+                                            <span class="select-value"></span>
+                                            <span class="select-arrow">▾</span>
+                                        </button>
+                                        <div class="select-dropdown hidden"></div>
+                                    </div>
+                                    <div class="custom-select" id="birthDay">
+                                        <button type="button" class="select-trigger">
+                                            <span class="select-value"></span>
+                                            <span class="select-arrow">▾</span>
+                                        </button>
+                                        <div class="select-dropdown hidden"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>联系邮箱 <span class="required">*</span></label>
+                                <input type="email" id="email" placeholder="请输入常用邮箱地址">
+                            </div>
+                        </div>
+
+                        <!-- 分隔线 -->
+                        <div class="form-divider"></div>
+
+                        <!-- 教育背景 -->
+                        <div class="form-subsection-label">教育背景</div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>毕业院校 <span class="required">*</span></label>
+                                <input type="text" id="school" placeholder="请输入毕业院校全称">
+                            </div>
+                            <div class="form-field">
+                                <label>专业方向 <span class="required">*</span></label>
+                                <input type="text" id="major" placeholder="请输入专业名称，如：材料化学">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label>最高学历 <span class="required">*</span></label>
+                                <div class="custom-select" id="education">
+                                    <button type="button" class="select-trigger">
+                                        <span class="select-value"></span>
+                                        <span class="select-arrow">▾</span>
+                                    </button>
+                                    <div class="select-dropdown hidden"></div>
+                                </div>
+                            </div>
+                            <div class="form-field">
+                                <label>毕业时间 <span class="required">*</span></label>
+                                <div class="custom-select" id="graduationYear">
+                                    <button type="button" class="select-trigger">
+                                        <span class="select-value"></span>
+                                        <span class="select-arrow">▾</span>
+                                    </button>
+                                    <div class="select-dropdown hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== 卡片02 申报岗位 ===== -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <span class="card-num">02</span>
+                        <h2 class="form-card-title">申报信息</h2>
+                        <span class="card-line"></span>
+                    </div>
+                    <div class="form-card-body">
+                        <div class="form-field">
+                            <label>申请岗位 <span class="required">*</span></label>
+                            <div class="radio-group" id="positionGroup">
+                                <label class="radio-item"><input type="radio" name="position" value="物理研究" checked><span class="radio-dot"></span>物理研究</label>
+                                <label class="radio-item"><input type="radio" name="position" value="资源勘探"><span class="radio-dot"></span>资源勘探</label>
+                                <label class="radio-item"><input type="radio" name="position" value="机械工程"><span class="radio-dot"></span>机械工程</label>
+                                <label class="radio-item"><input type="radio" name="position" value="材料科学"><span class="radio-dot"></span>材料科学</label>
+                                <label class="radio-item"><input type="radio" name="position" value="能源化学"><span class="radio-dot"></span>能源化学</label>
+                                <label class="radio-item"><input type="radio" name="position" value="人工智能"><span class="radio-dot"></span>人工智能</label>
+                            </div>
+                        </div>
+                        <div class="form-divider"></div>
+                        <div class="form-field">
+                            <label>信息来源 <span class="required">*</span></label>
+                            <div class="radio-group" id="sourceGroup">
+                                <label class="radio-item"><input type="radio" name="source" value="公司官网" checked><span class="radio-dot"></span>公司官网</label>
+                                <label class="radio-item"><input type="radio" name="source" value="招聘资讯"><span class="radio-dot"></span>招聘资讯</label>
+                                <label class="radio-item"><input type="radio" name="source" value="校园论坛"><span class="radio-dot"></span>校园论坛</label>
+                                <label class="radio-item"><input type="radio" name="source" value="公众号"><span class="radio-dot"></span>公众号</label>
+                                <label class="radio-item"><input type="radio" name="source" value="内部推荐"><span class="radio-dot"></span>内部推荐</label>
+                            </div>
+                        </div>
+                        <!-- 内推字段 -->
+                        <div id="referralFields" class="referral-fields hidden">
+                            <div class="referral-banner">
+                                <span class="referral-icon">◈</span>
+                                内部推荐通道需要填写推荐人及推荐码
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field">
+                                    <label>推荐人姓名 <span class="required">*</span></label>
+                                    <input type="text" id="referrerName" placeholder="请输入推荐人姓名" autocomplete="off">
+                                </div>
+                                <div class="form-field">
+                                    <label>推荐代码 <span class="required">*</span></label>
+                                    <input type="text" id="referralCode" placeholder="请输入推荐代码" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== 卡片03 招聘流程与声明 ===== -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <span class="card-num">03</span>
+                        <h2 class="form-card-title">招聘流程与声明</h2>
+                        <span class="card-line"></span>
+                    </div>
+                    <div class="form-card-body">
+
+                        <div class="form-subsection-label">招聘流程</div>
+                        <div class="process-timeline">
+                            <div class="process-step">
+                                <div class="step-marker">
+                                    <span class="step-dot"></span>
+                                    <span class="step-connector"></span>
+                                </div>
+                                <div class="step-content">
+                                    <span class="step-num">01</span>
+                                    <h3>初筛</h3>
+                                    <p>核查教育背景、工作经历与岗位要求的匹配度。</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-marker">
+                                    <span class="step-dot"></span>
+                                    <span class="step-connector"></span>
+                                </div>
+                                <div class="step-content">
+                                    <span class="step-num">02</span>
+                                    <h3>线上笔试</h3>
+                                    <p>通过初筛的候选人将收到笔试通知邮件，需在指定时限内完成线上测评。</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-marker">
+                                    <span class="step-dot"></span>
+                                    <span class="step-connector"></span>
+                                </div>
+                                <div class="step-content">
+                                    <span class="step-num">03</span>
+                                    <h3>线下面试</h3>
+                                    <p>笔试通过者进入线下面试环节，面试由公司统筹安排。</p>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-marker">
+                                    <span class="step-dot"></span>
+                                </div>
+                                <div class="step-content">
+                                    <span class="step-num">04</span>
+                                    <h3>录用通知</h3>
+                                    <p>考核通过后，正式发放录用通知，签订劳动合同。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-divider"></div>
+
+                        <div class="form-subsection-label">候选人声明</div>
+                        <div class="declaration-box">
+                            <div class="declaration-watermark">天启科技</div>
+                            <p class="declaration-lead">提交报名表即视为您<strong>同意</strong>以下全部条款：</p>
+                            <ol>
+                                <li>公司有权对候选人开展全面背景调查与安全审查，范围包括但不限于身份信息、教育履历、工作经历、社会关系及一切与录用相关的必要信息。</li>
+                                <li>须对本次招聘流程、测评试题及公司所有信息承担保密义务，不得以任何形式向第三方泄露。</li>
+                                <li>公司有权根据实际需求调整您的岗位、工作地点及工作内容。</li>
+                                <li>若提供虚假信息或违反条款，公司有权立即取消录用资格，追究全部法律责任与经济损失。</li>
+                                <li>公司对本招聘条款及所有环节保留最终解释权。</li>
+                            </ol>
+                        </div>
+                        <div class="checkbox-agree">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="agreeCheck">
+                                <span class="checkbox-box">
+                                    <svg viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5l3 3 7-7" stroke="#070a14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                <span class="checkbox-text">我已阅读并同意上述声明</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 提交 -->
+                <div class="form-submit">
+                    <button type="button" id="submitBtn" class="btn-submit">
+                        <span class="btn-hex">◈</span>
+                        提交报名表
+                    </button>
+                    <p id="formError" class="form-error hidden">
+                        <span class="error-icon">⚠</span>
+                        <span id="formErrorText"></span>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <div id="siteFooter"></div>
+
+    <!-- 登录弹窗 -->
+    <div id="loginModalContainer"></div>
+
+    <script src="js/site-components.js"></script>
+    <script src="js/apply.js"></script>
+</body>
+</html>

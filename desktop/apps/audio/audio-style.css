@@ -1,0 +1,217 @@
+/* ========== 音频播放器样式 ========== */
+
+:root {
+    --player-bg: #0a0e1a;
+    --player-card: #111826;
+    --player-border: #1e2a40;
+    --accent: #00c8ff;
+    --accent-dim: #00a2d8;
+    --text: #e8edf5;
+    --text-dim: #7a8ba0;
+    --progress-track: #1a2535;
+    --progress-fill: #00c8ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background: var(--player-bg);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ========== 播放器主体 ========== */
+.audio-player {
+    width: 100%;
+    height: 100%;
+    padding: 20px 24px 16px;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(ellipse at 50% 40%, rgba(0, 200, 255, 0.05) 0%, transparent 60%), var(--player-card);
+}
+
+/* 标题 */
+.audio-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ========== 波形区域 ========== */
+.waveform-area {
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 200, 255, 0.08);
+}
+
+#waveformCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ========== 字幕 ========== */
+.subtitle-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 88%;
+    text-align: center;
+    color: #a8e8ff;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow:
+        0 0 6px rgba(150, 230, 255, 0.45),
+        0 0 14px rgba(100, 200, 255, 0.25),
+        0 0 30px rgba(100, 200, 255, 0.12);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+.subtitle-overlay.visible {
+    opacity: 1;
+}
+
+/* ========== 进度条 ========== */
+.progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.time-display {
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 36px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+
+#progressBar {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--progress-track);
+    outline: none;
+    cursor: pointer;
+}
+
+/* WebKit 滑块 */
+#progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+    transition: transform 0.15s;
+}
+
+#progressBar::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+/* Firefox 滑块 */
+#progressBar::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 8px rgba(0, 200, 255, 0.5);
+}
+
+/* Firefox 轨道 */
+#progressBar::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--progress-track);
+}
+
+/* ========== 控制按钮 ========== */
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.ctrl-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 200, 255, 0.2);
+    background: rgba(0, 200, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.ctrl-btn svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.ctrl-btn:hover {
+    background: rgba(0, 200, 255, 0.15);
+    border-color: rgba(0, 200, 255, 0.4);
+}
+
+.ctrl-btn.play-btn {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, rgba(0, 200, 255, 0.2), rgba(0, 150, 255, 0.2));
+    border-color: rgba(0, 200, 255, 0.35);
+}
+.ctrl-btn.play-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.ctrl-btn.play-btn:hover {
+    background: linear-gradient(135deg, rgba(0, 200, 255, 0.3), rgba(0, 150, 255, 0.3));
+    border-color: rgba(0, 200, 255, 0.55);
+    box-shadow: 0 0 15px rgba(0, 200, 255, 0.2);
+}

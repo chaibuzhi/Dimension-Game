@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桌面</title>
+    <link rel="stylesheet" href="css/desktop.css">
+</head>
+<body>
+
+    <!-- 背景粒子 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 渐变光晕 -->
+    <div class="vignette"></div>
+
+    <!-- 桌面 -->
+    <div class="desktop" id="desktop">
+        <div class="desktop-icons" id="desktopIcons"></div>
+    </div>
+
+    <!-- 窗口容器（弹窗也在此内） -->
+    <div class="windows-container" id="windowsContainer"></div>
+
+    <!-- 通知卡片容器 -->
+    <div class="notice-stack" id="noticeStack"></div>
+
+    <!-- 通知中心面板 -->
+    <div class="notice-panel hidden" id="noticePanel">
+        <div class="notice-panel-header">
+            <span class="notice-panel-title">通知中心</span>
+        </div>
+        <div class="notice-panel-list" id="noticePanelList"></div>
+    </div>
+
+    <!-- 开始菜单 -->
+    <div class="start-menu hidden" id="startMenu"></div>
+
+    <!-- 大图遮罩 -->
+    <div class="lightbox hidden" id="lightbox" onclick="WindowManager.closeLightbox()">
+        <img id="lightboxImg" src="" alt="大图">
+    </div>
+
+    <!-- 任务栏 -->
+    <div class="taskbar">
+        <div class="taskbar-left">
+            <div class="start-button" id="startButton" title="开始">⊞</div>
+            <div class="taskbar-windows" id="taskbarWindows"></div>
+        </div>
+        <div class="taskbar-right">
+            <div class="taskbar-notification-area" id="taskbarNotificationArea" title="通知">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 1.5C5.4 1.5 3.5 3.3 3.5 5.8C3.5 8 3 9 2.5 10H13.5C13 9 12.5 8 12.5 5.8C12.5 3.3 10.6 1.5 8 1.5Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+                    <path d="M6.5 12.5C6.5 13.3 7.2 14 8 14C8.8 14 9.5 13.3 9.5 12.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                <span class="notification-badge hidden" id="notificationBadge"></span>
+            </div>
+            <div class="taskbar-time" id="taskbarTime"></div>
+        </div>
+    </div>
+
+    <!-- 基础模块 -->
+    <script src="js/apps-registry.js"></script>
+    <script src="js/folder-data.js"></script>
+    <script src="js/modal-data.js"></script>
+    <script src="js/window-manager.js"></script>
+
+    <!-- 数据文件 -->
+    <script src="apps/mail/mail-data.js"></script>
+    <script src="apps/chat/chat-data.js"></script>
+
+    <!-- 通知系统 -->
+    <script src="js/notifications.js"></script>
+
+    <!-- 中央调度器 -->
+    <script src="js/scheduler.js"></script>
+
+    <!-- 桌面逻辑 -->
+    <script src="js/desktop.js"></script>
+</body>
+</html>

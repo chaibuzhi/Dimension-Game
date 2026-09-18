@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻中心 · 天启科技</title>
+    <link rel="stylesheet" href="css/news.css">
+</head>
+<body>
+
+    <!-- 导航栏由 site-components.js 注入 -->
+    <div id="siteHeader"></div>
+
+    <!-- 新闻列表 -->
+    <div class="news-container">
+        <div class="page-title">
+            <p class="eyebrow">News Center</p>
+            <h1>新闻中心</h1>
+        </div>
+        <ul class="news-list" id="newsList">
+            <!-- 由 news-data.js 动态生成 -->
+        </ul>
+
+        <!-- 分页组件（装饰用，不跳转，始终高亮第1页） -->
+        <div class="news-pagination" id="newsPagination">
+            <a class="page-btn active" href="javascript:void(0)">1</a>
+            <a class="page-btn" href="javascript:void(0)">2</a>
+            <a class="page-btn" href="javascript:void(0)">3</a>
+            <a class="page-btn" href="javascript:void(0)">4</a>
+            <a class="page-btn page-next" href="javascript:void(0)">下一页 →</a>
+        </div>
+    </div>
+
+    <!-- 页脚由 site-components.js 注入 -->
+    <div id="siteFooter"></div>
+
+    <!-- 登录弹窗由 site-components.js 注入 -->
+    <div id="loginModalContainer"></div>
+
+    <script src="data/news-data.js"></script>
+    <script src="js/site-components.js"></script>
+    <script>
+        // ========== 渲染新闻列表 ==========
+        function renderNewsList() {
+            const list = document.getElementById('newsList');
+            if (!newsData || newsData.length === 0) {
+                list.innerHTML = '<li style="color: #6b7a8f; padding: 20px 0;">暂无新闻</li>';
+                return;
+            }
+            // 按日期倒序排序
+            const sorted = newsData.slice().sort((a, b) => b.date.localeCompare(a.date));
+            let html = '';
+            sorted.forEach(news => {
+                html += `
+                    <li>
+                        <a class="news-list-item" href="news-detail.html?id=${news.id}">
+                            <div class="item-meta">
+                                <span class="item-tag">${news.tag}</span>
+                                <span class="item-date">${news.date}</span>
+                            </div>
+                            <h2>${news.title}</h2>
+                            <p>${news.summary}</p>
+                        </a>
+                    </li>
+                `;
+            });
+            list.innerHTML = html;
+        }
+
+        // ========== 分页按钮（假分页，不改变高亮） ==========
+        function initPagination() {
+            // 当前不需要任何点击处理，因为要保持第1页高亮
+            // 如果将来需要真实分页，可以在这里扩展
+        }
+
+        // 初始化
+        renderNewsList();
+        initPagination();
+    </script>
+</body>
+</html>

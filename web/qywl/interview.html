@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丁文倩：边缘之上，唯有真相 - 前沿物理评论 · 人物</title>
+    <style>
+        :root {
+            --bg: #faf9f6;
+            --paper: #ffffff;
+            --text: #1a1a1a;
+            --text-dim: #4a4a4a;
+            --text-muted: #9a9a9a;
+            --line: #e5e2dc;
+            --line-light: #f0ede7;
+            --accent: #2b5b4b;
+            --accent-light: #eef3f0;
+            --gold: #a8894b;
+            --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', Georgia, serif;
+            --sans: 'PingFang SC', 'Microsoft YaHei', 'Heiti SC', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            font-family: var(--serif);
+            color: var(--text);
+            line-height: 1.95;
+        }
+
+        /* ========== 顶部细条 ========== */
+        .top-strip {
+            background: #1c3d31;
+            color: #a8c0b5;
+            font-family: var(--sans);
+            font-size: 11px;
+            padding: 8px 0;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid #173329;
+        }
+        .top-strip-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-strip .strip-nav {
+            display: flex;
+            gap: 20px;
+        }
+        .top-strip .strip-nav a {
+            color: #a8c0b5;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .top-strip .strip-nav a:hover { opacity: 1; }
+
+        /* ========== 品牌区 ========== */
+        .masthead {
+            background: var(--paper);
+            padding: 44px 32px 28px;
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+        }
+        .masthead .magazine-name {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text);
+            line-height: 1.1;
+        }
+        .masthead .magazine-name .accent-letter {
+            color: var(--accent);
+            font-style: italic;
+        }
+        .masthead .magazine-cn {
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.4em;
+            margin-top: 8px;
+        }
+        .masthead .magazine-tagline {
+            font-family: var(--sans);
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 0.25em;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        /* ========== 导航栏 ========== */
+        .magazine-nav {
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            justify-content: center;
+            padding: 0 32px;
+        }
+        .magazine-nav a {
+            display: block;
+            padding: 14px 20px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+            text-decoration: none;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .magazine-nav a:hover { color: var(--accent); }
+        .magazine-nav a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* ========== 文章主体 ========== */
+        .article-wrapper {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 48px 32px 70px;
+            background: var(--paper);
+        }
+
+        /* 栏目标签 */
+        .section-label {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .section-label .label-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .section-label .label-line::before,
+        .section-label .label-line::after {
+            content: '';
+            width: 36px;
+            height: 1px;
+            background: var(--line);
+        }
+
+        /* 标题区 */
+        .article-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .article-header h1 {
+            font-size: clamp(30px, 4vw, 40px);
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: 0.04em;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+        .article-header .subtitle {
+            font-family: var(--sans);
+            font-size: 14px;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+        }
+        .article-header .author-info {
+            font-family: var(--sans);
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+        .article-header .author-info .by {
+            font-style: italic;
+            color: var(--text-dim);
+        }
+
+        /* 题图 */
+        .hero-figure {
+            margin: 36px 0 44px;
+            text-align: center;
+        }
+        .hero-figure .hero-img {
+            background: linear-gradient(135deg, #e8e5de 0%, #d5d8d2 50%, #c8d0ca 100%);
+            display: block;
+            overflow: hidden;
+            min-height: 220px;
+            color: #8a8a8a;
+            font-family: var(--sans);
+            font-size: 14px;
+            letter-spacing: 0.05em;
+        }
+        .hero-figure .hero-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .hero-figure .hero-img span {
+            font-size: 56px;
+            margin-bottom: 12px;
+            opacity: 0.45;
+        }
+        .hero-figure figcaption {
+            font-family: var(--sans);
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            margin-top: 10px;
+        }
+
+        /* ========== 正文 ========== */
+        .article-body {
+            max-width: 680px;
+            margin: 0 auto;
+            font-size: 16.5px;
+            color: #222;
+        }
+        .article-body > p {
+            margin-bottom: 24px;
+            text-indent: 2em;
+            text-align: justify;
+        }
+        .article-body > p.no-indent {
+            text-indent: 0;
+        }
+
+        /* 首段大字引导 */
+        .article-body .drop-cap {
+            text-indent: 0;
+        }
+        .article-body .drop-cap::first-letter {
+            font-size: 3.4em;
+            font-weight: 700;
+            float: left;
+            line-height: 0.8;
+            margin: 6px 12px 0 0;
+            color: var(--accent);
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        /* ========== 采访者标注 ========== */
+        .interviewer-note {
+            margin: 36px 0 12px;
+            font-family: var(--sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .interviewer-note::before,
+        .interviewer-note::after {
+            content: '·';
+            margin: 0 12px;
+            color: var(--line);
+        }
+
+        /* ========== 问题样式（采访者） ========== */
+        .article-body > p.interview-question {
+            margin: 32px 0 12px;
+            font-family: var(--serif);
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1.7;
+            text-indent: 0;
+            letter-spacing: 0.02em;
+            padding-left: 1em;       /* 文字与金色左边框保持一个字符的间距 */
+            border-left: 2px solid var(--gold);
+            opacity: 0.9;
+        }
+
+        /* ========== 回答段落 ========== */
+        .interview-answer {
+            text-indent: 0;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        /* ========== 叙述段落（无缩进，居中排版） ========== */
+        .article-body > p.narration {
+            text-indent: 0;
+            color: var(--text-dim);
+            margin: 28px auto;
+            text-align: center;
+            font-style: italic;
+            font-size: 15px;
+            letter-spacing: 0.04em;
+            width: 100%;
+            display: block;
+        }
+        .narration .sep {
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--line);
+            margin: 16px auto 0;
+        }
+
+        /* ========== 杂志式居中引用 ========== */
+        .magazine-quote {
+            margin: 48px 0;
+            text-align: center;
+            position: relative;
+        }
+        .magazine-quote .quote-mark-top {
+            display: block;
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 64px;
+            color: var(--gold);
+            opacity: 0.35;
+            line-height: 0.6;
+            margin-bottom: 16px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .magazine-quote .quote-text {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.85;
+            color: var(--text);
+            letter-spacing: 0.05em;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .magazine-quote .quote-context {
+            font-family: var(--sans);
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            line-height: 1.8;
+        }
+        .magazine-quote .quote-line {
+            display: block;
+            width: 48px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.5;
+            margin: 20px auto 0;
+        }
+
+        /* ========== 文章结尾元信息 ========== */
+        .article-end-meta {
+            max-width: 680px;
+            margin: 48px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-family: var(--sans);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .article-end-meta .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .article-end-meta .tags a {
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 3px 12px;
+            border: 1px solid var(--line);
+            border-radius: 50px;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .article-end-meta .tags a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .article-end-meta .issue {
+            letter-spacing: 0.06em;
+        }
+
+        /* ========== 推荐阅读 ========== */
+        .recommended {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 32px 60px;
+            background: var(--paper);
+        }
+        .recommended .rec-title {
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 28px;
+            padding-top: 36px;
+            border-top: 1px solid var(--line);
+        }
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .rec-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .rec-card .rec-img {
+            aspect-ratio: 4/3;
+            background: #e8e5de;
+            display: block;
+            overflow: hidden;
+            font-size: 36px;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        .rec-card .rec-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(1);
+            transform: scale(1);
+            transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        .rec-card:hover .rec-img img {
+            filter: grayscale(0);
+            transform: scale(1.06);
+        }
+        .rec-card .rec-category {
+            font-family: var(--sans);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .rec-card .rec-headline {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-top: 4px;
+            color: var(--text);
+            transition: color 0.2s;
+        }
+        .rec-card:hover .rec-headline {
+            color: var(--accent);
+        }
+
+        /* ========== 页脚 ========== */
+        .magazine-footer {
+            background: #1c3d31;
+            border-top: 1px solid #173329;
+            color: #a8c0b5;
+            padding: 32px 32px 24px;
+            font-family: var(--sans);
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+        .magazine-footer .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .magazine-footer .footer-name {
+            font-family: Georgia, serif;
+            font-size: 20px;
+            color: #e8f0ed;
+            letter-spacing: 0.1em;
+            margin-bottom: 6px;
+        }
+        .magazine-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+        .magazine-footer .footer-links a {
+            color: #a8c0b5;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .magazine-footer .footer-links a:hover { opacity: 1; }
+        .magazine-footer .footer-copy {
+            color: #7a9a8c;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 800px) {
+            .masthead .magazine-name {
+                font-size: 30px;
+            }
+            .magazine-nav {
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+            .magazine-nav a {
+                padding: 12px 14px;
+                font-size: 12px;
+            }
+            .article-wrapper {
+                padding: 32px 20px 50px;
+            }
+            .article-body {
+                font-size: 15.5px;
+            }
+            .interview-question {
+                font-size: 15.5px;
+                padding-left: 12px;
+            }
+            .interview-answer {
+                padding-left: 12px;
+            }
+            .magazine-quote .quote-text {
+                font-size: 17px;
+            }
+            .rec-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .recommended {
+                padding: 0 20px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部细条 -->
+    <div class="top-strip">
+        <div class="top-strip-inner">
+            <span>Frontier Physics Review · 2026 Vol.6</span>
+            <div class="strip-nav">
+                <a href="javascript:void(0)">订阅</a>
+                <a href="javascript:void(0)">投稿</a>
+                <a href="javascript:void(0)">English</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 品牌区 -->
+    <header class="masthead">
+        <div class="magazine-name">FRONTIER <span class="accent-letter">P</span>HYSICS REVIEW</div>
+        <div class="magazine-cn">前沿物理评论</div>
+        <div class="magazine-tagline">In Pursuit of the Unseen</div>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav class="magazine-nav">
+        <a href="javascript:void(0)">前沿</a>
+        <a href="javascript:void(0)" class="active">人物</a>
+        <a href="javascript:void(0)">量子</a>
+        <a href="javascript:void(0)">材料</a>
+        <a href="javascript:void(0)">宇宙</a>
+        <a href="javascript:void(0)">对话</a>
+    </nav>
+
+    <!-- 文章主体 -->
+    <div class="article-wrapper">
+
+        <!-- 栏目标签 -->
+        <div class="section-label">
+            <span class="label-line">人物 · Profile</span>
+        </div>
+
+        <!-- 标题区 -->
+        <div class="article-header">
+            <h1>边缘之上，唯有真相</h1>
+            <p class="subtitle">丁文倩与她的φ能量研究</p>
+            <p class="author-info">
+                <span class="by">采写</span> 夏宁 &nbsp;|&nbsp; <span class="by">摄影</span> 林澈 &nbsp;|&nbsp; 2026年5月24日
+            </p>
+        </div>
+
+        <!-- 题图 -->
+        <div class="hero-figure">
+            <div class="hero-img">
+                <img src="../image/web_interview.webp" alt="丁文倩教授在西延酒店接受《前沿物理评论》专访">
+            </div>
+            <figcaption>采访进行至深夜，她说："得先相信，才能看见真相。" 摄影：林澈</figcaption>
+        </div>
+
+        <!-- 正文 -->
+        <div class="article-body">
+
+            <!-- 开篇 -->
+            <p class="drop-cap">
+                在全球能源发展峰会见到丁文倩时，她站在台上，黑色西装，表情严肃，每个停顿都像被计算过。报告结束，质疑四起，她点头致谢。那是天启科技的丁文倩，物理研究部总监，一个在公众面前保持正确姿态的人。
+            </p>
+
+            <p>晚上八点，西延酒店，我再次见到了她。</p>
+            
+            <p>客房里，丁文倩穿着米色的针织衫，头发散下来，眼底有些疲惫，但嘴角挂着笑意。身后的书桌上摊着几摞文件，像是还在工作。</p>
+
+            <p>她不好意思道：“请进。有点乱，我收拾一下。”</p>
+
+            <p>她整理完桌面的文件，又泡了两杯热茶，开始采访。</p>
+
+            <!-- 叙述 -->
+            <p class="narration">
+                —— 访谈 ——
+            </p>
+
+            <!-- 问题1 -->
+            <p class="interview-question">丁教授，这次报告反响不算好，您有预期吗？</p>
+            <p class="interview-answer">“如果那么容易成功，我们的工作就太简单了。”她面带笑意，语气很轻松，“我研究的本来就是边缘领域，不被理解是常态，交给时间吧。”</p>
+
+            <!-- 问题2 -->
+            <p class="interview-question">φ能量至今不被主流学界认可，您为什么还要一直坚持呢？</p>
+            <p class="interview-answer">“我只相信我看到的。”她声音很轻，但是笃定，“概念、公式、论文都属于理论世界，但实验室里的数据是真实的，我相信我看到的。”</p>
+            <p class="interview-answer">说完她忽然笑了，“是不是太主观了？科研工作者不该这么说。”</p>
+
+            <p class="no-indent">“在您房间，您可以畅所欲言。”</p>
+            <p>她笑着点点头，我继续问道：</p>
+
+            <!-- 问题3 -->
+            <p class="interview-question">天启科技在学术界争议很大，作为物理研究部总监，您怎么看？</p>
+            <p class="interview-answer">她眼角弯起来：“你也说了，我只是物理研究部的总监，不是品牌部，也不是总裁。除了学术领域，我没资格代表公司发言。”</p>
+            <p class="interview-answer">她收起笑意，语气认真，“科学只对真相负责。”</p>
+
+            <!-- 问题4 -->
+            <p class="interview-question">那您当初为什么会选择天启科技？</p>
+            <p class="interview-answer">“我觉得不是我选择了天启科技，是这个领域选择了我。”</p>
+            <p class="interview-answer">她看向窗外，说起2021年加入天启科技时，还在做博士阶段延续的新能源材料研究。转折点是2022年写的一篇论文《φ能量储能方式探索与理论极限计算》，此文后来成为φ能量研究领域的必读文献。</p>
+            <p class="interview-answer">“那篇论文让我成了总监。”她说完自己先笑了，“更重要的是，它让我找到了能源方向的可能性。业界都说‘φ能量成为终极清洁能源’只是理论空想，但是万一呢？万一能有突破呢？”</p>
+            <p class="interview-answer">“上世纪开始人类就在研究它，22年我们算出了它的储能极值，如今又观测到了释放机制，未来一定会有更多发现。”</p>
+
+            <!-- 叙述 -->
+            <p class="narration">
+                说这些话时，她的语速不自觉变快，眼睛像被什么东西点亮，
+                <br>仿佛又回到了白天的舞台上。
+            </p>
+
+            <p>“这大概就是做研究的魅力吧。”我感叹道。</p>
+            <p>她回过神，理了理头发，笑道：“抱歉，聊起工作我就收不住，没吓到你吧。”顿了顿又补充，“我现在想做的事，只有天启科技能给我平台，而且我丈夫也在西延，这里很好。”</p>
+
+            <!-- 细节描写 -->
+            <p>她提到“丈夫”的时候，语气没有变化，嘴角却露出一丝温柔的笑意，很快又收住了。</p>
+
+            <!-- 问题5 -->
+            <p class="interview-question">方便透露一下接下来的研究方向吗？</p>
+            <p class="interview-answer">“接下来要去南非，带队勘探。”她说的很干脆，我有些意外。</p>
+
+            <!-- 问题6 -->
+            <p class="interview-question">公司为什么会派科研人员带队勘探行动呢？</p>
+            <p class="interview-answer">“说实话，我……也挺意外的。”她顿了顿，目光落在茶杯的水面上，再抬眼时笑意如常，“不过能去实地，总归是机会，说不定能完成一些实验室里做不到的事情。”</p>
+
+            <!-- 问题7 -->
+            <p class="interview-question">是要在现场做实验吗？</p>
+            <p class="interview-answer">她笑着摇头：“我不能透露行动细节，再说下去，回去得写检讨了。”</p>
+
+            <!-- 问题8 -->
+            <p class="interview-question">第一次带队去无人区，会紧张吗？</p>
+            <p class="interview-answer">“说没有肯定是假的。”她坦诚道，“但我们公司的勘探体系成熟，团队也筹备了很久，离出发还有三个月，只要准备充分，我相信一定能拿到结果。”</p>
+
+            <!-- 问题9 -->
+            <p class="interview-question">这么有把握吗？</p>
+            <p class="interview-answer">她抬眼看向我，笑意淡了下去，眼神很稳。</p>
+            <p>“得先相信，才能看见真相。”她顿了顿，声音低下去。</p>
+
+            <!-- 关键引用 -->
+            <div class="magazine-quote">
+                <span class="quote-mark-top">“</span>
+                <div class="quote-text">最终能给你答案的，唯有真相——Only truth.</div>
+                <span class="quote-line"></span>
+            </div>
+
+            <!-- 结尾 -->
+            <p>采访结束时已近深夜。她送我到门口，离开时我瞥了一眼书桌，她已经重新拿起了文件，眉头微蹙，又回了自己的世界里。</p>
+
+            <p>灯光落在肩头，和白天台上那个笔挺的身影，重叠在了一起。</p>
+
+        </div>
+
+        <!-- 文章结尾元信息 -->
+        <div class="article-end-meta">
+            <div class="tags">
+                <a href="javascript:void(0)"># 人物</a>
+                <a href="javascript:void(0)"># φ能量</a>
+                <a href="javascript:void(0)"># 天启科技</a>
+                <a href="javascript:void(0)"># 能源物理</a>
+            </div>
+            <span class="issue">本文刊载于《前沿物理评论》2026年第6期</span>
+        </div>
+
+    </div>
+
+    <!-- 推荐阅读 -->
+    <div class="recommended">
+        <div class="rec-title">更多人物</div>
+        <div class="rec-grid">
+            <a class="rec-card" href="javascript:void(0)">
+                <div class="rec-img">
+                    <img src="../image/web_interview_rec1.webp" alt="量子计算实验室">
+                </div>
+                <span class="rec-category">人物 · Profile</span>
+                <span class="rec-headline">量子计算的下一个十年：对话中科院量子实验室主任</span>
+            </a>
+            <a class="rec-card" href="javascript:void(0)">
+                <div class="rec-img">
+                    <img src="../image/web_interview_rec2.webp" alt="暗物质探测仪">
+                </div>
+                <span class="rec-category">人物 · Profile</span>
+                <span class="rec-headline">她把暗物质探测仪送上太空：一位实验物理学家的二十年</span>
+            </a>
+            <a class="rec-card" href="javascript:void(0)">
+                <div class="rec-img">
+                    <img src="../image/web_interview_rec3.webp" alt="材料学家">
+                </div>
+                <span class="rec-category">人物 · Profile</span>
+                <span class="rec-headline">室温超导的追梦人：从矿洞里走出来的材料学家</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="magazine-footer">
+        <div class="footer-inner">
+            <div class="footer-name">FRONTIER PHYSICS REVIEW</div>
+            <div class="footer-links">
+                <a href="javascript:void(0)">关于本刊</a>
+                <a href="javascript:void(0)">订阅服务</a>
+                <a href="javascript:void(0)">版权声明</a>
+                <a href="javascript:void(0)">广告合作</a>
+                <a href="javascript:void(0)">联系我们</a>
+            </div>
+            <div class="footer-copy">© 2026 FRONTIER PHYSICS REVIEW · ALL RIGHTS RESERVED</div>
+        </div>
+    </footer>
+
+</body>
+</html>

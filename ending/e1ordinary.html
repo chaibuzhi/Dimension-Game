@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结局 · 平凡的一生</title>
+    <style>
+        :root {
+            --bg: #060a1c;
+            --text: #d0d0e0;
+            --text-dim: #70708a;
+            --accent: #0071e3;
+            --accent-glow: #00c8ff;
+            --font-serif: 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', 'Songti SC', 'STZhongsong', Georgia, serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            min-height: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-serif);
+            font-weight: 400;
+            font-size: 17px;
+            line-height: 2.15;
+            letter-spacing: 0.04em;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* ========== 背景光晕层（固定尺寸，居中，与正文一起淡入） ========== */
+        .glow-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(
+                    ellipse 1100px 650px at 50% 50%,
+                    rgba(0, 45, 95, 0.55) 0%,
+                    rgba(0, 30, 70, 0.25) 40%,
+                    transparent 70%
+                );
+            opacity: 0;
+            transition: opacity 2.4s ease;
+        }
+        .glow-layer.visible {
+            opacity: 1;
+        }
+
+        /* ========== 粒子层 ========== */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(140, 170, 220, 0.5);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            50% { transform: translateY(50vh) translateX(20px) rotate(180deg); opacity: 0.8; }
+            90% { opacity: 0.5; }
+            100% {
+                transform: translateY(-10vh) translateX(-10px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ========== 内容容器 ========== */
+        .ending-overlay {
+            position: relative;
+            z-index: 10;
+            max-width: 620px;
+            width: 100%;
+            padding: 70px 44px 180px;
+            text-align: center;
+        }
+
+        /* ========== 章节标识 ========== */
+        .chapter-mark {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeSlow 1.6s ease forwards;
+        }
+        .chapter-mark .title-hex {
+            display: block;
+            width: 32px;
+            height: 36px;
+            margin: 0 auto 20px;
+            opacity: 0.55;
+        }
+        .chapter-mark .title-hex polygon {
+            fill: none;
+            stroke: #6a8fc8;
+            stroke-width: 1;
+        }
+        .chapter-mark .title-hex .hex-inner {
+            stroke: #4a6a98;
+            stroke-width: 0.6;
+            opacity: 0.5;
+        }
+        .chapter-mark .title-text {
+            font-size: 12px;
+            letter-spacing: 0.7em;
+            color: #6a7898;
+            padding-left: 0.7em;
+            display: block;
+        }
+        @keyframes fadeSlow { to { opacity: 1; } }
+
+        /* ========== 段落 ========== */
+        .ending-text {
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .paragraph {
+            margin-bottom: 42px;
+            line-height: 2.15;
+            color: var(--text);
+            word-break: break-word;
+            min-height: 1.7em;
+        }
+        .paragraph:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .char {
+            display: inline-block;
+            opacity: 0;
+            animation: charAppear 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            will-change: opacity, filter, transform;
+        }
+        @keyframes charAppear {
+            from {
+                opacity: 0;
+                filter: blur(4px);
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== 结局标题 ========== */
+        .ending-title {
+            margin: 100px auto 0;
+            text-align: center;
+            opacity: 0;
+            animation: fadeSlow 2s ease forwards;
+        }
+        .ending-title .ending-label {
+            font-size: 20px;
+            letter-spacing: 0.5em;
+            color: #ffffff;
+            padding-left: 0.5em;
+            font-weight: 600;
+            display: block;
+            text-shadow:
+                0 0 12px rgba(120, 200, 255, 0.9),
+                0 0 32px rgba(0, 160, 255, 0.7),
+                0 0 60px rgba(0, 113, 227, 0.5),
+                0 0 100px rgba(0, 113, 227, 0.3);
+        }
+
+        /* ========== 按钮区域（只剩时光回溯） ========== */
+        .ending-actions {
+            margin-top: 48px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            opacity: 0;
+            animation: fadeSlow 2s ease forwards;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            font-size: 14px;
+            font-family: var(--font-serif);
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            color: var(--text);
+            background: transparent;
+            border: 1px solid rgba(0, 113, 227, 0.6);
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            padding-left: calc(40px + 0.2em);
+        }
+        .btn:hover {
+            background: rgba(0, 113, 227, 0.15);
+            border-color: var(--accent-glow);
+            color: #ffffff;
+            box-shadow: 0 0 30px rgba(0, 113, 227, 0.3);
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 200, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* ========== 滚动条 ========== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(120, 150, 200, 0.15);
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(120, 150, 200, 0.35);
+        }
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+        
+        /* ========== 响应式 ========== */
+        @media (max-width: 680px) {
+            body { font-size: 16px; line-height: 2; }
+            .ending-overlay { padding: 50px 26px 140px; }
+            .chapter-mark { margin-bottom: 32px; }
+            .paragraph { margin-bottom: 34px; }
+            .ending-title .ending-label { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景光晕（与正文一起淡入） -->
+    <div class="glow-layer" id="glowLayer"></div>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="ending-overlay">
+
+        <div class="chapter-mark">
+            <svg class="title-hex" viewBox="0 0 32 36" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="16,1 31,10 31,26 16,35 1,26 1,10"/>
+                <polygon class="hex-inner" points="16,6 26,12 26,24 16,30 6,24 6,12"/>
+            </svg>
+            <span class="title-text">结 局</span>
+        </div>
+
+        <div class="ending-text" id="endingText"></div>
+
+        <div class="ending-title" id="endingTitle">
+            <span class="ending-label">结局 · 平凡的一生</span>
+        </div>
+
+        <div class="ending-actions" id="endingActions">
+            <button class="btn" onclick="timeBack()">时 光 回 溯</button>
+        </div>
+    </div>
+
+<script>
+/* ============================================================
+   背景粒子
+   ============================================================ */
+(function initParticles() {
+    const container = document.getElementById('particles');
+    const count = 60;
+    for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        const dur = 12 + Math.random() * 14;
+        p.style.animationDuration = dur + 's';
+        p.style.animationDelay = (-Math.random() * dur) + 's';
+        const size = (1 + Math.random() * 2).toFixed(1) + 'px';
+        p.style.width = size;
+        p.style.height = size;
+        p.style.opacity = (0.3 + Math.random() * 0.4).toFixed(2);
+        container.appendChild(p);
+    }
+})();
+
+/* ============================================================
+   文本数据
+   ============================================================ */
+const SEGMENTS = [
+    { html: '你没有签署那份协议' },
+    { html: '天启科技没有再来催促<br>没有赔偿金，没有葬礼，没有告别' },
+    { html: '丁文倩就像从来没出现过一样<br>从你的生命中，消失了' },
+    { html: '你回到学校，继续当一名老师<br>生活好像回到了正轨' },
+    { html: '只是有些夜晚，你会想起她<br>她为什么离开，她经历了什么' },
+    { html: '你永远不会知道答案了' }
+];
+
+/* ============================================================
+   打字机
+   ============================================================ */
+const textContainer = document.getElementById('endingText');
+const titleEl = document.getElementById('endingTitle');
+const actionsEl = document.getElementById('endingActions');
+const glowLayer = document.getElementById('glowLayer');
+
+titleEl.style.animationPlayState = 'paused';
+actionsEl.style.animationPlayState = 'paused';
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function buildTypedHTML(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    function walk(node) {
+        const children = Array.from(node.childNodes);
+        children.forEach(child => {
+            if (child.nodeType === Node.TEXT_NODE) {
+                const text = child.textContent;
+                if (!text) return;
+                const frag = document.createDocumentFragment();
+                [...text].forEach(ch => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    if (ch === ' ') {
+                        span.innerHTML = '&nbsp;';
+                    } else {
+                        span.textContent = ch;
+                    }
+                    frag.appendChild(span);
+                });
+                node.replaceChild(frag, child);
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+                if (child.tagName === 'BR') return;
+                walk(child);
+            }
+        });
+    }
+
+    walk(temp);
+
+    const chars = temp.querySelectorAll('.char');
+    let idx = 0;
+    chars.forEach(span => {
+        span.style.animationDelay = (idx * 26) + 'ms';
+        idx++;
+    });
+
+    return { html: temp.innerHTML, charCount: chars.length };
+}
+
+async function typeParagraph(seg) {
+    const p = document.createElement('div');
+    p.className = 'paragraph';
+
+    const { html, charCount } = buildTypedHTML(seg.html);
+    p.innerHTML = html;
+    textContainer.appendChild(p);
+
+    const totalMs = charCount * 26 + 900;
+    await sleep(totalMs);
+    await sleep(200);
+}
+
+async function run() {
+    await sleep(1800);
+
+    // 背景光晕与第一段正文一起淡入
+    glowLayer.classList.add('visible');
+
+    for (let i = 0; i < SEGMENTS.length; i++) {
+        await typeParagraph(SEGMENTS[i]);
+    }
+
+    await sleep(400);
+    titleEl.style.animationPlayState = 'running';
+    actionsEl.style.animationPlayState = 'running';
+}
+
+window.addEventListener('load', () => {
+    run();
+});
+
+/* ============================================================
+   按钮
+   ============================================================ */
+function timeBack() {
+    window.history.back();
+}
+</script>
+</body>
+</html>

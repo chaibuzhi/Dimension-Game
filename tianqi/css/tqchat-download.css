@@ -1,0 +1,368 @@
+/* ========== Windows 风格下载/安装向导 ========== */
+
+.windows-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    z-index: 1300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.windows-window {
+    background: #ffffff;
+    border: 1px solid #b0b8c8;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: var(--font);
+    font-size: 13px;
+    user-select: none;
+}
+
+/* 标题栏 */
+.windows-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #eef2f7;
+    border-bottom: 1px solid #d0d8e4;
+    font-weight: 600;
+    color: #1a2233;
+}
+
+.windows-titlebar .windows-title-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.windows-titlebar .windows-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #8a96a8;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.windows-titlebar .windows-close:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.windows-body {
+    padding: 24px 28px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 步骤指示器 */
+.windows-steps {
+    display: flex;
+    align-items: center;      /* 新增：让所有子元素在垂直方向上居中 */
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 22px;
+}
+
+.windows-step {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #9aa6b8;
+    flex-shrink: 0;
+}
+
+.windows-step .step-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    background: #eef2f7;
+    border: 1px solid #d0d8e4;
+    color: #8a96a8;
+    flex-shrink: 0;
+}
+
+.windows-step.active .step-dot {
+    background: #1e4a8f;
+    border-color: #1e4a8f;
+    color: #ffffff;
+}
+
+.windows-step.completed .step-dot {
+    background: #059669;
+    border-color: #059669;
+    color: #ffffff;
+}
+
+.windows-step .step-label {
+    margin-left: 6px;
+    font-weight: 500;
+}
+
+.windows-step.active .step-label {
+    color: #1e4a8f;
+    font-weight: 600;
+}
+
+.windows-step.completed .step-label {
+    color: #059669;
+}
+
+.windows-step-line {
+    width: 40px;
+    height: 2px;
+    background: #d0d8e4;
+    margin: 0 10px;
+    align-self: center;       /* 新增：确保自身在父容器内垂直居中 */
+    flex-shrink: 0;
+}
+
+.windows-step.completed + .windows-step-line,
+.windows-step-line.completed {
+    background: #059669;
+}
+
+/* 软件信息头部 */
+.windows-app-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.windows-app-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #eef2f7;
+    border: 1px solid #d0d8e4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.windows-app-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a2233;
+    margin-bottom: 2px;
+}
+
+.windows-app-version {
+    font-size: 11px;
+    color: #8a96a8;
+}
+
+/* 通知正文 */
+.windows-notice-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a2233;
+    margin-bottom: 10px;
+}
+
+.windows-notice-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #3d4b63;
+    margin-bottom: 12px;
+}
+
+.windows-notice-features {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #6b7a8f;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+/* 按钮组 */
+.windows-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.windows-btn {
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid #c0c8d4;
+    background: #ffffff;
+    color: #1a2233;
+    transition: all 0.2s;
+}
+
+.windows-btn:hover {
+    background: #f3f5f8;
+}
+
+.windows-btn.primary {
+    background: #1e4a8f;
+    border-color: #1e4a8f;
+    color: #ffffff;
+}
+
+.windows-btn.primary:hover {
+    background: #163a6b;
+}
+
+.windows-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* 下载进度 */
+.windows-download-icon {
+    font-size: 44px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.windows-download-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2233;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.windows-download-desc {
+    font-size: 12px;
+    color: #8a96a8;
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.windows-progress-bar {
+    height: 8px;
+    background: #eef2f7;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 12px 0;
+    border: 1px solid #d0d8e4;
+}
+
+.windows-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1e4a8f, #3b5bdb);
+    border-radius: 4px;
+    transition: width 0.2s;
+}
+
+.windows-progress-text {
+    font-size: 12px;
+    color: #8a96a8;
+    text-align: center;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 许可协议 */
+.windows-license-box {
+    background: #f8fafc;
+    border: 1px solid #d0d8e4;
+    border-radius: 6px;
+    padding: 14px 16px;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 14px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #6b7a8f;
+}
+
+.windows-license-box p {
+    margin-bottom: 8px;
+}
+
+.windows-license-box p:last-child {
+    margin-bottom: 0;
+}
+
+.windows-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #3d4b63;
+}
+
+.windows-checkbox-row input {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+/* 安装路径 */
+.windows-path-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: #3d4b63;
+}
+
+.windows-path-input {
+    flex: 1;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border: 1px solid #d0d8e4;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #8a96a8;
+    cursor: not-allowed;
+}
+
+/* 安装完成 */
+.windows-install-success {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.windows-install-success .success-icon {
+    font-size: 56px;
+    margin-bottom: 14px;
+}
+
+.windows-install-success h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a2233;
+    margin-bottom: 6px;
+}
+
+.windows-install-success p {
+    font-size: 13px;
+    color: #8a96a8;
+    margin-bottom: 18px;
+}

@@ -1,0 +1,175 @@
+/* ========== 论文系统 · 外壳与通用容器 ========== */
+
+:root {
+    --paper-bg: #eef1f5;
+    --paper-card: #ffffff;
+    --paper-text: #1a2233;
+    --paper-text-dim: #3d4b63;
+    --paper-text-muted: #6b7a8f;
+    --paper-accent: #1e4a8f;
+    --paper-border: #dde3ec;
+    --paper-font: "Songti SC", "SimSun", "Noto Serif SC", Georgia, serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--paper-bg);
+    font-family: var(--paper-font);
+    color: var(--paper-text);
+    line-height: 1.8;
+    padding: 40px 20px;
+}
+
+/* 论文主容器 */
+.paper-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 论文卡片基础外壳 */
+.paper-card {
+    background: var(--paper-card);
+    border: 1px solid var(--paper-border);
+    border-radius: 6px;
+    padding: 60px 70px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.hidden-password {
+    color: #e5e5e54f;          /* 接近背景的浅灰，肉眼几乎不可读 */
+    background: transparent;
+    user-select: text;
+    cursor: text;
+}
+
+/* 隐藏字段中的标签：选中时黄色背景 */
+.hidden-label::selection {
+    background: #f5c542;
+    color: #1a1a1a;
+}
+
+/* 隐藏字段中的密钥：选中时红色背景 */
+.hidden-key::selection {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* 文献不存在 */
+.paper-not-found {
+    background: #ffffff;
+    border: 1px solid var(--paper-border);
+    border-radius: 8px;
+    padding: 60px 40px;
+    text-align: center;
+    color: var(--paper-text-muted);
+}
+
+.paper-not-found h2 {
+    font-size: 20px;
+    color: var(--paper-text);
+    margin-bottom: 10px;
+}
+
+/* 通用响应式 */
+@media (max-width: 600px) {
+    .paper-card {
+        padding: 30px 24px;
+    }
+}
+
+/* ========== 锁定状态 ========== */
+.paper-card.sealed-paper {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* 内容区域：保持正常排版，但会被模糊 */
+.sealed-content {
+    padding: 50px 60px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* 毛玻璃遮罩层：固定定位，始终在视口中央 */
+.sealed-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: not-allowed;
+}
+
+/* 锁定弹窗 */
+.sealed-modal {
+    background: #ffffff;
+    border: 1px solid #dde3ec;
+    border-radius: 14px;
+    padding: 26px 18px;
+    text-align: center;
+    width: 320px;               /* 实际宽度 */
+    max-width: 90vw;            /* 防止小屏溢出 */
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    cursor: default;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+.sealed-icon {
+    font-size: 42px;
+    margin-bottom: 4px;
+}
+
+.sealed-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #dc2626;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.sealed-meta {
+    font-size: 16px;
+    color: #1c2838;
+    margin-bottom: 22px;
+    font-weight: 700;
+}
+
+.sealed-btn {
+    padding: 9px 28px;
+    background: #1e4a8f;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+.sealed-btn:hover {
+    background: #163a6b;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+    .sealed-content {
+        padding: 30px 24px;
+    }
+    .sealed-modal {
+        padding: 28px 24px;
+    }
+}

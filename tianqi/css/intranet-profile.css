@@ -1,0 +1,279 @@
+/* ========== 个人中心 ========== */
+
+.profile-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 主卡片 */
+.profile-main-card {
+    display: flex;
+    gap: 36px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 32px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-main-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--accent), #38b8c3);
+}
+
+/* 左侧照片 3:4 */
+.profile-photo-side {
+    flex-shrink: 0;
+    width: 190px;
+    aspect-ratio: 3 / 4;
+}
+
+.profile-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    background: rgba(30, 74, 143, 0.06);
+    border: 1px solid rgba(30, 74, 143, 0.15);
+    overflow: hidden;
+}
+
+.profile-photo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+/* 右侧信息 */
+.profile-info-side {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 垂直居中，避免底部留白过多 */
+}
+
+/* 姓名区块 */
+.profile-name-block {
+    margin-bottom: 20px;
+}
+
+.profile-name {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--text);        /* 黑色 */
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.profile-name-en {
+    font-size: 14px;
+    color: var(--text-muted);  /* 普通灰色 */
+    letter-spacing: 0.04em;
+    margin-bottom: 0;
+}
+
+/* 两列信息 */
+.profile-info-columns {
+    display: flex;
+    gap: 24px;
+}
+
+.profile-info-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-info-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.profile-info-label {
+    flex-shrink: 0;
+    width: 60px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+}
+
+.profile-info-value {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* 分隔线 */
+.profile-info-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 16px 0;
+}
+
+/* 入职时间与权限等级 */
+.profile-info-extra {
+    display: flex;
+    gap: 24px;
+}
+.profile-info-extra .profile-info-row {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 14px;
+}
+
+/* 下方两栏 */
+.profile-bottom-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+}
+
+.profile-bottom-grid .card {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* 登录信息卡片内部拉伸，避免底部空白 */
+.profile-login-card .profile-login-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 内容垂直居中 */
+    gap: 12px;
+}
+
+.profile-login-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.profile-login-label {
+    flex-shrink: 0;
+    width: 90px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+}
+
+.profile-login-value {
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+/* 账号操作记录 */
+.account-log-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-log-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.account-log-item:last-child {
+    border-bottom: none;
+}
+
+.account-log-time {
+    flex-shrink: 0;
+    width: 90px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+.account-log-action {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+}
+
+/* 管理员操作高亮 */
+.account-log-item.danger .account-log-action {
+    color: #de5b5b;
+    font-weight: 500;
+}
+
+/* 响应式 */
+@media (max-width: 700px) {
+    .profile-main-card {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .profile-photo-side {
+        width: 160px;
+        margin: 0 auto;
+    }
+
+    .profile-photo-placeholder {
+        font-size: 56px;
+    }
+
+    .profile-name {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .profile-name-en {
+        text-align: center;
+        display: block;
+    }
+
+    .profile-info-columns,
+    .profile-info-extra {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .profile-info-row,
+    .profile-login-row {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .profile-info-label,
+    .profile-login-label {
+        width: auto;
+    }
+
+    .profile-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-log-item {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .account-log-time {
+        width: auto;
+    }
+}

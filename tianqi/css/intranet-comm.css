@@ -1,0 +1,299 @@
+/* ========== 内部通讯（聊天应用样式） ========== */
+
+.comm-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* 聊天应用容器 */
+.comm-app {
+    display: flex;
+    height: 520px;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    margin-bottom: 16px;
+}
+
+/* 左侧联系人栏 */
+.comm-app-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    background: #fafbfc;
+}
+
+.comm-search-box {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.comm-search-box input {
+    width: 100%;
+    padding: 8px 12px;
+    background: #f0f2f5;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    outline: none;
+    cursor: not-allowed;
+}
+
+.comm-contact-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.comm-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f2f5;
+    transition: background 0.15s;
+}
+
+.comm-contact-item:hover {
+    background: #f3f5f8;
+}
+
+.comm-contact-item.active {
+    background: rgba(30, 74, 143, 0.06);
+    border-left: 3px solid var(--accent);
+}
+
+.comm-contact-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    background: #eef2f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.comm-contact-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: inherit;
+}
+
+.comm-contact-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.comm-contact-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1px;
+}
+
+.comm-contact-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.comm-contact-empty {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    flex-shrink: 0;
+}
+
+/* 右侧聊天窗口 */
+.comm-app-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.comm-app-chat-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    background: #ffffff;
+}
+
+.comm-app-chat-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafbfc;
+    padding: 30px;
+}
+
+.comm-cleared-message {
+    text-align: center;
+}
+
+.comm-cleared-message p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+}
+
+.comm-cleared-message strong {
+    color: var(--danger);
+    font-weight: 600;
+}
+
+.comm-restore-btn {
+    margin-top: 14px;
+    padding: 9px 20px;
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.comm-restore-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.comm-restore-hint {
+    min-height: 18px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--danger);
+}
+
+/* 底部输入栏（禁用） */
+.comm-app-chat-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: #ffffff;
+}
+
+.comm-app-chat-input input {
+    flex: 1;
+    padding: 10px 14px;
+    background: #f5f6f8;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    outline: none;
+    cursor: not-allowed;
+}
+
+.comm-app-chat-input button {
+    padding: 10px 22px;
+    background: #eef2f7;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* 响应式 */
+@media (max-width: 700px) {
+    .comm-app {
+        flex-direction: column;
+        height: auto;
+    }
+    .comm-app-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .comm-contact-list {
+        max-height: 200px;
+    }
+}
+/* ========== 顶部滚动公告 ========== */
+.comm-announcement {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.comm-announcement:hover {
+    background: rgba(220, 38, 38, 0.12);
+    border-color: rgba(220, 38, 38, 0.6);
+}
+
+.comm-announcement-tag {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 50px;
+    background: #dc2626;
+    color: #ffffff;
+    border: 1px solid #dc2626;
+    white-space: nowrap;
+}
+
+.comm-announcement-scroll {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.comm-announcement-text {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--danger);
+    letter-spacing: 0.02em;
+    animation: commAnnounceScroll 12s linear infinite;
+    white-space: nowrap;
+}
+
+.comm-announcement:hover .comm-announcement-text {
+    animation-play-state: paused;
+}
+
+.comm-announcement-arrow {
+    flex-shrink: 0;
+    font-size: 13px;
+    color: var(--danger);
+    transition: transform 0.2s, color 0.2s;
+}
+
+.comm-announcement:hover .comm-announcement-arrow {
+    color: #ffffff;
+    transform: translateX(2px);
+}

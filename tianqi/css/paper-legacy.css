@@ -1,0 +1,252 @@
+/* ========== 复古技术文档 ==========
+   用于：许远峰《多维实体[目标]概述：技术特性》
+   以及未来所有早年文献
+==================================== */
+
+.paper-card.legacy-doc {
+    font-family: "SimSun", "Songti SC", "STSong", serif;
+    font-size: 15px;
+    color: #1a1a1a;
+    padding: 50px 60px;
+    border-radius: 2px;
+    border: 1px solid #b0b8c0;
+    box-shadow: none;
+    background: #ffffff;
+    line-height: 1.9;
+}
+
+.legacy-doc .paper-body {
+    font-size: 15px;
+    color: #1a1a1a;
+}
+
+/* 普通正文段落：默认首行缩进 */
+.legacy-doc .paper-body p {
+    margin-bottom: 12px;
+    text-indent: 2em;
+    line-height: 1.9;
+}
+
+/* ===== 文件头 ===== */
+.legacy-header {
+    border-bottom: 1px solid #888;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+}
+
+.legacy-header-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.legacy-file-no {
+    font-size: 13px;
+    color: #444;
+    letter-spacing: 0.04em;
+}
+
+.legacy-classification {
+    font-size: 13px;
+    color: #8b0000;
+    border: 1px solid #8b0000;
+    padding: 1px 10px;
+    letter-spacing: 0.08em;
+}
+
+.legacy-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+}
+
+.legacy-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 24px;
+    font-size: 13px;
+    color: #555;
+}
+
+/* ===== 说明 ===== */
+.legacy-note {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.9;
+    padding: 10px 14px;
+    border: 1px dashed #999;
+    margin-bottom: 24px;
+    text-indent: 0;
+}
+
+/* ===== 章节标题 ===== */
+.legacy-h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    margin: 48px 0 16px;
+    letter-spacing: 0.08em;
+    text-indent: 0;
+}
+
+/* ===== 术语 ===== */
+.legacy-term {
+    text-indent: 0;
+    margin-bottom: 8px;
+}
+
+.legacy-term-label {
+    font-weight: 700;
+    color: #111;
+    margin-right: 6px;
+}
+
+/* ===== 规格条目 ===== */
+.legacy-spec {
+    text-indent: 0;
+    margin-bottom: 8px;
+}
+
+.legacy-spec-label {
+    font-weight: 700;
+    color: #111;
+    margin-right: 6px;
+}
+
+/* ===== 警告 / 注意：上下横线，居中 ===== */
+.legacy-warning {
+    margin: 28px auto 0;
+    padding: 10px 18px;
+    border-top: 1px dashed #8b0000;
+    border-bottom: 1px dashed #8b0000;
+    background: none;
+    max-width: 610px;
+    text-align: center;
+}
+
+.legacy-doc .paper-body .legacy-warning-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #740000;
+    margin-bottom: 6px;
+    text-indent: 0;
+    letter-spacing: 0.2em;
+    text-align: center;
+}
+
+.legacy-doc .paper-body .legacy-warning p {
+    font-size: 15px;
+    color: #740000;
+    margin-bottom: 3px;
+    text-indent: 0;
+    line-height: 1.9;
+    text-align: center;
+}
+
+/* ===== 图片（复古档案风） ===== */
+.legacy-image {
+    margin: 24px auto;
+    max-width: 640px;
+    padding: 0;
+    text-align: center;
+}
+
+.legacy-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #b0b8c0;
+    filter: grayscale(0.4) contrast(1.05);
+}
+
+.legacy-image figcaption {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 0.08em;
+    font-family: "SimSun", "Songti SC", serif;
+}
+
+/* ===== 数据异常 ===== */
+.legacy-data-anomaly {
+    text-align: center;
+    font-size: 13px;
+    margin: 4px 0 12px;
+    text-indent: 0;
+}
+
+/* ===== 表格 ===== */
+.legacy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+    border: none;
+}
+
+.legacy-table th {
+    background: none;
+    border: none;
+    border-bottom: 1.5px solid #aaa;
+    padding: 7px 12px;
+    text-align: center;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 0.06em;
+}
+
+.legacy-table td {
+    border: none;
+    border-bottom: 1px dashed #aaa;
+    padding: 6px 12px;
+    text-align: center;
+    color: #333;
+}
+
+.legacy-table tbody tr:last-child td {
+    border-bottom: 1.5px solid #aaa;
+}
+
+/* ===== 更多说明 ===== */
+.legacy-more {
+    font-size: 13px;
+    color: #555;
+    margin-top: 8px;
+    text-indent: 0;
+}
+
+/* ===== 页脚注释 ===== */
+.legacy-footer-note {
+    margin-top: 30px;
+    padding-top: 12px;
+    border-top: 1px solid #999;
+    font-size: 13px;
+    color: #666;
+}
+
+.legacy-footer-note p {
+    text-indent: 0;
+}
+
+/* ===== 隐藏密码 ===== */
+.legacy-doc .hidden-password {
+    color: #f0ede59d;
+    background: transparent;
+    user-select: text;
+    cursor: text;
+}
+
+.legacy-doc .hidden-password::selection {
+    color: #ffffff;
+    background: #dc2626;
+}
+
+@media (max-width: 600px) {
+    .paper-card.legacy-doc { padding: 28px 20px; }
+    .legacy-title { font-size: 18px; }
+}

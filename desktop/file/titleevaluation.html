@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职称申请书 - Word</title>
+    <style>
+        :root {
+            --bg: #050510;
+            --text: #d0d0e0;
+            --text-dim: #70708a;
+            --accent: #0071e3;
+            --accent-glow: #00c8ff;
+            --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --word-bg: #ffffff;
+            --word-text: #1d1d1f;
+            --word-border: #d2d2d7;
+            --word-muted: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font);
+        }
+
+        body {
+            background: #f0f0f3;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== 浏览器窗口外壳 ========== */
+        .browser-window {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            height: 90vh;
+            background: #1a1a2e;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .browser-toolbar {
+            background: #2c2c3a;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .browser-toolbar .address-bar {
+            flex: 1;
+            background: #3a3a4c;
+            border-radius: 8px;
+            padding: 6px 14px;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* ========== Word 界面容器 ========== */
+        .word-container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #f0f0f3;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Word 顶部工具栏 ========== */
+        .word-toolbar {
+            background: rgba(245, 245, 247, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid #d2d2d7;
+            flex-shrink: 0;
+            padding: 4px 12px;
+        }
+
+        .word-menu-bar {
+            display: flex;
+            gap: 18px;
+            padding: 4px 0;
+            font-size: 13px;
+            color: #1d1d1f;
+        }
+        .word-menu-bar span {
+            cursor: default;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .word-menu-bar span:hover {
+            background: #e0e0e5;
+        }
+
+        .word-ribbon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0;
+            border-top: 1px solid #e0e0e5;
+            flex-wrap: wrap;
+        }
+        .ribbon-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 10px;
+            border-right: 1px solid #e0e0e5;
+        }
+        .ribbon-group:last-child {
+            border-right: none;
+        }
+        .ribbon-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: default;
+            font-size: 14px;
+            color: #1d1d1f;
+            transition: background 0.2s;
+        }
+        .ribbon-icon:hover {
+            background: #e0e0e5;
+        }
+        .ribbon-label {
+            font-size: 11px;
+            color: #6c757d;
+            text-align: center;
+            line-height: 1.2;
+            cursor: default;
+        }
+
+        /* ========== Word 文档编辑区 ========== */
+        .word-editor {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+            background: #f0f0f3;
+            text-align: center;
+        }
+
+        .word-page {
+            background: var(--word-bg);
+            width: 100%;
+            max-width: 720px;
+            display: inline-block;
+            text-align: left;
+            padding: 50px 60px;
+            padding-bottom: 80px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-radius: 2px;
+        }
+
+        /* ========== 文档内容样式 ========== */
+        .doc-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .doc-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--word-text);
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .doc-header .doc-subtitle {
+            font-size: 13px;
+            color: var(--word-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .doc-section {
+            margin-bottom: 24px;
+        }
+        .doc-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--word-text);
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+            margin-bottom: 14px;
+        }
+
+        /* ========== 基本信息表格（带照片） ========== */
+        .basic-info-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .basic-info-table {
+            flex: 1;
+            border-collapse: collapse;
+            font-size: 14px;
+            color: var(--word-text);
+            width: 100%;
+        }
+        .basic-info-table td {
+            padding: 10px 14px;
+            border: 1px solid #e8e8ed;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .basic-info-table .label {
+            width: 90px;
+            background: #f8f8fa;
+            font-weight: 500;
+            color: #555;
+            white-space: nowrap;
+        }
+        .basic-info-table .value {
+            color: var(--word-text);
+        }
+
+        /* 照片区域 */
+        .photo-area {
+            width: 180px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+        .photo-frame {
+            width: 160px;
+            aspect-ratio: 3/4;
+            border: 1px solid #d2d2d7;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 auto;
+            background: #f5f5f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-frame .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+            background: linear-gradient(135deg, #f0f0f5, #e0e0e5);
+        }
+        .photo-placeholder .placeholder-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+        .photo-label {
+            font-size: 12px;
+            color: var(--word-muted);
+            margin-top: 4px;
+        }
+
+        /* ========== 通用表格样式 ========== */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            color: var(--word-text);
+        }
+        .doc-table td {
+            padding: 10px 14px;
+            border: 1px solid #e8e8ed;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .doc-table .label {
+            width: 100px;
+            background: #f8f8fa;
+            font-weight: 500;
+            color: #555;
+            white-space: nowrap;
+        }
+        .doc-table .value {
+            color: var(--word-text);
+        }
+
+        .doc-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--word-text);
+            margin-bottom: 12px;
+        }
+
+        .paper-list {
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: var(--word-text);
+            line-height: 1.8;
+        }
+        .paper-list li {
+            padding: 6px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .paper-list li:last-child {
+            border-bottom: none;
+        }
+        .paper-list .paper-title {
+            font-weight: 500;
+        }
+        .paper-list .paper-journal {
+            color: var(--word-muted);
+            font-size: 13px;
+        }
+
+        .award-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--word-text);
+        }
+        .award-item {
+            background: #f8f8fa;
+            padding: 10px 14px;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+        .award-item .award-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .award-item .award-level {
+            font-size: 12px;
+            color: var(--accent);
+        }
+
+        .signature {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+            font-size: 14px;
+            color: var(--word-text);
+        }
+        .signature .sig-line {
+            text-align: right;
+        }
+        .signature .sig-line .sig-space {
+            display: inline-block;
+            width: 120px;
+            border-bottom: 1px solid #999;
+            margin-left: 10px;
+        }
+
+        /* 底部额外留白 */
+        .doc-bottom-spacer {
+            height: 20px;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .word-page {
+                padding: 30px 24px;
+                padding-bottom: 60px;
+            }
+            .basic-info-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .photo-area {
+                width: 100%;
+            }
+            .photo-frame {
+                width: 140px;
+            }
+            .doc-table .label {
+                width: 70px;
+                font-size: 12px;
+            }
+            .doc-table td {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            .award-grid {
+                grid-template-columns: 1fr;
+            }
+            .doc-bottom-spacer {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Word 界面 -->
+    <div class="word-container">
+        <!-- 菜单栏 -->
+        <div class="word-toolbar">
+            <div class="word-menu-bar">
+                <span>文件</span>
+                <span>编辑</span>
+                <span>视图</span>
+                <span>插入</span>
+                <span>格式</span>
+                <span>工具</span>
+                <span>帮助</span>
+            </div>
+            <div class="word-ribbon">
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">📋</div>
+                    <div class="ribbon-icon">📄</div>
+                    <div class="ribbon-icon">💾</div>
+                </div>
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">🔍</div>
+                    <div class="ribbon-icon">↩️</div>
+                    <div class="ribbon-icon">↪️</div>
+                </div>
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">🅰️</div>
+                    <div class="ribbon-icon">𝗕</div>
+                    <div class="ribbon-icon">𝘐</div>
+                    <div class="ribbon-icon">U̲</div>
+                </div>
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">⬅️</div>
+                    <div class="ribbon-icon">⬆️</div>
+                    <div class="ribbon-icon">⬇️</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文档编辑区 -->
+        <div class="word-editor">
+            <div class="word-page">
+                <!-- 文档标题 -->
+                <div class="doc-header">
+                    <h1>西延中学教师职称申请表</h1>
+                    <p class="doc-subtitle">申请职称：中学一级教师（物理学）</p>
+                </div>
+
+                <!-- 基本信息（带照片） -->
+                <div class="doc-section">
+                    <div class="doc-section-title">基本信息</div>
+                    <div class="basic-info-wrapper">
+                        <!-- 左侧照片 -->
+                        <div class="photo-area">
+                            <div class="photo-frame">
+                                <img src="../image/hanxiu.webp" alt="韩休证件照" onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex';">
+                                <div class="photo-placeholder" style="display:none;">
+                                    <span class="placeholder-icon">👤</span>
+                                    <span>韩休<br>证件照</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 右侧信息表格 -->
+                        <table class="basic-info-table">
+                            <tr>
+                                <td class="label">姓名</td>
+                                <td class="value">韩休</td>
+                                <td class="label">性别</td>
+                                <td class="value">男</td>
+                            </tr>
+                            <tr>
+                                <td class="label">出生日期</td>
+                                <td class="value">1995年7月15日</td>
+                                <td class="label">年龄</td>
+                                <td class="value">31岁</td>
+                            </tr>
+                            <tr>
+                                <td class="label">婚姻状况</td>
+                                <td class="value">已婚</td>
+                                <td class="label">民族</td>
+                                <td class="value">汉族</td>
+                            </tr>
+                            <tr>
+                                <td class="label">工作单位</td>
+                                <td class="value" colspan="3">西延中学</td>
+                            </tr>
+                            <tr>
+                                <td class="label">现任职务</td>
+                                <td class="value" colspan="3">高中物理教师</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 教育背景 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">教育背景</div>
+                    <table class="doc-table">
+                        <tr>
+                            <td class="label">最高学历</td>
+                            <td class="value" colspan="3">博士研究生</td>
+                        </tr>
+                        <tr>
+                            <td class="label">毕业院校</td>
+                            <td class="value">龙华大学</td>
+                            <td class="label">毕业时间</td>
+                            <td class="value">2022年6月</td>
+                        </tr>
+                        <tr>
+                            <td class="label">专业方向</td>
+                            <td class="value" colspan="3">天体物理学（硕博连读）</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 工作经历 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">工作经历</div>
+                    <table class="doc-table">
+                        <tr>
+                            <td class="label">2022.09 - 至今</td>
+                            <td class="value">西延中学 高中物理教师</td>
+                        </tr>
+                        <tr>
+                            <td class="label">2017.09 - 2022.06</td>
+                            <td class="value">龙华大学 天体物理学专业 博士研究生（硕博连读）</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 代表性成果 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">代表性成果</div>
+                    <ul class="paper-list">
+                        <li>
+                            <p class="paper-title">1. 「基于深度学习的引力波信号分类方法」</p>
+                            <p class="paper-journal">《天体物理学报》 2025年 第3期</p>
+                        </li>
+                        <li>
+                            <p class="paper-title">2. 「AI辅助的恒星光谱特征识别与分类研究」</p>
+                            <p class="paper-journal">《现代物理进展》 2024年 第11期</p>
+                        </li>
+                        <li>
+                            <p class="paper-title">3. 指导学生获省级高中生物理竞赛一等奖</p>
+                            <p class="paper-journal">省级 · 2025年</p>
+                        </li>
+                        <li>
+                            <p class="paper-title">4. 西延市高中物理实验教学技能大赛一等奖</p>
+                            <p class="paper-journal">市级 · 2025年</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 获奖记录 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">获奖记录</div>
+                    <div class="award-grid">
+                        <div class="award-item">
+                            <p class="award-name">西延市高中物理实验教学技能大赛一等奖</p>
+                            <p class="award-level">市级 · 2025年</p>
+                        </div>
+                        <div class="award-item">
+                            <p class="award-name">指导学生获省级物理竞赛一等奖</p>
+                            <p class="award-level">省级 · 2025年</p>
+                        </div>
+                        <div class="award-item">
+                            <p class="award-name">西延市优秀教师</p>
+                            <p class="award-level">市级 · 2024年</p>
+                        </div>
+                        <div class="award-item">
+                            <p class="award-name">西延中学优秀教师</p>
+                            <p class="award-level">校级 · 2023年</p>
+                        </div>
+                        <div class="award-item">
+                            <p class="award-name">龙华大学优秀博士毕业论文奖</p>
+                            <p class="award-level">校级 · 2022年</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 自我评价 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">自我评价</div>
+                    <p class="doc-text">
+                        本人于2022年获得龙华大学天体物理学博士学位，同年入职西延中学，担任高中物理教师。任教以来，始终坚持“以学生为中心”的教学理念，注重培养学生的科学思维与探究能力。
+                    </p>
+                    <p class="doc-text">
+                        在教学工作中，主讲高中物理必修与选修课程，课堂风格深入浅出，善于运用生活中的物理现象激发学生学习兴趣。多次指导学生参加省级、市级物理竞赛并获奖。
+                    </p>
+                    <p class="doc-text">
+                        在教研方面，结合自身天体物理学研究背景，探索将前沿科技案例融入中学物理教学，主持校级教研课题一项，发表教学研究论文两篇。
+                    </p>
+                </div>
+
+                <!-- 签名 -->
+                <div class="signature">
+                    <div class="sig-line">
+                        申请人签名：<span class="sig-space"></span>
+                    </div>
+                </div>
+                <div class="signature" style="margin-top:10px;">
+                    <div class="sig-line">
+                        日期：2026年7月10日
+                    </div>
+                </div>
+
+                <!-- 底部留白 -->
+                <div class="doc-bottom-spacer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

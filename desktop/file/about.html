@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于游戏</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        background: #f3f3f3;
+        color: #1a1a1a;
+        font-family: 'Segoe UI', 'Microsoft YaHei UI', 'PingFang SC', system-ui, -apple-system, sans-serif;
+        font-size: 14px;
+        display: flex;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========== 左侧边栏 ========== */
+    .sidebar {
+        width: 200px;
+        flex-shrink: 0;
+        background: #f3f3f3;
+        padding: 20px 10px 16px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #ebebeb;
+        overflow-y: auto;
+    }
+
+    /* 顶部：用户卡片 */
+    .user-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 10px;
+        border-radius: 6px;
+        margin-bottom: 18px;
+        transition: background 0.15s;
+        cursor: default;
+    }
+
+    .user-card:hover {
+        background: #ebebeb;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: #d6d6d6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #888;
+    }
+
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .user-info {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .user-name {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #1a1a1a;
+        line-height: 1.3;
+    }
+
+    .user-email {
+        font-size: 11.5px;
+        color: #7a7a7a;
+        line-height: 1.4;
+        margin-top: 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* 中部：假导航 */
+    .nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        margin-bottom: 16px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 13px;
+        color: #2a2a2a;
+        cursor: default;
+        position: relative;
+        transition: background 0.12s;
+        user-select: none;
+    }
+
+    .nav-item:hover {
+        background: #eaeaea;
+    }
+
+    .nav-item.active {
+        background: #e8e8e8;
+    }
+
+    .nav-item.active::before {
+        content: '';
+        position: absolute;
+        left: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 16px;
+        background: #0067c0;
+        border-radius: 2px;
+    }
+
+    .nav-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        color: #4a4a4a;
+    }
+
+    /* 底部：制作团队 */
+    .credit {
+        margin-top: auto;
+        padding-top: 14px;
+    }
+
+    .credit-title {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: #8a8a8a;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        padding-left: 10px;
+    }
+
+    .credit-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    /* 与 .nav-item 一致的按钮样式 */
+    .credit-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        color: #2a2a2a;
+        cursor: default;
+        text-decoration: none;
+        transition: background 0.12s, color 0.12s;
+        user-select: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .credit-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        color: #4a4a4a;
+        transition: color 0.12s;
+    }
+
+    /* 所有条目都可 hover 高亮（和中部导航一致） */
+    .credit-item:hover {
+        background: #eaeaea;
+    }
+
+    .credit-label {
+        flex-shrink: 0;
+        color: #8a8a8a;
+        font-size: 12px;
+        transition: color 0.12s;
+    }
+
+    /* 可点击的条目：hover 时文字变蓝 */
+    .credit-item-link {
+        cursor: pointer;
+    }
+
+    .credit-item-link:hover {
+        color: #0067c0;
+    }
+
+    .credit-item-link:hover .credit-label {
+        color: #0067c0;
+    }
+
+    .credit-item-link:hover .credit-icon {
+        color: #0067c0;
+    }
+
+    .credit-footer {
+        font-size: 11px;
+        color: #999;
+        line-height: 1.6;
+        margin-top: 10px;
+        padding-left: 12px;
+        letter-spacing: 0.02em;
+    }
+
+    /* ========== 右侧内容区 ========== */
+    .content {
+        flex: 1;
+        min-width: 0;
+        overflow-y: auto;
+        padding: 32px 40px 40px;
+    }
+
+    .content-inner {
+        max-width: 100%;
+    }
+
+    /* 顶部标题区（居中） */
+    .hero {
+        text-align: center;
+        padding: 12px 0 36px;
+    }
+
+    .hero-hex {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 16px;
+        display: block;
+    }
+
+    .hero-title {
+        font-size: 26px;
+        font-weight: 600;
+        color: #1a1a1a;
+        letter-spacing: 0.12em;
+        padding-left: 0.12em;
+        line-height: 1.3;
+        margin-bottom: 6px;
+    }
+
+    .hero-en {
+        font-size: 11px;
+        font-weight: 500;
+        color: #0067c0;
+        letter-spacing: 0.4em;
+        padding-left: 0.4em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    .hero-sub {
+        font-size: 18px;
+        font-weight: 500;
+        color: #4a4a4a;
+        letter-spacing: 0.5em;
+        padding-left: 0.5em;
+        margin-bottom: 20px;
+    }
+
+    .hero-version {
+        display: inline-block;
+        font-size: 11.5px;
+        color: #6a6a6a;
+        letter-spacing: 0.15em;
+        padding: 3px 14px;
+        border: 1px solid #d6d6d6;
+        border-radius: 50px;
+        background: #fafafa;
+    }
+
+    /* 卡片外的小标题 */
+    .section-label {
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #6a6a6a;
+        letter-spacing: 0.16em;
+        padding-left: 0.16em;
+        margin-bottom: 8px;
+        margin-left: 2px;
+        text-transform: uppercase;
+    }
+
+    /* 卡片 */
+    .card {
+        background: #ffffff;
+        border: 1px solid #ebebeb;
+        border-radius: 8px;
+        padding: 18px 22px;
+        margin-bottom: 24px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .card-body {
+        font-size: 13.5px;
+        line-height: 1.85;
+        color: #3a3a3a;
+    }
+
+    .card-body p {
+        margin-bottom: 10px;
+    }
+
+    .card-body p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* 游戏简介卡片 */
+    .intro-footnote {
+        font-size: 12px;
+        color: #999;
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #f2f2f2;
+        letter-spacing: 0.02em;
+        line-height: 1.6;
+    }
+
+    /* 温馨提示卡片：每行分隔符 */
+    .tips-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tip-item {
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: #3a3a3a;
+        padding: 10px 0;
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    .tip-item:first-child {
+        padding-top: 0;
+    }
+
+    .tip-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .tip-item strong {
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.25);
+    }
+    /* ========== QQ 降级提示 ========== */
+    .qq-fallback {
+        display: none;
+        font-size: 11px;
+        color: #8a8a8a;
+        padding: 6px 4px 0;
+        line-height: 1.6;
+        margin-top: 2px;
+    }
+
+    .qq-fallback strong {
+        color: #0067c0;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+    }
+
+    .qq-fallback button {
+        margin-left: 8px;
+        padding: 2px 8px;
+        font-size: 10.5px;
+        border: 1px solid #d1d1d1;
+        border-radius: 3px;
+        background: #fdfdfd;
+        cursor: pointer;
+        color: #1a1a1a;
+        font-family: inherit;
+        transition: background 0.12s, border-color 0.12s;
+    }
+
+    .qq-fallback button:hover {
+        background: #f0f0f0;
+        border-color: #b3b3b3;
+    }
+
+</style>
+</head>
+<body>
+
+    <!-- ========== 左侧边栏 ========== -->
+    <aside class="sidebar">
+
+        <!-- 用户卡片 -->
+        <div class="user-card">
+            <div class="user-avatar">
+                <img src="../image/hanxiu.webp" alt="韩休" onerror="this.style.display='none'; this.parentElement.textContent='韩';">
+            </div>
+            <div class="user-info">
+                <div class="user-name">韩休</div>
+                <div class="user-email">hanxiu@mail.com</div>
+            </div>
+        </div>
+
+        <!-- 假导航 -->
+        <nav class="nav">
+            <div class="nav-item active">
+                <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="12" height="12" rx="1.5"/>
+                    <path d="M2 6.5h12M6.5 6.5V14"/>
+                </svg>
+                通用
+            </div>
+            <div class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 1.5a4.5 4.5 0 0 0-4.5 4.5v3L2 11h12l-1.5-2V6A4.5 4.5 0 0 0 8 1.5Z"/>
+                    <path d="M6.5 13.5a1.5 1.5 0 0 0 3 0"/>
+                </svg>
+                通知
+            </div>
+            <div class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 6a10 10 0 0 1 12 0"/>
+                    <path d="M4 8.5a7 7 0 0 1 8 0"/>
+                    <path d="M6 11a4 4 0 0 1 4 0"/>
+                    <circle cx="8" cy="13.5" r="0.6" fill="currentColor"/>
+                </svg>
+                网络
+            </div>
+            <div class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="12" height="10" rx="1.2"/>
+                    <path d="M2 10l3-3 3 3 3-4 3 3"/>
+                </svg>
+                墙纸
+            </div>
+            <div class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6.5v3h2.5L9 12.5v-9L5.5 6.5H3Z"/>
+                    <path d="M11.5 5.5a4 4 0 0 1 0 5"/>
+                </svg>
+                声音
+            </div>
+        </nav>
+
+        <!-- 制作团队 -->
+        <div class="credit">
+            <div class="credit-title">制作团队</div>
+
+            <div class="credit-nav">
+                <div class="credit-item">
+                    <svg class="credit-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11.5 1.5l3 3-9 9-3.5.5.5-3.5z"/>
+                        <path d="M9.5 3.5l3 3"/>
+                    </svg>
+                    <span class="credit-label">作者</span>
+                    <span>柴不知</span>
+                </div>
+                <div class="credit-item">
+                    <svg class="credit-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 1.5a4 4 0 0 0-2.5 7.2V10h5V8.7A4 4 0 0 0 8 1.5Z"/>
+                        <path d="M6 12.5h4M6.8 14h2.4"/>
+                    </svg>
+                    <span class="credit-label">顾问</span>
+                    <span>阔落holic</span>
+                </div>
+                <a class="credit-item credit-item-link" href="https://space.bilibili.com/21368964" target="_blank" rel="noopener">
+                    <svg class="credit-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773z"/>
+                    </svg>
+                    <span class="credit-label">B站</span>
+                    <span>柴不知桃不语</span>
+                </a>
+                <a class="credit-item credit-item-link" id="qqLink" href="javascript:void(0);">
+                    <svg class="credit-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.04 2 11c0 2.79 1.36 5.29 3.5 6.94V22l4.18-2.29c.73.14 1.51.21 2.32.21 5.52 0 10-4.04 10-9S17.52 2 12 2z"/>
+                    </svg>
+                    <span class="credit-label">QQ</span>
+                    <span>252117332</span>
+                </a>
+            </div>
+
+            <div class="qq-fallback" id="qqFallback">
+                未能唤起 QQ，请手动添加：<strong id="qqCopyText">252117332</strong>
+                <button type="button" onclick="copyQQ()">复制</button>
+            </div>
+
+            <div class="credit-footer">
+                感谢游玩，欢迎反馈游戏 BUG。
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- ========== 右侧内容 ========== -->
+    <main class="content">
+        <div class="content-inner">
+
+            <!-- 顶部标题区（居中） -->
+            <div class="hero">
+                <svg class="hero-hex" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="32,4 58,18 58,46 32,60 6,46 6,18"
+                             stroke="#0067c0" stroke-width="2" fill="none"/>
+                    <polygon points="32,14 50,23 50,41 32,50 14,41 14,23"
+                             stroke="#0067c0" stroke-width="1.2" fill="none" opacity="0.45"/>
+                    <circle cx="32" cy="32" r="2.5" fill="#0067c0"/>
+                </svg>
+                <h1 class="hero-title">多维实体</h1>
+                <div class="hero-en">Dimension</div>
+                <div class="hero-sub">空 棺</div>
+                <div class="hero-version">版本 v 1.0</div>
+            </div>
+
+            <!-- 游戏简介 -->
+            <div class="section-label">游戏简介</div>
+            <div class="card">
+                <div class="card-body">
+                    <p>你是韩休，一名高中物理老师。</p>
+                    <p>你的妻子丁文倩，在天启科技的一次秘密行动中意外身亡。</p>
+                    <p>你开始调查，试图揭开她死亡的真相。</p>
+                </div>
+                <p class="intro-footnote">游戏内容均为虚构，如有雷同，纯属巧合。</p>
+            </div>
+
+            <!-- 温馨提示 -->
+            <div class="section-label">温馨提示</div>
+            <div class="card">
+                <div class="tips-list">
+                    <div class="tip-item">本游戏包含音乐与音效，建议佩戴耳机。</div>
+                    <div class="tip-item">解谜过程中需要阅读文本，线索藏在文章、对话等细节里。</div>
+                    <div class="tip-item">主题涉及死亡、微惊悚与心理压迫。</div>
+                    <div class="tip-item">游戏过程中可能出现屏幕闪烁、乱码、抖动等特效。</div>
+                    <div class="tip-item"><strong>光敏性癫痫患者请勿游玩。</strong></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+<script>
+    (function() {
+        const QQ_UIN = '252117332';
+
+        // ========== 判定设备 ==========
+        function isMobile() {
+            return /Android|iPhone|iPad|iPod|HarmonyOS/i.test(navigator.userAgent);
+        }
+
+        // ========== 构造协议 URL ==========
+        function buildScheme() {
+            if (isMobile()) {
+                // 移动端：mqqapi
+                return `mqqapi://userprofile/friend_profile_card?src_type=web&version=1.0&source=2&uin=${QQ_UIN}`;
+            }
+            // 桌面端：NTQQ 深链
+            const params = JSON.stringify({ uin: QQ_UIN, sourceType: 'QrCodeShareBuddyLink' });
+            return `tencent://ntqq-open?subCmd=profile&action=openMiniBuddyProfile&actionParams=${encodeURIComponent(params)}`;
+        }
+
+        // ========== 唤起 QQ ==========
+        function tryOpenQQ() {
+            const scheme = buildScheme();
+            const fallback = document.getElementById('qqFallback');
+
+            // 先隐藏旧提示
+            fallback.style.display = 'none';
+
+            // 记录唤起起始时间
+            const startTime = Date.now();
+            let blurred = false;
+
+            // 监听失焦——页面切走说明唤起成功
+            const onBlur = () => {
+                blurred = true;
+                window.removeEventListener('blur', onBlur);
+            };
+            window.addEventListener('blur', onBlur);
+
+            // 用隐式 a 标签触发协议跳转
+            // （比 location.href 更安全：不会破坏当前页面上下文）
+            const a = document.createElement('a');
+            a.href = scheme;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            // 2 秒后检测：如果页面还在前台，说明唤起失败
+            setTimeout(() => {
+                window.removeEventListener('blur', onBlur);
+                if (!blurred && Date.now() - startTime < 2500) {
+                    fallback.style.display = 'block';
+                }
+            }, 2000);
+        }
+
+        // ========== 复制 QQ 号 ==========
+        function copyQQ() {
+            const text = QQ_UIN;
+            const btn = event.target;
+            const originalText = btn.textContent;
+
+            const onSuccess = () => {
+                btn.textContent = '✓ 已复制';
+                setTimeout(() => { btn.textContent = originalText; }, 1500);
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+                    // 降级：选中文本
+                    const range = document.createRange();
+                    const selection = window.getSelection();
+                    range.selectNodeContents(document.getElementById('qqCopyText'));
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    try {
+                        document.execCommand('copy');
+                        onSuccess();
+                    } catch (e) {
+                        alert('请手动复制：' + text);
+                    }
+                });
+            } else {
+                // 老浏览器降级
+                const range = document.createRange();
+                const selection = window.getSelection();
+                range.selectNodeContents(document.getElementById('qqCopyText'));
+                selection.removeAllRanges();
+                selection.addRange(range);
+                try {
+                    document.execCommand('copy');
+                    onSuccess();
+                } catch (e) {
+                    alert('请手动复制：' + text);
+                }
+            }
+        }
+
+        // ========== 绑定点击 ==========
+        document.getElementById('qqLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            tryOpenQQ();
+        });
+
+        // 暴露给 button onclick
+        window.copyQQ = copyQQ;
+    })();
+</script>
+</body>
+</html>

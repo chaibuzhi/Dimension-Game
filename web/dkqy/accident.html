@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南非北开普省能源勘探项目发生人员伤亡 - 地勘前沿</title>
+    <style>
+        :root {
+            --red: #c7000b;
+            --red-dark: #a00008;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --text-dim: #444;
+            --text-muted: #888;
+            --line: #e0e0e0;
+            --font: 'PingFang SC', 'Microsoft YaHei', 'Heiti SC', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            font-family: var(--font);
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        a { color: #333; text-decoration: none; }
+        a:hover { color: var(--red); }
+
+        /* ========== 顶部细线 ========== */
+        .top-line {
+            height: 3px;
+            background: var(--red);
+        }
+
+        /* ========== 品牌区 ========== */
+        .masthead {
+            padding: 22px 20px 14px;
+            text-align: center;
+        }
+        .masthead .brand-zh {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--red);
+            letter-spacing: 0.16em;
+            line-height: 1.2;
+        }
+        .masthead .brand-en {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+        .masthead .brand-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 0.05em;
+        }
+        .masthead .brand-date .red {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        /* ========== 导航栏（经典红底白字） ========== */
+        .main-nav {
+            background: var(--red);
+            border-bottom: 2px solid var(--red-dark);
+        }
+        .main-nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 40px;
+        }
+        .main-nav a {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0 10px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.03em;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .main-nav a:hover {
+            background: var(--red-dark);
+        }
+        .main-nav a.active {
+            background: var(--red-dark);
+            font-weight: 700;
+        }
+
+        /* ========== 面包屑 ========== */
+        .breadcrumb {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 10px 20px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .breadcrumb a { color: var(--text-muted); }
+        .breadcrumb a:hover { color: var(--red); }
+        .breadcrumb .sep { margin: 0 6px; color: #ccc; }
+
+        /* ========== 文章区 ========== */
+        .article-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px 20px 50px;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .article-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.45;
+            color: #111;
+            margin-bottom: 12px;
+        }
+        .article-header .article-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .article-header .article-meta .source {
+            color: var(--red);
+            font-weight: 600;
+        }
+        .article-header .article-meta .dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #bbb;
+        }
+
+        /* 正文分隔线 */
+        .article-divider {
+            border: none;
+            border-top: 2px solid var(--red);
+            margin: 0 0 24px;
+        }
+
+        /* 正文 */
+        .article-body {
+            font-size: 15px;
+            color: var(--text-dim);
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .article-body p {
+            margin-bottom: 20px;
+            text-indent: 2em;
+            text-align: justify;
+        }
+        .article-body p.no-indent {
+            text-indent: 0;
+        }
+        .article-body .highlight-box {
+            margin: 22px 0;
+            padding: 14px 18px;
+            background: #fff8f0;
+            border: 1px solid #f0dcc0;
+            border-left: 4px solid var(--red);
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.8;
+            text-indent: 0;
+        }
+        .article-body .highlight-box strong {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        /* 正文图片占位 */
+        .figure {
+            margin: 24px 0;
+            text-align: center;
+        }
+        .figure .figure-img {
+            background: #f5f5f5;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            display: block;
+            overflow: hidden;
+            min-height: 180px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .figure .figure-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .figure .figure-img span {
+            font-size: 40px;
+            margin-bottom: 6px;
+            opacity: 0.4;
+        }
+        .figure figcaption {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* ========== 相关阅读 ========== */
+        .related {
+            max-width: 780px;
+            margin: 32px auto 0;
+            border-top: 1px solid var(--line);
+            padding-top: 16px;
+        }
+        .related .related-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .related .related-title::before {
+            content: '';
+            width: 4px;
+            height: 14px;
+            background: var(--red);
+        }
+        .related ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .related ul li {
+            font-size: 13px;
+            line-height: 1.6;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .related ul li::before {
+            content: '·';
+            color: var(--red);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .related ul li a {
+            color: #444;
+        }
+        .related ul li a:hover { color: var(--red); }
+
+        /* ========== 底部提示 ========== */
+        .article-notice {
+            max-width: 780px;
+            margin: 24px auto 0;
+            padding: 12px 16px;
+            background: #f8f8f8;
+            border: 1px solid var(--line);
+            font-size: 11px;
+            color: #999;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* ========== 页脚 ========== */
+        .site-footer {
+            background: #333;
+            color: #999;
+            font-size: 11px;
+            padding: 24px 20px 18px;
+            text-align: center;
+            line-height: 1.9;
+        }
+        .site-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+        .site-footer .footer-links a {
+            color: #aaa;
+        }
+        .site-footer .footer-links a:hover { color: #fff; }
+        .site-footer .footer-copy {
+            color: #666;
+            font-size: 10px;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 600px) {
+            .masthead .brand-zh {
+                font-size: 28px;
+            }
+            .main-nav-inner {
+                padding: 0 6px;
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+            .main-nav a {
+                padding: 0 8px;
+                font-size: 12px;
+            }
+            .article-header h1 {
+                font-size: 20px;
+            }
+            .article-body {
+                font-size: 14px;
+            }
+            .article-wrapper {
+                padding: 12px 14px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部红色细线 -->
+    <div class="top-line"></div>
+
+    <!-- 品牌区 -->
+    <header class="masthead">
+        <div class="brand-zh">地勘前沿</div>
+        <div class="brand-en">GeoExploration Frontline</div>
+        <div class="brand-date">
+            行业权威信息平台 · 每日更新
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+        <div class="main-nav-inner">
+            <a href="javascript:void(0)">首页</a>
+            <a href="javascript:void(0)">勘探动态</a>
+            <a href="javascript:void(0)" class="active">安全事故</a>
+            <a href="javascript:void(0)">政策法规</a>
+            <a href="javascript:void(0)">设备技术</a>
+            <a href="javascript:void(0)">矿业市场</a>
+            <a href="javascript:void(0)">国际视野</a>
+            <a href="javascript:void(0)">地质百科</a>
+        </div>
+    </nav>
+
+    <!-- 面包屑 -->
+    <div class="breadcrumb">
+        <a href="javascript:void(0)">首页</a><span class="sep">/</span>
+        <a href="javascript:void(0)">安全事故</a><span class="sep">/</span>
+        <span>正文</span>
+    </div>
+
+    <!-- 文章区 -->
+    <div class="article-wrapper">
+
+        <div class="article-header">
+            <h1>南非北开普省能源勘探项目发生人员伤亡</h1>
+            <div class="article-meta">
+                <span class="source">地勘前沿</span>
+                <span class="dot"></span>
+                <span>2026年7月17日</span>
+                <span class="dot"></span>
+                <span>记者：范志远</span>
+                <span class="dot"></span>
+                <span>发自约翰内斯堡</span>
+            </div>
+        </div>
+
+        <hr class="article-divider">
+
+        <div class="article-body">
+            <p>7月中旬，南非北开普省卡拉哈迪边缘地区一处能源勘探项目发生严重事故，涉事企业为天启科技。</p>
+
+            <P>勘探队进入山体内部后，洞内突发不明原因坍塌，破坏力远超常规塌方，造成人员死亡。同时，此次坍塌波及周边地质结构，导致附近多处岩层出现明显位移，具体影响范围仍在评估，坍塌诱因尚无定论。</P>
+
+            <div class="figure">
+                <div class="figure-img">
+                    <img src="../image/web_accident.webp" alt="南非北开普省卡拉哈迪地区勘探现场（资料图）">
+                </div>
+            </div>
+            
+            <p>天启科技已向南非矿产资源与能源部提交正式事故报告，确认存在人员死亡，但未披露伤亡人数与勘探作业细节。</p>
+
+            <p>南非矿产资源与能源部仅证实：该项目持有合法勘探许可、手续完备，事故已移交相关部门调查，对于事故细节、调查进展及是否存在违规操作等问题均未作进一步回应。</p>
+
+            <div class="highlight-box">
+                <strong>截至发稿，天启科技总部未发布任何公开声明，亦未回应本报采访请求。</strong>
+            </div>
+
+            <p>据悉，这并非天启科技勘探活动中首次出现人员伤亡，该公司过往勘探行动中也曾发生安全事故，但均未对外公布详细信息。</p>
+
+            <p>目前，事故调查仍在进行中，本站将持续关注事件进展。</p>
+        </div>
+
+        <!-- 相关阅读 -->
+        <div class="related">
+            <div class="related-title">相关阅读</div>
+            <ul>
+                <li><a href="javascript:void(0)">智利铜矿巷道坍塌事故：两名矿工失联超48小时</a></li>
+                <li><a href="javascript:void(0)">蒙古国戈壁勘探营地遭遇沙尘暴，设备损毁严重</a></li>
+                <li><a href="javascript:void(0)">印尼金矿尾矿库渗漏：环保部门介入调查</a></li>
+                <li><a href="javascript:void(0)">青海格尔木地质队车辆侧翻，三人轻伤</a></li>
+            </ul>
+        </div>
+
+        <!-- 底部提示 -->
+        <div class="article-notice">
+            本文仅代表作者个人观点，不代表本网站立场。未经授权禁止转载、摘编、复制或建立镜像。<br>
+            如有新闻线索，请联系编辑部：news@geofrontier.example.com
+        </div>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="javascript:void(0)">关于我们</a>
+            <a href="javascript:void(0)">联系方式</a>
+            <a href="javascript:void(0)">版权声明</a>
+            <a href="javascript:void(0)">广告合作</a>
+            <a href="javascript:void(0)">网站地图</a>
+            <a href="javascript:void(0)">友情链接</a>
+        </div>
+        <p>地勘前沿 · GeoExploration Frontline</p>
+        <p class="footer-copy">
+            © 2026 GeoExploration Frontline · 西ICP备2026001234号-1 · 西公网安备6101002026001234号<br>
+            地址：西延市高新区地质大厦B座 · 电话：029-88669999
+        </p>
+    </footer>
+
+</body>
+</html>

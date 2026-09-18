@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChaiMail - 邮箱</title>
+    <link rel="stylesheet" href="mail-style.css">
+</head>
+<body>
+
+    <!-- 登录页面 -->
+    <div class="login-view" id="loginView">
+        <div class="login-brand">
+            <div class="brand-name">Chai<span class="brand-dot">Mail</span></div>
+            <p class="brand-slogan">连接每一刻<br>让沟通更有温度</p>
+        </div>
+        <div class="login-card">
+            <h2>登录邮箱</h2>
+            <label>邮箱地址</label>
+            <input type="text" id="mailAddress" placeholder="yourname@mail.com">
+            <label>密码</label>
+            <input type="password" id="mailPassword" placeholder="请输入密码">
+            <button class="btn" onclick="loginMail()">登 录</button>
+            <div class="login-error" id="loginError"></div>
+            <p class="login-hint">请输入您的个人邮箱密码。</p>
+        </div>
+    </div>
+
+    <!-- 邮箱主界面 -->
+    <div class="mail-view" id="mailView">
+        <div class="mail-header">
+            <div>
+                <span class="brand-name">Chai<span style="color:var(--accent);">Mail</span></span>
+                <span class="brand-slogan"> | 连接每一刻</span>
+            </div>
+            <div class="header-right">
+                <span class="user-info" id="mailUserInfo"></span>
+                <button class="btn-logout" onclick="logoutMail()">退出登录</button>
+            </div>
+        </div>
+
+        <div class="mail-body">
+            <!-- ===== 左侧导航栏 ===== -->
+            <div class="mail-nav">
+                <div class="nav-compose" id="navCompose" onclick="showComposeMode()">
+                    <span class="compose-icon">✏️</span>
+                    <span class="compose-text">写邮件</span>
+                </div>
+                <div class="nav-divider"></div>
+                <div class="nav-folder active" id="navInbox" onclick="showFolder('inbox', this)">
+                    <span class="folder-icon">📥</span>
+                    <span class="folder-text">收件箱</span>
+                </div>
+                <div class="nav-folder" id="navSent" onclick="showFolder('sent', this)">
+                    <span class="folder-icon">📤</span>
+                    <span class="folder-text">发件箱</span>
+                </div>
+                <div class="nav-folder" onclick="showFolder('drafts', this)">
+                    <span class="folder-icon">📝</span>
+                    <span class="folder-text">草稿箱</span>
+                </div>
+                <div class="nav-folder" onclick="showFolder('trash', this)">
+                    <span class="folder-icon">🗑️</span>
+                    <span class="folder-text">垃圾箱</span>
+                </div>
+            </div>
+            <!-- ↑ 注意：这里正确闭合了 .mail-nav -->
+
+            <!-- ===== 中间面板（邮件列表 / 联系人列表） ===== -->
+            <div class="mail-list-panel" id="mailListPanel"></div>
+
+            <!-- ===== 右侧面板（邮件详情 / 写邮件内容箱） ===== -->
+            <div class="mail-detail-panel" id="mailDetailPanel">
+                <div class="mail-detail-placeholder" id="mailPlaceholder">
+                    <p>选择一封邮件查看内容</p>
+                </div>
+                <div class="mail-detail-content hidden" id="mailDetailContent"></div>
+                <div class="mail-compose-content hidden" id="mailComposeContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mail-data.js"></script>
+    <script src="mail-script.js"></script>
+</body>
+</html>

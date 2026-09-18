@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行程单 - Pdf</title>
+    <style>
+        :root {
+            --bg: #050510;
+            --text: #d0d0e0;
+            --text-dim: #70708a;
+            --accent: #0071e3;
+            --accent-glow: #00c8ff;
+            --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --word-bg: #ffffff;
+            --word-text: #1d1d1f;
+            --word-border: #d2d2d7;
+            --word-muted: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font);
+        }
+
+        body {
+            background: #f0f0f3;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ========== Word 界面容器 ========== */
+        .word-container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #f0f0f3;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== Word 顶部工具栏 ========== */
+        .word-toolbar {
+            background: rgba(245, 245, 247, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid #d2d2d7;
+            flex-shrink: 0;
+            padding: 4px 12px;
+        }
+
+        .word-menu-bar {
+            display: flex;
+            gap: 18px;
+            padding: 4px 0;
+            font-size: 13px;
+            color: #1d1d1f;
+        }
+        .word-menu-bar span {
+            cursor: default;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .word-menu-bar span:hover {
+            background: #e0e0e5;
+        }
+
+        .word-ribbon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 0;
+            border-top: 1px solid #e0e0e5;
+            flex-wrap: wrap;
+        }
+        .ribbon-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 10px;
+            border-right: 1px solid #e0e0e5;
+        }
+        .ribbon-group:last-child {
+            border-right: none;
+        }
+        .ribbon-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: default;
+            font-size: 14px;
+            color: #1d1d1f;
+            transition: background 0.2s;
+        }
+        .ribbon-icon:hover {
+            background: #e0e0e5;
+        }
+
+        /* ========== Word 文档编辑区 ========== */
+        .word-editor {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+            background: #f0f0f3;
+            text-align: center;
+        }
+
+        .word-page {
+            background: var(--word-bg);
+            width: 100%;
+            max-width: 760px;
+            display: inline-block;
+            text-align: left;
+            padding: 50px 60px;
+            padding-bottom: 80px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-radius: 2px;
+            color: var(--word-text);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* ========== 文档内容样式 ========== */
+        .doc-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .doc-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--word-text);
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .doc-header .doc-subtitle {
+            font-size: 13px;
+            color: var(--word-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .doc-section {
+            margin-bottom: 24px;
+        }
+        .doc-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--word-text);
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+            margin-bottom: 14px;
+        }
+
+        /* 表格样式 */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            color: var(--word-text);
+        }
+        .doc-table td {
+            padding: 8px 12px;
+            border: 1px solid #e8e8ed;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .doc-table .label {
+            width: 110px;
+            background: #f8f8fa;
+            font-weight: 500;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        /* 行程表格 */
+        .itinerary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            color: var(--word-text);
+        }
+        .itinerary-table th {
+            text-align: left;
+            padding: 8px 12px;
+            border: 1px solid #e8e8ed;
+            background: #f8f8fa;
+            font-weight: 600;
+            color: #555;
+        }
+        .itinerary-table td {
+            padding: 8px 12px;
+            border: 1px solid #e8e8ed;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .itinerary-table .day {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        .itinerary-table .highlight-day {
+            background: #fdf8f0;
+        }
+        .itinerary-table .highlight-day strong {
+            color: #c0392b;
+        }
+
+        .note-box {
+            background: #fef9e7;
+            border: 1px solid #f0dcc0;
+            border-left: 4px solid #f39c12;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #333;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .doc-bottom-spacer {
+            height: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .word-page {
+                padding: 30px 24px;
+                font-size: 13px;
+            }
+            .doc-table td,
+            .itinerary-table td,
+            .itinerary-table th {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+            .doc-table .label {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="word-container">
+        <!-- 菜单栏 -->
+        <div class="word-toolbar">
+            <div class="word-menu-bar">
+                <span>文件</span>
+                <span>编辑</span>
+                <span>视图</span>
+                <span>插入</span>
+                <span>格式</span>
+                <span>工具</span>
+                <span>帮助</span>
+            </div>
+            <div class="word-ribbon">
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">📋</div>
+                    <div class="ribbon-icon">📄</div>
+                    <div class="ribbon-icon">💾</div>
+                </div>
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">🔍</div>
+                    <div class="ribbon-icon">↩️</div>
+                    <div class="ribbon-icon">↪️</div>
+                </div>
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">🅰️</div>
+                    <div class="ribbon-icon">𝗕</div>
+                    <div class="ribbon-icon">𝘐</div>
+                    <div class="ribbon-icon">U̲</div>
+                </div>
+                <div class="ribbon-group">
+                    <div class="ribbon-icon">⬅️</div>
+                    <div class="ribbon-icon">⬆️</div>
+                    <div class="ribbon-icon">⬇️</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文档编辑区 -->
+        <div class="word-editor">
+            <div class="word-page">
+                <div class="doc-header">
+                    <h1>新西兰双人9天8晚深度游 · 行程单</h1>
+                    <p class="doc-subtitle">星途旅行社 · 出行确认单</p>
+                </div>
+
+                <!-- 订单信息 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">订单信息</div>
+                    <table class="doc-table">
+                        <tr>
+                            <td class="label">订单编号</td>
+                            <td>XT-20260625-12</td>
+                        </tr>
+                        <tr>
+                            <td class="label">旅客信息</td>
+                            <td>韩休（男，国内护照）<br>丁文倩（女，国内护照）</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 航班信息 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">航班信息</div>
+                    <table class="doc-table">
+                        <tr>
+                            <td class="label">去程</td>
+                            <td>2026年8月2日 CZ305 西延 → 奥克兰 00:30-16:30</td>
+                        </tr>
+                        <tr>
+                            <td class="label">回程</td>
+                            <td>2026年8月10日 CZ306 奥克兰 → 西延 23:00-05:50+1</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 行程概览 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">行程概览</div>
+                    <table class="itinerary-table">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>行程安排</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="day">8月2日</td>
+                                <td>抵达奥克兰，接机入住天空城酒店</td>
+                            </tr>
+                            <tr class="highlight-day">
+                                <td class="day"><strong>8月3日</strong></td>
+                                <td>奥克兰市区游览（天空塔、伊甸山、海港大桥），傍晚返回酒店，享用私人晚宴</td>
+                            </tr>
+                            <tr>
+                                <td class="day">8月4日</td>
+                                <td>奥克兰 → 皇后镇，下午自由活动，入住湖边度假酒店</td>
+                            </tr>
+                            <tr class="highlight-day">
+                                <td class="day">8月5日</td>
+                                <td>米尔福德峡湾一日游，晚上返回皇后镇</td>
+                            </tr>
+                            <tr>
+                                <td class="day">8月6日</td>
+                                <td>皇后镇自由活动（可选：跳伞、蹦极、TSS蒸汽船）</td>
+                            </tr>
+                            <tr class="highlight-day">
+                                <td class="day">8月7日</td>
+                                <td>皇后镇 → 蒂卡波湖，观星之旅</td>
+                            </tr>
+                            <tr>
+                                <td class="day">8月8日</td>
+                                <td>蒂卡波湖 → 基督城，市区游览</td>
+                            </tr>
+                            <tr class="highlight-day">
+                                <td class="day">8月9日</td>
+                                <td>基督城 → 奥克兰，自由购物</td>
+                            </tr>
+                            <tr>
+                                <td class="day">8月10日</td>
+                                <td>奥克兰出发，返回西延</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 酒店信息 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">酒店信息</div>
+                    <table class="doc-table">
+                        <tr>
+                            <td class="label">奥克兰</td>
+                            <td>天空城酒店（2晚）</td>
+                        </tr>
+                        <tr>
+                            <td class="label">皇后镇</td>
+                            <td>湖畔度假酒店（3晚）</td>
+                        </tr>
+                        <tr>
+                            <td class="label">蒂卡波湖</td>
+                            <td>观星客栈（1晚）</td>
+                        </tr>
+                        <tr>
+                            <td class="label">基督城</td>
+                            <td>市中心酒店（1晚）</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- 费用包含 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">费用包含</div>
+                    <p>往返机票、住宿、每日早餐、行程所列景点门票、司导服务。</p>
+                </div>
+
+                <!-- 特别备注 -->
+                <div class="doc-section">
+                    <div class="doc-section-title">特别备注</div>
+                    <div class="note-box">
+                        此行包含您指定的 <strong>8月3日纪念日晚宴</strong> 安排，我们已与皇后镇湖畔餐厅确认预订，请放心。
+                    </div>
+                </div>
+
+                <p style="color:#d4721a; font-size:13px;">💡 温馨提示：8月为新西兰初春，南岛气温约5-15℃，请携带保暖衣物。</p>
+
+                <div class="doc-bottom-spacer"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

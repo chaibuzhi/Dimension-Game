@@ -1,0 +1,207 @@
+/* ========== 编年史文档样式 ==========
+   用于：罗建立《[ 目标 ] 研究纪实档案》
+   以及未来可能的同类档案汇编
+======================================= */
+
+.paper-card.chronicle-doc {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "Palatino Linotype", Georgia, "STSong", serif;
+    font-size: 18px;
+    color: #2c241b;
+    padding: 60px 70px;
+    border-radius: 4px;
+    border: 1px solid #d5c8ae;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: #fbf6ea;
+}
+
+.chronicle-doc .paper-body {
+    font-size: 18px;
+    color: #2c241b;
+}
+
+.chronicle-doc .paper-body p {
+    text-indent: 2em;
+    margin-bottom: 14px;
+    line-height: 2.1;
+}
+
+/* ===== 档案头 ===== */
+.chronicle-header {
+    border-bottom: 2px solid #8b3a2f;
+    padding-bottom: 22px;
+    margin-bottom: 30px;
+}
+
+.chronicle-id-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.chronicle-file-no {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #6f6356;
+}
+
+.chronicle-classification {
+    font-size: 13px;
+    font-weight: 700;
+    color: #8b3a2f;
+    border: 1px solid #8b3a2f;
+    border-radius: 3px;
+    padding: 3px 12px;
+    letter-spacing: 0.1em;
+}
+
+.chronicle-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #1c1712;
+    margin-bottom: 6px;
+}
+
+.chronicle-subtitle {
+    font-size: 16px;
+    color: #6f6356;
+    letter-spacing: 0.15em;
+    margin-bottom: 14px;
+}
+
+.chronicle-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    font-size: 14px;
+    color: #6f6356;
+}
+
+/* ===== 说明 ===== */
+.chronicle-note {
+    font-size: 15px;
+    font-style: italic;
+    color: #6f6356;
+    line-height: 2.0;
+    padding: 14px 18px;
+    border-left: 3px solid #c5b18a;
+    margin-bottom: 32px;
+    background: rgba(197, 177, 138, 0.1);
+}
+
+.chronicle-note p {
+    text-indent: 0;
+    margin-bottom: 0;
+}
+
+/* ===== 阶段 ===== */
+.chronicle-phase {
+    margin-bottom: 32px;
+}
+
+.chronicle-phase-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.chronicle-phase-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: #8b3a2f;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+
+.chronicle-phase-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c1712;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.chronicle-phase-period {
+    font-size: 15px;
+    color: #8b3a2f;
+    white-space: nowrap;
+}
+
+/* ===== 事件时间线 ===== */
+.chronicle-events {
+    position: relative;
+    border-left: 1px solid #c5b18a;
+    padding-left: 26px;
+    margin: 12px 0 16px 8px;
+}
+
+.chronicle-event {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.chronicle-event::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 10px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8b3a2f;
+}
+
+.chronicle-year {
+    font-size: 15px;
+    font-weight: 700;
+    color: #a0522d;
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+}
+
+.chronicle-event-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #3c332a;
+}
+
+/* ===== 段落总结 ===== */
+.chronicle-reflection {
+    font-style: italic;
+    font-size: 15px;
+    color: #6f6356;
+    line-height: 2.1;
+    padding: 14px 20px;
+    border-left: 3px solid #8b3a2f;
+    margin: 16px 0 8px 8px;
+    background: rgba(139, 58, 47, 0.06);
+}
+
+.chronicle-reflection p {
+    text-indent: 0;
+    margin-bottom: 0;
+}
+
+/* ===== 结语 ===== */
+.chronicle-epilogue {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 2px solid #8b3a2f;
+}
+
+.chronicle-epilogue p {
+    font-size: 15px;
+    line-height: 2.2;
+    color: #2c241b;
+}
+
+@media (max-width: 600px) {
+    .paper-card.chronicle-doc { padding: 30px 20px; }
+    .chronicle-phase-head {
+        flex-direction: column;
+        gap: 4px;
+    }
+}

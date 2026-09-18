@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求职求助！天启探索者计划值得去吗？ - 西延大学校园论坛</title>
+    <style>
+    :root {
+        --green: #4caf7d;
+        --green-dark: #2e8b5e;
+        --green-mid: #66bb8f;
+        --green-light: #e8f5ee;
+        --green-pale: #f0faf5;
+        --bg: #f2f8f5;
+        --paper: #ffffff;
+        --text: #222;
+        --text-dim: #555;
+        --text-muted: #999;
+        --line: #e0ebe4;
+        --line-light: #edf5f0;
+        --accent: #ff8a5c;
+        --accent-light: #fff0e8;
+        --red-light: #fef0f0;
+        --red: #d05050;
+        --font: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Helvetica Neue', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background: var(--bg);
+        font-family: var(--font);
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    a { color: var(--green-dark); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ========== 顶部横幅 ========== */
+    .topbar {
+        background: #2e8b5e;
+        color: #c8ead8;
+        font-size: 12px;
+        padding: 5px 0;
+    }
+    .topbar-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .topbar a { color: #c8ead8; }
+    .topbar a:hover { color: #fff; text-decoration: none; }
+    .topbar .topbar-right {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    /* ========== 头部 ========== */
+    .site-header {
+        background: linear-gradient(135deg, #e0f5ea 0%, #c8ecda 40%, #b0e2c8 100%);
+        border-bottom: 1px solid #b8dcc8;
+        padding: 24px 20px 20px;
+    }
+    .site-header-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .site-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .site-logo .logo-mark {
+        width: 46px;
+        height: 46px;
+        background: #fff;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 2px 10px rgba(78, 175, 125, 0.2);
+        flex-shrink: 0;
+    }
+    .site-logo .logo-text {
+        display: flex;
+        flex-direction: column;
+    }
+    .site-logo .logo-text .zh {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--green-dark);
+        letter-spacing: 0.04em;
+        line-height: 1.3;
+    }
+    .site-logo .logo-text .slogan {
+        font-size: 11px;
+        color: #6a9a80;
+        letter-spacing: 0.04em;
+    }
+
+    /* ========== 导航栏 ========== */
+    .main-nav {
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .main-nav-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        height: 40px;
+    }
+    .main-nav a {
+        padding: 0 14px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        color: var(--text-dim);
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s, border-color 0.2s, background 0.2s;
+        white-space: nowrap;
+    }
+    .main-nav a:hover {
+        color: var(--green-dark);
+        text-decoration: none;
+        background: var(--green-light);
+    }
+    .main-nav a.active {
+        color: var(--green-dark);
+        border-bottom-color: var(--green);
+        font-weight: 600;
+        background: transparent;
+    }
+
+    /* ========== 面包屑行 ========== */
+    .breadcrumb-row {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 12px 16px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .breadcrumb {
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+    .breadcrumb a { color: var(--text-muted); }
+    .breadcrumb a:hover { color: var(--green-dark); }
+    .breadcrumb .sep { margin: 0 6px; color: #ccc; }
+    .breadcrumb .current { color: var(--text-dim); }
+    .action-btns {
+        display: flex;
+        gap: 8px;
+    }
+    .action-btns .btn-post {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 14px;
+        background: var(--green);
+        color: #fff;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .action-btns .btn-post:hover {
+        background: var(--green-dark);
+        text-decoration: none;
+    }
+    .action-btns .btn-reply {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 14px;
+        background: var(--paper);
+        color: var(--green-dark);
+        border: 1px solid var(--green);
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .action-btns .btn-reply:hover {
+        background: var(--green-light);
+        text-decoration: none;
+    }
+
+    /* ========== 主体 ========== */
+    .main-wrapper {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 12px 16px 40px;
+    }
+
+    /* ========== 帖子卡片 ========== */
+    .post-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 14px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+    }
+    .post-card .post-head {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line-light);
+        background: #fafdfb;
+    }
+    .post-card .post-head .board-name {
+        font-size: 11px;
+        color: var(--green-dark);
+        font-weight: 600;
+        display: inline-block;
+        padding: 1px 8px;
+        background: var(--green-light);
+        border-radius: 4px;
+        margin-bottom: 6px;
+    }
+    .post-card .post-head h1 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #111;
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
+    .post-card .post-head .post-meta {
+        font-size: 11px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    /* ========== 楼层结构 ========== */
+    .floor {
+        display: flex;
+        padding: 0;
+        border-bottom: 1px solid var(--line-light);
+        background: var(--paper);
+        transition: background 0.15s;
+    }
+    .floor:last-of-type {
+        border-bottom: none;
+    }
+    .floor:hover {
+        background: #fafefc;
+    }
+
+    /* 用户信息区 */
+    .floor .user-side {
+        width: 130px;
+        flex-shrink: 0;
+        padding: 14px 10px 10px;
+        border-right: 1px solid var(--line-light);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .floor .user-side:hover {
+        background: #f0faf5;
+    }
+    .floor .user-name {
+        font-size: 12px;
+        color: var(--text-dim);
+        font-weight: 600;
+        word-break: break-all;
+        line-height: 1.4;
+    }
+    .floor .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+        opacity: 0.85;
+    }
+    .floor .user-level {
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--green-mid);
+    }
+    .floor .user-tag {
+        font-size: 10px;
+        padding: 0 6px;
+        border-radius: 3px;
+        font-weight: 500;
+        background: var(--accent-light);
+        color: var(--accent);
+    }
+
+    /* 内容区 */
+    .floor .floor-main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .floor .floor-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 14px 5px;
+        border-bottom: 1px solid var(--line-light);
+    }
+    .floor .floor-time {
+        font-size: 11px;
+        color: #bbb;
+    }
+    .floor .floor-no {
+        font-size: 11px;
+        color: #ccc;
+        font-weight: 500;
+    }
+    .floor .floor-content {
+        flex: 1;
+        padding: 10px 14px 8px;
+        font-size: 14px;
+        color: #333;
+        line-height: 1.8;
+        word-break: break-word;
+    }
+    .floor-content strong {
+        color: #1a5c3a;
+        font-weight: 700;
+    }
+    .floor .floor-content .reply-target {
+        display: block;
+        font-size: 12px;
+        color: var(--text-muted);
+        background: var(--green-pale);
+        border: 1px solid var(--line-light);
+        border-radius: 4px;
+        padding: 5px 10px;
+        margin-top: 10px;
+    }
+    .floor .floor-content .reply-target a {
+        color: var(--green-dark);
+        font-weight: 500;
+    }
+    .floor .floor-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 2px 14px 8px;
+        font-size: 11px;
+    }
+    .floor .floor-actions a {
+        color: #ccc;
+    }
+    .floor .floor-actions a:hover {
+        color: var(--green-dark);
+        text-decoration: none;
+    }
+
+    /* 头像颜色 */
+    .avatar-c1 { background: #a8d4b8; }
+    .avatar-c2 { background: #f0c8a0; }
+    .avatar-c3 { background: #a8c4d8; }
+    .avatar-c4 { background: #e8b8c0; }
+    .avatar-c5 { background: #c8bcd8; }
+    .avatar-c6 { background: #a0d4c8; }
+    .avatar-c7 { background: #e8d090; }
+    .avatar-c8 { background: #d8b8b0; }
+    .avatar-c9 { background: #b8c4d8; }
+    .avatar-c10 { background: #b8d8e0; }
+    .avatar-c11 { background: #c8dcb0; }
+    .avatar-c12 { background: #e8c0a8; }
+    .avatar-op { background: var(--green); }
+
+    /* ========== 锁定横幅 ========== */
+    .lock-banner {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        background: var(--red-light);
+        border-top: 1px solid #f0d0d0;
+        font-size: 12px;
+        color: var(--red);
+    }
+    .lock-banner .lock-icon {
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+    .lock-banner strong {
+        color: var(--green-dark);
+    }
+
+    /* ========== 快速回复（禁用） ========== */
+    .quick-reply {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-top: 14px;
+    }
+    .quick-reply .reply-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-dim);
+        margin-bottom: 8px;
+    }
+    .quick-reply textarea {
+        width: 100%;
+        height: 80px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-size: 12px;
+        font-family: var(--font);
+        resize: none;
+        outline: none;
+        background: #f8faf9;
+        color: #ccc;
+        cursor: not-allowed;
+    }
+    .quick-reply .reply-btn-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 8px;
+    }
+    .quick-reply .reply-btn {
+        padding: 5px 18px;
+        background: #d0d8d0;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: not-allowed;
+        font-family: var(--font);
+    }
+
+    /* ========== 页脚 ========== */
+    .site-footer {
+        background: #f0f0f0;
+        border-top: 1px solid #e0e0e0;
+        padding: 12px 16px;
+        font-size: 11px;
+        color: var(--text-muted);
+        line-height: 1.8;
+    }
+    .site-footer-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .site-footer .footer-left {
+        color: #aaa;
+    }
+    .site-footer .footer-right {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .site-footer .footer-right a {
+        color: var(--text-muted);
+    }
+    .site-footer .footer-right a:hover { color: #555; }
+    .site-footer .footer-right .sep { color: #ccc; }
+    .site-footer .footer-right .site-tag {
+        color: #bbb;
+        font-size: 10px;
+    }
+
+    /* ========== 个人资料弹窗 ========== */
+    .profile-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: profileFadeIn 0.2s ease;
+    }
+    @keyframes profileFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .profile-modal {
+        width: 90%;
+        max-width: 440px;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: profileModalIn 0.25s ease;
+    }
+    @keyframes profileModalIn {
+        from { transform: translateY(-14px) scale(0.96); opacity: 0; }
+        to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .profile-modal-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        background: #f5faf7;
+        border-bottom: 1px solid var(--line);
+    }
+    .profile-modal-titlebar .modal-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+    }
+    .profile-modal-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background: #e0ebe4;
+        color: #555;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+        line-height: 1;
+        padding: 0;
+    }
+    .profile-modal-close:hover {
+        background: #c8dcc8;
+    }
+    .profile-modal-body {
+        padding: 20px;
+        text-align: left;
+    }
+
+    /* 第一部分：用户信息 + 田字统计 */
+    .profile-main-section {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 14px;
+    }
+    .profile-left {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 110px;
+        gap: 6px;
+    }
+    .profile-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: var(--green);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    .profile-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1a1a1a;
+        text-align: center;
+        line-height: 1.4;
+    }
+    .profile-level {
+        font-size: 11px;
+        color: var(--green-dark);
+        font-weight: 500;
+    }
+    .profile-right {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .profile-stat-item {
+        background: #f5faf7;
+        border: 1px solid var(--line-light);
+        border-radius: 8px;
+        padding: 12px 8px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .profile-stat-num {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--green-dark);
+        line-height: 1.3;
+        word-break: break-all;
+    }
+    .profile-stat-label {
+        font-size: 10px;
+        color: #999;
+        margin-top: 2px;
+    }
+
+    /* 第二部分：签名 + 操作按钮 */
+    .profile-bottom-section {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .profile-signature-card {
+        background: #fafdfb;
+        border: 1px solid var(--line-light);
+        border-radius: 8px;
+        padding: 10px 12px;
+    }
+    .profile-signature-label {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--green-dark);
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
+    }
+    .profile-signature-text {
+        font-size: 12px;
+        color: #888;
+        line-height: 1.6;
+        text-align: center;
+    }
+    .profile-action-btns {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+    }
+    .profile-action-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-size: 11px;
+        color: var(--green-dark);
+        font-weight: 500;
+        padding: 7px 8px;
+        border: 1px solid #c8dcc8;
+        border-radius: 6px;
+        background: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+        user-select: none;
+        font-family: var(--font);
+    }
+    .profile-action-btn:hover {
+        border-color: var(--green);
+        background: #e8f5ee;
+        text-decoration: none;
+    }
+    .profile-action-btn.disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+    .profile-action-btn.disabled:hover {
+        border-color: #c8dcc8;
+        background: #ffffff;
+    }
+    .profile-action-btn .action-icon {
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    /* ========== ChaiMail 弹窗 ========== */
+    .mail-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: profileFadeIn 0.2s ease;
+    }
+    .mail-modal {
+        width: 90%;
+        max-width: 340px;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: profileModalIn 0.25s ease;
+    }
+    .mail-modal-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        background: #f5f5f7;
+        border-bottom: 1px solid #e0e0e5;
+    }
+    .mail-modal-titlebar .modal-title {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+    }
+    .mail-modal-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background: #e8e8ec;
+        color: #555;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+        line-height: 1;
+        padding: 0;
+    }
+    .mail-modal-close:hover {
+        background: #d0d0d8;
+    }
+    .mail-modal-body {
+        padding: 24px 20px 20px;
+        text-align: center;
+    }
+    .mail-modal-brand-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .mail-modal-logo {
+        font-size: 26px;
+    }
+    .mail-modal-brand {
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        line-height: 1.4;
+    }
+    .mail-modal-brand span {
+        color: #0071e3;
+    }
+    .mail-modal-text {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+    .mail-modal-actions {
+        display: flex;
+        justify-content: center;
+    }
+    .mail-modal-btn {
+        display: inline-block;
+        padding: 9px 32px;
+        background: #0071e3;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: inherit;
+    }
+    .mail-modal-btn:hover {
+        background: #0077ed;
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 700px) {
+        .main-nav-inner {
+            padding: 0 8px;
+            overflow-x: auto;
+        }
+        .main-nav a {
+            padding: 0 10px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .floor {
+            flex-direction: column;
+        }
+        .floor .user-side {
+            width: 100%;
+            flex-direction: row;
+            gap: 8px;
+            padding: 8px 12px;
+            border-right: none;
+            border-bottom: 1px solid var(--line-light);
+            text-align: left;
+            align-items: center;
+        }
+        .floor .user-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+        .floor .floor-header {
+            padding: 6px 12px 3px;
+        }
+        .floor .floor-content {
+            padding: 8px 12px 6px;
+        }
+        .post-card .post-head h1 {
+            font-size: 16px;
+        }
+        .main-wrapper {
+            padding: 10px 10px 30px;
+        }
+        .breadcrumb-row {
+            padding: 10px 10px 0;
+        }
+        .site-header {
+            padding: 18px 12px 14px;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部横幅 -->
+    <div class="topbar">
+        <div class="topbar-inner">
+            <span>西延大学校园论坛</span>
+            <div class="topbar-right">
+                <a href="javascript:void(0)">登录</a>
+                <a href="javascript:void(0)">注册</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 头部 -->
+    <header class="site-header">
+        <div class="site-header-inner">
+            <div class="site-logo">
+                <div class="logo-mark">🌿</div>
+                <div class="logo-text">
+                    <span class="zh">西延大学校园论坛</span>
+                    <span class="slogan">学习 · 生活 · 求职 · 交友</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+        <div class="main-nav-inner">
+            <a href="javascript:void(0)">首页</a>
+            <a href="javascript:void(0)">校园生活</a>
+            <a href="javascript:void(0)">学习交流</a>
+            <a href="javascript:void(0)" class="active">求职就业</a>
+            <a href="javascript:void(0)">租房二手</a>
+            <a href="javascript:void(0)">灌水闲聊</a>
+            <a href="javascript:void(0)">匿名树洞</a>
+        </div>
+    </nav>
+
+    <!-- 面包屑行 -->
+    <div class="breadcrumb-row">
+        <div class="breadcrumb">
+            <a href="javascript:void(0)">首页</a><span class="sep">/</span>
+            <a href="javascript:void(0)">求职就业</a><span class="sep">/</span>
+            <span class="current">帖子正文</span>
+        </div>
+        <div class="action-btns">
+            <a class="btn-post" href="javascript:void(0)">发帖</a>
+            <a class="btn-reply" href="javascript:void(0)">回复</a>
+        </div>
+    </div>
+
+    <!-- 主体 -->
+    <div class="main-wrapper">
+
+        <!-- 帖子卡片 -->
+        <div class="post-card">
+            <div class="post-head">
+                <span class="board-name">求职就业</span>
+                <h1>求职求助！天启探索者计划值得去吗？</h1>
+                <div class="post-meta">
+                    <span>楼主：化学周小舟</span>
+                    <span>发帖时间：2026-02-25</span>
+                    <span>回复：22</span>
+                </div>
+            </div>
+
+            <!-- 楼主层 -->
+            <div class="floor">
+                <div class="user-side" data-user="xiaozhou">
+                    <span class="user-name">化学周小舟</span>
+                    <div class="user-avatar avatar-op">周</div>
+                    <span class="user-level">Lv.4</span>
+                    <span class="user-tag">楼主</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-02-25 20:14</span>
+                        <span class="floor-no">#1</span>
+                    </div>
+                    <div class="floor-content">
+                        家人们，化学系硕士在线破防。
+                        <br>读博申校全寄，考公笔试陪跑，毕业论文还在原地踏步，导师已经对我彻底绝望。
+                        <br>
+                        <br><strong>我有个远房亲戚在天启科技上班，要我关注一下他们的「天启探索者」招聘计划。</strong>
+                        <br>想问下有没有过来人说说这家公司到底怎么样？
+                        <br>再找不到工作我真要收拾行李回老家考三支一扶了😭
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1楼 物院老王 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">物院老王</span>
+                    <div class="user-avatar avatar-c1">王</div>
+                    <span class="user-level">Lv.7</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-02-27 19:12</span>
+                        <span class="floor-no">#2</span>
+                    </div>
+                    <div class="floor-content">
+                        天启科技每年来我们学校招不少，但是门槛不低，不是随便就能捞到的offer。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2楼 奶茶 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">奶茶三分糖少冰</span>
+                    <div class="user-avatar avatar-c2">茶</div>
+                    <span class="user-level">Lv.5</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-02-28 12:30</span>
+                        <span class="floor-no">#3</span>
+                    </div>
+                    <div class="floor-content">
+                        "天启探索者"这名字好中二，每次看见都脚趾抠地。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3楼 地质 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">地质狗永不认输</span>
+                    <div class="user-avatar avatar-c3">地</div>
+                    <span class="user-level">Lv.8</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-01 09:41</span>
+                        <span class="floor-no">#4</span>
+                    </div>
+                    <div class="floor-content">
+                        算是西延本土巨头，有国资背景，资源足，听说在罗布泊还有个基地，能入不亏！
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4楼 加班 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">加班使人秃头</span>
+                    <div class="user-avatar avatar-c4">加</div>
+                    <span class="user-level">Lv.6</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-05 20:03</span>
+                        <span class="floor-no">#5</span>
+                    </div>
+                    <div class="floor-content">
+                        我有学长在里面工作，加班巨狠。以前还经常和我们聚餐，现在几乎联系不上人。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5楼 物理小杨 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">物理系小杨</span>
+                    <div class="user-avatar avatar-c5">物</div>
+                    <span class="user-level">Lv.5</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-08 15:27</span>
+                        <span class="floor-no">#6</span>
+                    </div>
+                    <div class="floor-content">
+                        之前系里组织参观过一次，进门必须上交手机，访客证还分不同颜色，跟军事基地一样，但食堂嘎嘎好吃！
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6楼 楼主 -->
+            <div class="floor">
+                <div class="user-side" data-user="xiaozhou">
+                    <span class="user-name">化学周小舟</span>
+                    <div class="user-avatar avatar-op">周</div>
+                    <span class="user-level">Lv.4</span>
+                    <span class="user-tag">楼主</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-15 14:33</span>
+                        <span class="floor-no">#7</span>
+                    </div>
+                    <div class="floor-content">
+                        感谢各位老哥给的信息！本来随便投碰碰运气，居然收到线上笔试通知，下周就要考，现在有点慌。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7楼 旷野吹风 + 内嵌回复 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">旷野吹风</span>
+                    <div class="user-avatar avatar-c6">旷</div>
+                    <span class="user-level">Lv.8</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-16 16:10</span>
+                        <span class="floor-no">#8</span>
+                    </div>
+                    <div class="floor-content">
+                        投的什么岗位？勘探岗听说有可能外派南非、中亚，相当于公费环游世界。
+                        <span class="reply-target">
+                            <a href="javascript:void(0)">化学周小舟</a> 回复：报的材料科学岗，主要做实验，门槛低一点。勘探岗我可不敢冲，怕出去回不来。
+                        </span>
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8楼 老薛 + 内嵌回复 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">老薛不写论文</span>
+                    <div class="user-avatar avatar-c7">薛</div>
+                    <span class="user-level">Lv.6</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-18 09:56</span>
+                        <span class="floor-no">#9</span>
+                    </div>
+                    <div class="floor-content">
+                        之前听专业课老师说过，天启一直在研究一种叫φ能量的东西，号称新型清洁能源，但老师私下和我们说这是伪科学，lz谨慎考虑。
+                        <span class="reply-target">
+                            <a href="javascript:void(0)">化学周小舟</a> 回复：我等下去搜搜，开开眼。
+                        </span>
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9楼 楼主 -->
+            <div class="floor">
+                <div class="user-side" data-user="xiaozhou">
+                    <span class="user-name">化学周小舟</span>
+                    <div class="user-avatar avatar-op">周</div>
+                    <span class="user-level">Lv.4</span>
+                    <span class="user-tag">楼主</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-22 21:02</span>
+                        <span class="floor-no">#10</span>
+                    </div>
+                    <div class="floor-content">
+                        笔试考完人有点懵。专业题占比很少，一大堆主观问答。
+                        <br>
+                        <br>印象很深有一道大题问<strong>"你怎么理解真相？"</strong>
+                        <br>我一个搞化学做实验的，不是读哲学的啊喂。下周还要面试，不会整一堆灵魂拷问吧😐
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10楼 找工 + 内嵌回复 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">找工流浪猫</span>
+                    <div class="user-avatar avatar-c8">找</div>
+                    <span class="user-level">Lv.4</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-25 22:18</span>
+                        <span class="floor-no">#11</span>
+                    </div>
+                    <div class="floor-content">
+                        蹲经验！我也准备投，楼主亲戚能帮忙推荐吗？
+                        <br>或者分享一下笔试题目也行。
+                        <span class="reply-target">
+                            <a href="javascript:void(0)">化学周小舟</a> 回复：你私我邮箱，我问问我亲戚。等过了面试就把题目发出来，给各位做攻略！
+                        </span>
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11楼 码农 + 内嵌回复 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">已跑路的码农</span>
+                    <div class="user-avatar avatar-c9">码</div>
+                    <span class="user-level">Lv.9</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-03-27 00:04</span>
+                        <span class="floor-no">#12</span>
+                    </div>
+                    <div class="floor-content">
+                        去年面过他们设备研发岗，拿到offer最后拒了。
+                        <br>保密协议很厚，竞业条款也很严。面试也不会死磕专业，很看重你的价值取向和抗压能力。祝好运。
+                        <span class="reply-target">
+                            <a href="javascript:void(0)">化学周小舟</a> 回复：收到，感谢提醒！
+                        </span>
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12楼 旷野 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">旷野吹风</span>
+                    <div class="user-avatar avatar-c6">旷</div>
+                    <span class="user-level">Lv.8</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-01 18:20</span>
+                        <span class="floor-no">#13</span>
+                    </div>
+                    <div class="floor-content">
+                        楼主人呢？面试过了吗？
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13楼 老王 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">物院老王</span>
+                    <div class="user-avatar avatar-c1">王</div>
+                    <span class="user-level">Lv.7</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-09 11:47</span>
+                        <span class="floor-no">#14</span>
+                    </div>
+                    <div class="floor-content">
+                        还在等结果？不会已经被捞走没空逛论坛了吧。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14楼 找工 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">找工流浪猫</span>
+                    <div class="user-avatar avatar-c8">找</div>
+                    <span class="user-level">Lv.4</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-14 20:05</span>
+                        <span class="floor-no">#15</span>
+                    </div>
+                    <div class="floor-content">
+                        说好分享题目的，邮件也不回了，楼主还在吗😂
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15楼 物理小杨 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">物理系小杨</span>
+                    <div class="user-avatar avatar-c5">物</div>
+                    <span class="user-level">Lv.5</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-18 10:13</span>
+                        <span class="floor-no">#16</span>
+                    </div>
+                    <div class="floor-content">
+                        听说天启内部保密等级特别高，入职了说不定都不让随便发言。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16楼 午夜 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">午夜瞎聊</span>
+                    <div class="user-avatar avatar-c10">午</div>
+                    <span class="user-level">Lv.5</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-20 23:41</span>
+                        <span class="floor-no">#17</span>
+                    </div>
+                    <div class="floor-content">
+                        我听说天启科技好像一直在找什么多维实体，有人说这东西可以让人长生不老，不知道真的假的。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 17楼 奶茶 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">奶茶三分糖少冰</span>
+                    <div class="user-avatar avatar-c2">茶</div>
+                    <span class="user-level">Lv.5</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-25 12:04</span>
+                        <span class="floor-no">#18</span>
+                    </div>
+                    <div class="floor-content">
+                        楼主你还好吧？别出事啊。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 18楼 理性 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">理性中立选手</span>
+                    <div class="user-avatar avatar-c11">理</div>
+                    <span class="user-level">Lv.7</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-04-25 14:22</span>
+                        <span class="floor-no">#19</span>
+                    </div>
+                    <div class="floor-content">
+                        越传越离谱了。大企业有涉密项目很正常，少看网上阴谋论吓唬应届生。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 19楼 楼主 -->
+            <div class="floor">
+                <div class="user-side" data-user="xiaozhou">
+                    <span class="user-name">化学周小舟</span>
+                    <div class="user-avatar avatar-op">周</div>
+                    <span class="user-level">Lv.4</span>
+                    <span class="user-tag">楼主</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-05-08 16:49</span>
+                        <span class="floor-no">#20</span>
+                    </div>
+                    <div class="floor-content">
+                        各位同学，我已经拿到天启科技的offer，准备入职，感谢大家的建议与关心。
+                        <br><strong>如果大家对天启科技感兴趣，可以参加招聘，本帖将不再进行回复。</strong>
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 20楼 旷野 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">旷野吹风</span>
+                    <div class="user-avatar avatar-c6">旷</div>
+                    <span class="user-level">Lv.8</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-05-08 17:02</span>
+                        <span class="floor-no">#21</span>
+                    </div>
+                    <div class="floor-content">
+                        恭喜恭喜🎉
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 21楼 午夜 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">午夜瞎聊</span>
+                    <div class="user-avatar avatar-c10">午</div>
+                    <span class="user-level">Lv.5</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-05-09 17:21</span>
+                        <span class="floor-no">#22</span>
+                    </div>
+                    <div class="floor-content">
+                        怎么说话一股子官方味儿，这公司怪怪的。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 22楼 码农 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">已跑路的码农</span>
+                    <div class="user-avatar avatar-c9">码</div>
+                    <span class="user-level">Lv.9</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-05-10 18:10</span>
+                        <span class="floor-no">#23</span>
+                    </div>
+                    <div class="floor-content">
+                        楼主要多保重，万事小心。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 23楼 柴不知 -->
+            <div class="floor">
+                <div class="user-side">
+                    <span class="user-name">柴不知桃不语</span>
+                    <div class="user-avatar avatar-c12">柴</div>
+                    <span class="user-level">Lv.6</span>
+                </div>
+                <div class="floor-main">
+                    <div class="floor-header">
+                        <span class="floor-time">2026-07-08 12:51</span>
+                        <span class="floor-no">#24</span>
+                    </div>
+                    <div class="floor-content">
+                        楼主真的消失了诶。
+                    </div>
+                    <div class="floor-actions">
+                        <a href="javascript:void(0)">回复</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 锁定横幅 -->
+            <div class="lock-banner">
+                <span class="lock-icon">🔒</span>
+                <span>此贴已于2026年7月9日由 [ <strong>化学周小舟</strong> ] 申请锁定，无法编辑或回复。</span>
+            </div>
+
+        </div>
+
+        <!-- 快速回复（禁用） -->
+        <div class="quick-reply">
+            <div class="reply-title">快速回复</div>
+            <textarea readonly>本贴禁止回复。</textarea>
+            <div class="reply-btn-row">
+                <button class="reply-btn" type="button" disabled>发表回复</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div class="footer-left">
+                Powered by Discuz! X3.4
+            </div>
+            <div class="footer-right">
+                <a href="javascript:void(0)">举报</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">小黑屋</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">手机版</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">Archiver</a>
+                <span class="sep">|</span>
+                <span>西延大学校园论坛</span>
+                <span class="sep">|</span>
+                <span class="site-tag">XYBBS · 青春西延</span>
+                <span class="sep">|</span>
+                <span class="site-tag">51La</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== 个人资料弹窗 ==========
+        function showProfileModal() {
+            const existing = document.querySelector('.profile-modal-overlay');
+            if (existing) existing.remove();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'profile-modal-overlay';
+            overlay.innerHTML = `
+                <div class="profile-modal">
+                    <div class="profile-modal-titlebar">
+                        <span class="modal-title">用户资料</span>
+                        <button class="profile-modal-close" id="profileModalClose">×</button>
+                    </div>
+                    <div class="profile-modal-body">
+                        <!-- 第一部分：用户信息 + 田字统计 -->
+                        <div class="profile-main-section">
+                            <div class="profile-left">
+                                <div class="profile-avatar">周</div>
+                                <div class="profile-name">化学周小舟</div>
+                                <div class="profile-level">Lv.4</div>
+                            </div>
+                            <div class="profile-right">
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-num">42</div>
+                                    <div class="profile-stat-label">发帖</div>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-num">317</div>
+                                    <div class="profile-stat-label">积分</div>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-num">2022-09-12</div>
+                                    <div class="profile-stat-label">注册时间</div>
+                                </div>
+                                <div class="profile-stat-item">
+                                    <div class="profile-stat-num">2026-07-08</div>
+                                    <div class="profile-stat-label">最后活跃</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第二部分：签名 + 操作按钮 -->
+                        <div class="profile-bottom-section">
+                            <div class="profile-signature-card">
+                                <div class="profile-signature-label">个人签名</div>
+                                <div class="profile-signature-text">这个人很懒，什么也没留下</div>
+                            </div>
+                            <div class="profile-action-btns">
+                                <button class="profile-action-btn disabled" type="button">
+                                    <span class="action-icon">👤</span>添加好友
+                                </button>
+                                <button class="profile-action-btn disabled" type="button">
+                                    <span class="action-icon">📇</span>站内信
+                                </button>
+                                <button class="profile-action-btn" type="button" id="profileEmailLink">
+                                    <span class="action-icon">✉️</span>邮箱地址
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            function closeProfileModal() {
+                overlay.remove();
+                document.removeEventListener('keydown', escHandler);
+            }
+
+            function escHandler(e) {
+                if (e.key === 'Escape') closeProfileModal();
+            }
+
+            overlay.querySelector('#profileModalClose').addEventListener('click', closeProfileModal);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) closeProfileModal();
+            });
+            document.addEventListener('keydown', escHandler);
+
+            // 点击邮箱地址，弹出 ChaiMail 弹窗
+            overlay.querySelector('#profileEmailLink').addEventListener('click', function() {
+                // 设置小周联系人解锁键
+                const key = 'mail_contact_unlocked';
+                let data = {};
+                try { data = JSON.parse(localStorage.getItem(key) || '{}'); } catch {}
+                data.xiaozhou = true;
+                localStorage.setItem(key, JSON.stringify(data));
+                closeProfileModal();
+                showMailModal();
+            });
+        }
+
+        // ========== ChaiMail 弹窗（与公众号一致） ==========
+        function showMailModal() {
+            const existing = document.querySelector('.mail-modal-overlay');
+            if (existing) existing.remove();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'mail-modal-overlay';
+            overlay.innerHTML = `
+                <div class="mail-modal">
+                    <div class="mail-modal-titlebar">
+                        <span class="modal-title"><span>📧</span>邮箱</span>
+                        <button class="mail-modal-close" id="mailModalClose">×</button>
+                    </div>
+                    <div class="mail-modal-body">
+                        <div class="mail-modal-brand-row">
+                            <span class="mail-modal-logo">📧</span>
+                            <span class="mail-modal-brand">Chai<span style="color:#0071e3;">Mail</span></span>
+                        </div>
+                        <div class="mail-modal-text">已添加至联系人列表</div>
+                        <div class="mail-modal-actions">
+                            <button class="mail-modal-btn" id="mailModalConfirm">确 定</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            function closeMailModal() {
+                overlay.remove();
+                document.removeEventListener('keydown', escHandler);
+            }
+
+            function escHandler(e) {
+                if (e.key === 'Escape') closeMailModal();
+            }
+
+            overlay.querySelector('#mailModalConfirm').addEventListener('click', closeMailModal);
+            overlay.querySelector('#mailModalClose').addEventListener('click', closeMailModal);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) closeMailModal();
+            });
+            document.addEventListener('keydown', escHandler);
+        }
+
+        // ========== 头像点击逻辑 ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // 只给周小舟的头像绑定弹窗事件
+            const xiaozhouSides = document.querySelectorAll('.user-side[data-user="xiaozhou"]');
+            xiaozhouSides.forEach(side => {
+                side.addEventListener('click', function() {
+                    showProfileModal();
+                });
+            });
+
+            // 其他头像点击无反应，但保留悬停效果（CSS 已处理）
+        });
+    </script>    
+
+</body>
+</html>

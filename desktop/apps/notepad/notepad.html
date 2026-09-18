@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>记事本</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        background: #ffffff;
+        color: #1a1a1a;
+        font-family: 'Segoe UI', 'Microsoft YaHei UI', 'PingFang SC', system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    /* ========== 工具栏 ========== */
+    .toolbar {
+        height: 36px;
+        flex-shrink: 0;
+        background: #f8f8f8;
+        border-bottom: 1px solid #ececec;
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        gap: 4px;
+    }
+
+    .tool-btn {
+        height: 26px;
+        padding: 0 12px;
+        border: none;
+        background: transparent;
+        color: #1a1a1a;
+        font-size: 12.5px;
+        font-family: inherit;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.12s;
+        line-height: 1;
+    }
+
+    .tool-btn:hover {
+        background: #ebebeb;
+    }
+
+    .tool-btn:active {
+        background: #dddddd;
+    }
+
+    .spacer {
+        flex: 1;
+    }
+
+    .save-status {
+        font-size: 11.5px;
+        color: #8a8a8a;
+        padding-right: 8px;
+        letter-spacing: 0.02em;
+        transition: color 0.2s;
+        user-select: none;
+    }
+
+    .save-status.saving {
+        color: #c0a060;
+    }
+
+    /* ========== 编辑区 ========== */
+    .editor {
+        flex: 1;
+        width: 100%;
+        border: none;
+        outline: none;
+        resize: none;
+        padding: 20px 24px;
+        font-family: 'Consolas', 'Monaco', 'Menlo', 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.75;
+        color: #1a1a1a;
+        background: #ffffff;
+        letter-spacing: 0.02em;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .editor::placeholder {
+        color: #c0c0c0;
+        font-family: 'Segoe UI', 'Microsoft YaHei UI', 'PingFang SC', system-ui, sans-serif;
+        letter-spacing: 0.02em;
+    }
+
+    /* ========== 滚动条 ========== */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.25);
+    }
+</style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <button class="tool-btn" id="btnClear">清空</button>
+        <div class="spacer"></div>
+        <span class="save-status" id="saveStatus">已保存</span>
+    </div>
+
+    <textarea class="editor" id="editor" placeholder="在这里记录你的线索与想法..." spellcheck="false"></textarea>
+
+<script>
+    (function() {
+        const STORAGE_KEY = 'notepad_content';
+        const editor = document.getElementById('editor');
+        const status = document.getElementById('saveStatus');
+        const btnClear = document.getElementById('btnClear');
+
+        let saveTimer = null;
+        let statusTimer = null;
+
+        // ========== 载入已有内容 ==========
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) editor.value = saved;
+        } catch (e) {}
+
+        // ========== 状态显示 ==========
+        function setStatus(text, isSaving) {
+            status.textContent = text;
+            status.classList.toggle('saving', !!isSaving);
+
+            if (statusTimer) clearTimeout(statusTimer);
+            if (isSaving) {
+                statusTimer = setTimeout(() => {
+                    status.textContent = '已保存';
+                    status.classList.remove('saving');
+                }, 800);
+            }
+        }
+
+        // ========== 防抖保存（600ms） ==========
+        function scheduleSave() {
+            setStatus('保存中…', true);
+            if (saveTimer) clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                try {
+                    localStorage.setItem(STORAGE_KEY, editor.value);
+                } catch (e) {}
+                saveTimer = null;
+            }, 600);
+        }
+
+        // 输入时触发
+        editor.addEventListener('input', scheduleSave);
+
+        // ========== 清空 ==========
+        btnClear.addEventListener('click', () => {
+            if (!editor.value.trim()) return;
+            if (!confirm('确定要清空所有内容吗？此操作无法撤销。')) return;
+
+            editor.value = '';
+            try { localStorage.setItem(STORAGE_KEY, ''); } catch (e) {}
+            setStatus('已保存', false);
+            editor.focus();
+        });
+
+        // ========== 初始聚焦 ==========
+        setTimeout(() => editor.focus(), 100);
+    })();
+</script>
+</body>
+</html>

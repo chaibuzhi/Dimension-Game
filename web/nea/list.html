@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国家能源科技重点合作机构名单（2021年度） - 国家能源局科技与装备司</title>
+    <style>
+        :root {
+            --blue: #1a3c6e;
+            --blue-dark: #142e54;
+            --blue-mid: #2a5080;
+            --blue-light: #eef2f8;
+            --bg: #f5f6f8;
+            --paper: #ffffff;
+            --text: #222;
+            --text-dim: #444;
+            --text-muted: #666;
+            --line: #e0e4ea;
+            --red: #8b1a1a;
+            --gold: #c9a84c;
+            --font-serif: 'SimSun', 'Songti SC', serif;
+            --font-sans: 'Microsoft YaHei', 'SimHei', 'PingFang SC', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            font-family: var(--font-serif);
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        a { color: var(--blue); text-decoration: none; }
+        a:hover { text-decoration: none; }
+
+        /* ========== 页眉 Hero（整合顶部横幅） ========== */
+        .gov-header {
+            background: var(--blue);
+            border-bottom: 3px solid var(--gold);
+            padding: 0;
+        }
+        .gov-header-tools {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 8px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+        .gov-header-tools a {
+            color: #b0c8e0;
+            font-family: var(--font-sans);
+            font-size: 12px;
+        }
+        .gov-header-tools a:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .gov-header-tools .tools-left {
+            display: flex;
+            gap: 16px;
+        }
+        .gov-header-tools .tools-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .gov-header-tools .tools-right .sep {
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+        }
+
+        .gov-header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 28px 30px 24px;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+        .gov-emblem {
+            width: 72px;
+            height: 72px;
+            background: radial-gradient(circle at 35% 30%, #d42020, #a01010);
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 30px;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-family: var(--font-sans);
+            letter-spacing: 1px;
+        }
+        .gov-title {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .gov-title .zh {
+            font-family: var(--font-sans);
+            font-size: 27px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.08em;
+            line-height: 1.3;
+        }
+        .gov-title .en {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            color: #b0c8e0;
+            letter-spacing: 0.06em;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* ========== 导航栏（居中） ========== */
+        .gov-nav {
+            background: var(--paper);
+            border-bottom: 1px solid var(--line);
+        }
+        .gov-nav-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            height: 44px;
+        }
+        .gov-nav a {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            color: #444;
+            padding: 0 16px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.02em;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+            white-space: nowrap;
+        }
+        .gov-nav a:hover {
+            color: var(--blue);
+            background: var(--blue-light);
+            text-decoration: none;
+        }
+        .gov-nav a.active {
+            color: var(--blue);
+            font-weight: 600;
+            border-bottom-color: var(--blue);
+        }
+
+        /* ========== 面包屑 ========== */
+        .breadcrumb {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 14px 30px 0;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .breadcrumb a { color: var(--text-muted); }
+        .breadcrumb a:hover { color: var(--blue); text-decoration: none; }
+        .breadcrumb .sep { margin: 0 8px; color: #bbb; }
+        .breadcrumb .current { color: var(--blue); font-weight: 500; }
+
+        /* ========== 正文区 ========== */
+        .content-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 30px 50px;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: 0.04em;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .pub-info {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }
+        .pub-info span {
+            margin: 0 12px;
+        }
+
+        .doc-body {
+            font-size: 17px;
+            color: var(--text-dim);
+            line-height: 2.1;
+        }
+        .doc-body p {
+            margin-bottom: 18px;
+            text-indent: 2em;
+            text-align: justify;
+        }
+        .doc-body p.no-indent {
+            text-indent: 0;
+        }
+
+        /* ========== 表格 ========== */
+        .doc-table {
+            margin: 24px 0;
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        .doc-table thead th {
+            background: var(--blue);
+            color: #fff;
+            font-weight: 600;
+            padding: 12px 14px;
+            border: 1px solid var(--blue-dark);
+            text-align: center;
+            font-family: var(--font-sans);
+            letter-spacing: 0.03em;
+            font-size: 15px;
+        }
+        .doc-table tbody td {
+            padding: 11px 14px;
+            border: 1px solid var(--line);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        .doc-table tbody td:last-child {
+            text-align: left;
+            line-height: 1.7;
+        }
+        .doc-table tbody td:nth-child(2) {
+            text-align: left;
+            font-weight: 500;
+        }
+        .doc-table tbody tr:nth-child(even) {
+            background: #f8fafd;
+        }
+        .doc-table tbody tr:hover {
+            background: var(--blue-light);
+        }
+
+        /* ========== 附件 ========== */
+        .doc-attachment {
+            margin: 20px 0 28px;
+            padding: 14px 18px;
+            background: #fafbfd;
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        .doc-attachment .attach-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .doc-attachment .attach-link {
+            color: var(--blue);
+            font-weight: 600;
+        }
+        .doc-attachment .attach-link:hover {
+            text-decoration: underline;
+        }
+        .doc-attachment .attach-size {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        /* ========== 落款 ========== */
+        .doc-signature {
+            margin-top: 36px;
+            text-align: right;
+            font-size: 16px;
+            color: #111;
+            line-height: 2.2;
+            padding-right: 8px;
+        }
+        .doc-signature .agency {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            font-family: var(--font-sans);
+        }
+
+        /* ========== 页面工具 ========== */
+        .page-tools {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .page-tools a {
+            color: var(--text-muted);
+            margin-right: 12px;
+        }
+        .page-tools a:hover { color: var(--blue); text-decoration: none; }
+
+        /* ========== 页脚 ========== */
+        .site-footer {
+            background: var(--blue-dark);
+            color: #c8d4e0;
+            padding: 26px 20px 18px;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            line-height: 2.0;
+            border-top: 3px solid var(--gold);
+        }
+        .footer-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .footer-gov-links {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+        .footer-gov-links a {
+            color: #c8d4e0;
+            font-size: 13px;
+        }
+        .footer-gov-links a:hover { color: #fff; text-decoration: none; }
+        .footer-gov-links .sep {
+            color: #5a7a9a;
+        }
+        .footer-site-links {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .footer-site-links a {
+            color: #9ab0c4;
+            font-size: 12px;
+        }
+        .footer-site-links a:hover { color: #fff; text-decoration: none; }
+        .footer-site-links .sep {
+            color: #5a7a9a;
+        }
+        .footer-address {
+            color: #9ab0c4;
+            font-size: 12px;
+            letter-spacing: 0.02em;
+        }
+        .footer-bottom {
+            color: #7a94ac;
+            font-size: 11px;
+            padding-top: 8px;
+            margin-top: 8px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 700px) {
+            .gov-header-tools {
+                padding: 6px 16px;
+                flex-direction: column;
+                gap: 4px;
+                font-size: 11px;
+            }
+            .gov-header-inner {
+                padding: 20px 16px 18px;
+                gap: 12px;
+            }
+            .gov-title .zh {
+                font-size: 20px;
+                letter-spacing: 0.04em;
+            }
+            .gov-title .en {
+                font-size: 9px;
+            }
+            .gov-emblem {
+                width: 52px;
+                height: 52px;
+                font-size: 22px;
+            }
+            .gov-nav-inner {
+                padding: 0 8px;
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+            .gov-nav a {
+                padding: 0 12px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+            .content-wrapper {
+                padding: 14px 16px 40px;
+            }
+            .doc-title {
+                font-size: 19px;
+            }
+            .doc-body {
+                font-size: 15px;
+            }
+            .doc-table {
+                font-size: 13px;
+            }
+            .doc-table thead th,
+            .doc-table tbody td {
+                padding: 8px 8px;
+                font-size: 12px;
+            }
+            .breadcrumb {
+                padding: 10px 16px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 页眉 Hero（整合顶部工具行） -->
+    <header class="gov-header">
+        <!-- 工具行 -->
+        <div class="gov-header-tools">
+            <div class="tools-left">
+                <a href="javascript:void(0)">中国政府网</a>
+                <a href="javascript:void(0)">省级人大网</a>
+                <a href="javascript:void(0)">省政协网</a>
+            </div>
+            <div class="tools-right">
+                <a href="javascript:void(0)">繁體中文</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">ENGLISH</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">无障碍浏览</a>
+            </div>
+        </div>
+
+        <!-- 品牌区 -->
+        <div class="gov-header-inner">
+            <div class="gov-emblem">★</div>
+            <div class="gov-title">
+                <span class="zh">国家能源局科技与装备司</span>
+                <span class="en">
+                    Energy Conservation and Technological Equipment Department<br>
+                    National Energy Administration
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏（居中） -->
+    <nav class="gov-nav">
+        <div class="gov-nav-inner">
+            <a href="javascript:void(0)">首页</a>
+            <a href="javascript:void(0)">机构概况</a>
+            <a href="javascript:void(0)">新闻发布</a>
+            <a href="javascript:void(0)">政策法规</a>
+            <a href="javascript:void(0)">科技与装备</a>
+            <a href="javascript:void(0)" class="active">通知公告</a>
+            <a href="javascript:void(0)">数据统计</a>
+            <a href="javascript:void(0)">公众服务</a>
+        </div>
+    </nav>
+
+    <!-- 面包屑 -->
+    <div class="breadcrumb">
+        <a href="javascript:void(0)">首页</a><span class="sep">/</span>
+        <a href="javascript:void(0)">通知公告</a><span class="sep">/</span>
+        <span class="current">正文</span>
+    </div>
+
+    <!-- 正文区 -->
+    <div class="content-wrapper">
+
+        <div class="doc-title">国家能源科技重点合作机构名单（2021年度）</div>
+
+        <div class="pub-info">
+            <span>发布单位：国家能源局科技与装备司</span>
+            <span>发布日期：2021年12月18日</span>
+        </div>
+
+        <div class="doc-body">
+            <p>根据国家能源局《关于印发〈国家能源科技创新发展规划〉的通知》（国能发科技〔2020〕42号）有关要求，经组织申报、专家评审和综合评议，现将2021年度国家能源科技重点合作机构名单予以公示。</p>
+
+            <p class="no-indent" style="font-weight:600; font-family:var(--font-sans); color:#111; font-size:16px;">公示名单（节选）</p>
+
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th style="width:60px;">序号</th>
+                        <th style="width:280px;">机构名称</th>
+                        <th>合作方向</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>国家电投新能源技术研究院</td>
+                        <td>新型储能技术、智慧能源系统、综合能源服务</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>中科能源科学研究院</td>
+                        <td>先进核能、氢能技术、能源材料</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>天启科技股份有限公司</td>
+                        <td>能源勘探、水体能源研究、特种探测装备研发</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>华夏清洁能源技术研究院</td>
+                        <td>海上风电、碳捕集利用与封存</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>北方深地勘探研究院</td>
+                        <td>深层油气勘探、地质综合评价</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>华东储能技术股份有限公司</td>
+                        <td>动力电池、储能系统、电池回收</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>国家地质调查局水文地质环境地质调查中心</td>
+                        <td>地下水调查、地热资源评价</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>中南电力系统装备股份公司</td>
+                        <td>电网自动化、电力系统保护与控制</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>远洋深海工程研究所</td>
+                        <td>深海装备、海洋能源开发</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>阳光新能源科技股份有限公司</td>
+                        <td>光伏组件、光伏系统、储能</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>公示期为2021年12月18日至12月24日。如有异议，请在公示期内以书面形式向我司反映。</p>
+
+            <div class="doc-attachment">
+                <span class="attach-icon">📎</span>
+                <a class="attach-link" href="javascript:void(0)">附件：2021年度国家能源科技重点合作机构名单.pdf</a>
+                <span class="attach-size">（236 KB）</span>
+            </div>
+
+            <div class="doc-signature">
+                <div class="agency">国家能源局科技与装备司</div>
+                <div>2021年12月18日</div>
+            </div>
+        </div>
+
+        <div class="page-tools">
+            <div>
+                <a href="javascript:void(0)">【打印本页】</a>
+                <a href="javascript:void(0)">【关闭窗口】</a>
+            </div>
+            <span>本页共 1 页</span>
+        </div>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <!-- 第一行：政府单位 -->
+            <div class="footer-gov-links">
+                <a href="javascript:void(0)">国家发展改革委</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">自然资源部</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">生态环境部</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">政务公开</a>
+            </div>
+            <!-- 第二行：网站链接 -->
+            <div class="footer-site-links">
+                <a href="javascript:void(0)">网站地图</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">联系我们</a>
+                <span class="sep">|</span>
+                <a href="javascript:void(0)">加入收藏</a>
+            </div>
+            <div class="footer-address">
+                通讯地址：北京市西城区三里河路46号 &nbsp;|&nbsp; 邮编：100045
+            </div>
+            <div class="footer-bottom">
+                <span>主办单位：国家能源局</span>
+                <span>京ICP备11044902号</span>
+                <span>京公网安备 11010202007691</span>
+                <span>网站标识码：bm62000002号</span>
+                <span>国家能源局 版权所有</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

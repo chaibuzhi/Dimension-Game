@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEDS观察：天启科技专题报告引质疑 - 能源观察</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1e;
+            --text-dim: #3d3d42;
+            --text-muted: #8a8a90;
+            --border: #d5dbe6;
+            --border-light: #e8ecf2;
+            --primary: #0b3d91;
+            --primary-dark: #082c68;
+            --primary-light: #e8edf5;
+            --font: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Heiti SC', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ========== 顶部bar ========== */
+        .top-bar {
+            background: #111;
+            color: #888;
+            font-size: 12px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+        }
+        .top-bar .left span {
+            letter-spacing: 0.05em;
+        }
+        .top-bar .right {
+            display: flex;
+            gap: 18px;
+        }
+        .top-bar .right a {
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.2s;
+        }
+        .top-bar .right a:hover {
+            color: #fff;
+        }
+
+        /* ========== 头部 ========== */
+        .site-header {
+            background: var(--bg);
+            padding: 24px 48px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .site-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .site-logo .logo-mark {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 30px;
+            font-family: Georgia, 'Times New Roman', serif;
+            letter-spacing: 0;
+            border-radius: 2px;
+        }
+        .site-logo .logo-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .site-logo .logo-text .zh {
+            font-size: 22px;
+            font-weight: 700;
+            color: #16161a;
+            letter-spacing: 0.1em;
+        }
+        .site-logo .logo-text .en {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .site-slogan {
+            font-size: 14px;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+
+        /* ========== 导航栏 ========== */
+        .site-nav {
+            background: var(--bg);
+            border-bottom: 2px solid var(--primary);
+            padding: 0 48px;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            height: 44px;
+        }
+        .site-nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+        }
+        .site-nav a:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .site-nav a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+            background: transparent;
+        }
+
+        /* ========== 面包屑 ========== */
+        .breadcrumb {
+            max-width: 1180px;
+            margin: 18px auto 0;
+            padding: 0 48px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            color: var(--primary);
+        }
+        .breadcrumb .sep {
+            margin: 0 6px;
+            color: #ccc;
+        }
+
+        /* ========== 主体布局 ========== */
+        .main-wrapper {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 22px 48px 60px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+        }
+
+        /* ========== 文章主体 ========== */
+        .article-main {
+            background: transparent;
+            padding: 0;
+        }
+        .article-category {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 12px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 3px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+        }
+        .article-main h1 {
+            font-size: 30px;
+            font-weight: 700;
+            line-height: 1.45;
+            color: #111;
+            margin-bottom: 14px;
+        }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 26px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .article-meta .source {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .article-meta .sep-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #aaa;
+        }
+
+        .article-body {
+            font-size: 16px;
+            line-height: 2.0;
+            color: var(--text-dim);
+        }
+        .article-body p {
+            margin-bottom: 22px;
+        }
+        .article-body .figure {
+            margin: 28px 0;
+            text-align: center;
+        }
+        .article-body .figure .img-placeholder {
+            display: block;
+            overflow: hidden;
+            min-height: 200px;
+            background: #f0f2f5;
+            border-radius: 4px;
+            color: #6a7a8f;
+            font-size: 14px;
+            border: 1px solid var(--border-light);
+        }
+
+        .article-body .figure .img-placeholder img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .article-body .figure .img-placeholder span {
+            font-size: 44px;
+            margin-bottom: 8px;
+        }
+        .article-body .figure figcaption {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+        .article-body .highlight-box {
+            margin: 28px 0;
+            padding: 18px 22px;
+            background: var(--primary-light);
+            border-left: 3px solid var(--primary);
+            font-size: 15px;
+            color: var(--text-dim);
+            line-height: 1.9;
+        }
+        .article-body .quote-inline {
+            font-weight: 600;
+            color: #111;
+        }
+
+        /* ========== 文章底部 ========== */
+        .article-footer {
+            margin-top: 40px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .article-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .article-tags .tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50px;
+            text-decoration: none;
+        }
+        .article-tags .tag:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        .article-share {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ========== 侧边栏 ========== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+        .sidebar-block .block-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 14px;
+            letter-spacing: 0.03em;
+        }
+        .sidebar-block .block-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar-block .block-list a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 14px;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+            transition: color 0.2s;
+        }
+        .sidebar-block .block-list a:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .sidebar-block .block-list a:hover {
+            color: var(--primary);
+        }
+        .sidebar-block .block-list a .rank-num {
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .sidebar-block .block-list a .rank-num.n2 {
+            background: #3a6bb5;
+        }
+        .sidebar-block .block-list a .rank-num.n3 {
+            background: #6a8cc0;
+        }
+        .sidebar-block .block-list a .list-text {
+            flex: 1;
+        }
+        .sidebar-block .block-list a time {
+            font-size: 11px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        .sidebar-block .more-link {
+            display: block;
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-top: 8px;
+            transition: color 0.2s;
+        }
+        .sidebar-block .more-link:hover {
+            color: var(--primary);
+        }
+
+        /* ========== 页脚 ========== */
+        .site-footer {
+            background: #111;
+            color: #888;
+            padding: 26px 48px;
+            margin-top: 20px;
+        }
+        .site-footer .footer-inner {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            font-size: 12px;
+        }
+        .site-footer .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        .site-footer .footer-links a {
+            color: #888;
+            text-decoration: none;
+        }
+        .site-footer .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+                gap: 36px;
+                padding: 20px 24px 48px;
+            }
+            .sidebar {
+                display: none;
+            }
+            .site-nav {
+                padding: 0 20px;
+                gap: 0;
+                overflow-x: auto;
+            }
+            .site-nav a {
+                padding: 0 12px;
+                font-size: 13px;
+            }
+            .site-header {
+                padding: 18px 20px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .site-slogan {
+                white-space: normal;
+            }
+            .top-bar {
+                padding: 0 20px;
+            }
+            .breadcrumb {
+                padding: 0 24px;
+            }
+            .article-main h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部bar -->
+    <div class="top-bar">
+        <div class="left">
+            <span>专注全球能源格局与行业前沿观察</span>
+        </div>
+        <div class="right">
+            <a href="javascript:void(0)">RSS订阅</a>
+            <a href="javascript:void(0)">联系我们</a>
+        </div>
+    </div>
+
+    <!-- 头部 -->
+    <header class="site-header">
+        <div class="site-logo">
+            <div class="logo-mark">E</div>
+            <div class="logo-text">
+                <span class="zh">能源观察</span>
+                <span class="en">Energy Watch</span>
+            </div>
+        </div>
+        <span class="site-slogan">专注全球能源行业 记录每一次变革</span>
+    </header>
+
+    <!-- 导航 -->
+    <nav class="site-nav">
+        <a href="javascript:void(0)">首页</a>
+        <a href="javascript:void(0)">政策解读</a>
+        <a href="javascript:void(0)">行业动态</a>
+        <a href="javascript:void(0)">企业观察</a>
+        <a href="javascript:void(0)" class="active">国际视野</a>
+        <a href="javascript:void(0)">新能源</a>
+        <a href="javascript:void(0)">评论专栏</a>
+    </nav>
+
+    <!-- 面包屑 -->
+    <div class="breadcrumb">
+        <a href="javascript:void(0)">首页</a><span class="sep">/</span>
+        <a href="javascript:void(0)">国际视野</a><span class="sep">/</span>
+        <span>GEDS观察</span>
+    </div>
+
+    <!-- 主体 -->
+    <div class="main-wrapper">
+        <!-- 文章区 -->
+        <article class="article-main">
+            <span class="article-category">国际视野 · 观察报道</span>
+            <h1>GEDS观察：天启科技专题报告引质疑</h1>
+            <div class="article-meta">
+                <span class="source">能源观察</span>
+                <span class="sep-dot"></span>
+                <span>2026年5月19日</span>
+                <span class="sep-dot"></span>
+                <span>记者：周闻</span>
+            </div>
+            <div class="article-body">
+                <p>5月18日，全球能源发展峰会（Global Energy Development Summit，GEDS）在西延举行。
+                    <br>天启科技物理研究部总监丁文倩教授应邀出席，在"新能源研发"板块就<span class="quote-inline">《凝聚态φ能量：储能机制与可控释放》</span>作专题报告。</p>
+
+                <div class="figure">
+                    <div class="img-placeholder">
+                        <img src="../image/web_geds.webp" alt="GEDS峰会上丁文倩教授作专题报告">
+                    </div>
+                </div>
+
+                <p>报告结束后，多位学者对报告提出质疑，认为关键参数缺乏独立验证，模型假设与现有物理化学共识存在偏差。</p>
+
+                <p>闭门会议结束后，有能源物理学教授指出，丁文倩的理论框架缺乏可证伪性。另有学者表示：<span class="quote-inline">“这种研究路径与天启科技一贯的风格高度一致——雄心勃勃的叙事，经不起推敲的科研。”</span></p>
+
+                <div class="highlight-box">
+                    这并非天启科技在学术场合首次遇冷。回顾该公司近年的行动轨迹：频繁发布新闻，学术产出稀疏。官网大量关于“新型水体能源”、“勘探突破”的新闻稿措辞颇具雄心，但在学术共同体的公开讨论中，其研究路径并未获得广泛认可。
+                </div>
+
+                <p>据公开学术数据库统计，该公司研究人员成果发表数量，与其行业声量并不匹配。有学者表示：<span class="quote-inline">“天启科技的发布会比论文多。”</span></p>
+
+                <p>针对相关争议，学界观点不一。部分学者认为，天启科技更倾向于用企业叙事替代学术验证；也有观点指出，该公司在能源勘探领域的行动能力毋庸置疑，但其理论物理层面的贡献仍处于“有待观察”阶段。</p>
+
+                <p>据悉，<span class="quote-inline">丁文倩教授会后接受了《前沿物理评论》独家专访，</span>就峰会期间的质疑与后续研究路径做出回应，专访内容将于近期刊发。</p>
+            </div>
+
+            <div class="article-footer">
+                <div class="article-tags">
+                    <a class="tag" href="javascript:void(0)">#GEDS</a>
+                    <a class="tag" href="javascript:void(0)">#新能源</a>
+                    <a class="tag" href="javascript:void(0)">#学术争议</a>
+                    <a class="tag" href="javascript:void(0)">#理论物理</a>
+                </div>
+                <span class="article-share">来源：能源观察 | 未经授权禁止转载</span>
+            </div>
+        </article>
+
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <!-- 本周热度 -->
+            <div class="sidebar-block">
+                <div class="block-title">本周热度</div>
+                <ul class="block-list">
+                    <a href="javascript:void(0)">
+                        <span class="rank-num">1</span>
+                        <span class="list-text">海上风电成全球增长引擎</span>
+                        <time>07.12</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="rank-num n2">2</span>
+                        <span class="list-text">光伏组件价格持续下行</span>
+                        <time>07.10</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="rank-num n3">3</span>
+                        <span class="list-text">欧盟发布能源安全新战略</span>
+                        <time>07.08</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="rank-num n3">4</span>
+                        <span class="list-text">OPEC+减产力度低于预期</span>
+                        <time>07.05</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="rank-num n3">5</span>
+                        <span class="list-text">氢能产业链降本路线图发布</span>
+                        <time>07.02</time>
+                    </a>
+                </ul>
+                <a class="more-link" href="javascript:void(0)">查看更多 →</a>
+            </div>
+
+            <!-- 专题评论 -->
+            <div class="sidebar-block">
+                <div class="block-title">专题评论</div>
+                <ul class="block-list">
+                    <a href="javascript:void(0)">
+                        <span class="list-text">储能行业"内卷"的深层逻辑</span>
+                        <time>06.28</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">欧洲能源转型的困境与出路</span>
+                        <time>06.20</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">新材料研发的效率瓶颈</span>
+                        <time>06.15</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">电力市场化改革的下半场</span>
+                        <time>06.08</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">碳关税对出口制造业的冲击</span>
+                        <time>06.02</time>
+                    </a>
+                </ul>
+                <a class="more-link" href="javascript:void(0)">查看更多 →</a>
+            </div>
+
+            <!-- 行业报告 -->
+            <div class="sidebar-block">
+                <div class="block-title">行业报告</div>
+                <ul class="block-list">
+                    <a href="javascript:void(0)">
+                        <span class="list-text">全球新能源投资趋势半年报</span>
+                        <time>06.30</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">亚太电力需求与供应结构分析</span>
+                        <time>06.22</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">碳交易机制影响评估</span>
+                        <time>06.10</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">全球LNG贸易格局变化趋势</span>
+                        <time>06.05</time>
+                    </a>
+                    <a href="javascript:void(0)">
+                        <span class="list-text">智能电网投资回报周期研究</span>
+                        <time>06.01</time>
+                    </a>
+                </ul>
+                <a class="more-link" href="javascript:void(0)">查看更多 →</a>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span>能源观察 Energy Watch © 2026 版权所有</span>
+            <div class="footer-links">
+                <a href="javascript:void(0)">关于我们</a>
+                <a href="javascript:void(0)">联系方式</a>
+                <a href="javascript:void(0)">隐私声明</a>
+                <a href="javascript:void(0)">广告合作</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

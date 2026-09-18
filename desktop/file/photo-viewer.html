@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照片查看器</title>
+    <style>
+        :root {
+            --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font);
+        }
+        body {
+            background: #f0f0f3;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .photo-toolbar {
+            background: #2c2c3a;
+            padding: 8px 16px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .photo-toolbar .address-bar {
+            flex: 1;
+            background: #3a3a4c;
+            border-radius: 8px;
+            padding: 5px 14px;
+            color: #ccc;
+            font-size: 12px;
+        }
+        .photo-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #e8e8ec;
+            padding: 16px;
+        }
+        .photo-area img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            object-fit: contain;
+        }
+        .photo-not-found {
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="photo-toolbar">
+        <div class="address-bar" id="addressBar">🖼️ 图片查看器</div>
+    </div>
+    <div class="photo-area" id="photoArea">
+        <div class="photo-not-found" id="notFound" style="display:none;">图片不存在</div>
+        <img id="photoImg" src="" alt="照片" style="display:none;">
+    </div>
+
+    <script>
+        // 读取 URL 参数中的 src
+        const urlParams = new URLSearchParams(window.location.search);
+        const src = urlParams.get('src');
+
+        const photoImg = document.getElementById('photoImg');
+        const notFound = document.getElementById('notFound');
+        const addressBar = document.getElementById('addressBar');
+
+        if (src) {
+            addressBar.textContent = '🖼️ ' + src;
+            photoImg.src = src;
+            photoImg.style.display = 'block';
+            photoImg.onerror = function() {
+                photoImg.style.display = 'none';
+                notFound.style.display = 'block';
+            };
+        } else {
+            notFound.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>论文 · 天启科技内部文献</title>
+    <link rel="stylesheet" href="css/paper.css">
+</head>
+<body>
+    <div class="paper-container" id="paperContainer">
+        <!-- 内容由 JS 渲染 -->
+    </div>
+
+    <script src="data/papers.js"></script>
+    <script>
+        // ========== 动态加载论文风格样式 ==========
+        function loadPaperStyle(href) {
+            if (!href) return;
+            const existing = document.querySelector(`link[href="${href}"]`);
+            if (existing) return;
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        }
+
+        // ========== 获取 URL 中的论文 ID ==========
+        function getPaperIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        // ========== 渲染论文 ==========
+        function renderPaper() {
+            const id = getPaperIdFromUrl();
+            const container = document.getElementById('paperContainer');
+
+            if (!papersData || !papersData[id]) {
+                container.innerHTML = `
+                    <div class="paper-not-found">
+                        <h2>文献不存在</h2>
+                        <p>该文献可能已被删除或链接有误。</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const paper = papersData[id];
+            document.title = paper.title + ' · 天启科技内部文献';
+
+            // ========== 检查是否处于锁定模式 ==========
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('mode') === 'sealed') {
+                renderSealedPaper(paper);
+                return;
+            }
+
+            const typeStyleMap = {
+                'modern': 'css/paper-modern.css',
+                'legacy': 'css/paper-legacy.css',
+                'chronicle': 'css/paper-chronicle.css'
+            };
+            loadPaperStyle(typeStyleMap[paper.type]);
+
+            let cardClass = '';
+            if (paper.type === 'modern') cardClass = 'modern-doc';
+            else if (paper.type === 'chronicle') cardClass = 'chronicle-doc';
+            else if (paper.type === 'legacy') cardClass = 'legacy-doc';
+
+            let headerHtml = '';
+            if (!paper.type || paper.type === 'standard') {
+                headerHtml = `
+                    <header class="paper-header">
+                        <h1 class="paper-title">${paper.title}</h1>
+                        <div class="paper-meta">
+                            <span>作者：${paper.author}</span>
+                            <span>日期：${paper.date}</span>
+                        </div>
+                    </header>
+                `;
+            }
+
+            container.innerHTML = `
+                <article class="paper-card ${cardClass}">
+                    ${headerHtml}
+                    <div class="paper-body">
+                        ${paper.content}
+                    </div>
+                </article>
+            `;
+        }
+
+        // ========== 渲染锁定状态 ==========
+        function renderSealedPaper(paper) {
+            const container = document.getElementById('paperContainer');
+            container.innerHTML = `
+                <article class="paper-card sealed-paper">
+                    <div class="sealed-content">
+                        ${paper.content}
+                    </div>
+                    <div class="sealed-overlay">
+                        <div class="sealed-modal">
+                            <div class="sealed-icon">🚫</div>
+                            <h2 class="sealed-title">禁止访问</h2>
+                            <h2 class="sealed-meta">此文件已被单独锁定</h2>
+                            <button class="sealed-btn" onclick="window.close()">关闭页面</button>
+                        </div>
+                    </div>
+                </article>
+            `;
+
+            // ========== 锁定模式：禁止全选与复制论文内容 ==========
+            preventContentCopy();
+        }
+
+        // ========== 阻止锁定页面的复制行为 ==========
+        function preventContentCopy() {
+            // 阻止 Ctrl+A / Cmd+A 全选
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a') {
+                    e.preventDefault();
+                }
+            });
+
+            // 阻止复制事件
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+            });
+
+            // 阻止右键菜单（如果不需要可删除）
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            // 阻止拖拽选中（针对部分浏览器）
+            document.addEventListener('selectstart', function(e) {
+                if (!e.target.closest('.sealed-modal')) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // 初始化
+        renderPaper();
+    </script>
+</body>
+</html>

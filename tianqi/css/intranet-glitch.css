@@ -1,0 +1,590 @@
+/* ========== 完整入侵动画样式 ========== */
+
+/* 鼠标锁定 */
+.lock-cursor {
+    cursor: none !important;
+}
+
+.lock-cursor * {
+    cursor: none !important;
+    pointer-events: none !important;
+    user-select: none !important;
+}
+
+/* 反色闪烁 */
+.invert-flicker {
+    animation: invertFlicker 0.15s steps(2, end) infinite;
+}
+
+@keyframes invertFlicker {
+    0% { filter: invert(0); }
+    50% { filter: invert(1); }
+    100% { filter: invert(0); }
+}
+
+.invert-flicker-1 {
+    animation: invertFlicker 0.3s steps(2, end) 1;
+}
+
+.invert-flicker-2 {
+    animation: invertFlicker 0.15s steps(2, end) 1;
+}
+
+.invert-flicker-4 {
+    animation: invertFlicker 0.15s steps(2, end) 2;
+}
+
+/* 左上角乱码块 */
+.corner-glitch-block {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9998;
+    font-family: monospace, 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    color: #00ff41;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.corner-glitch-line {
+    white-space: nowrap;
+    animation: cornerGlitchIn 0.08s ease-out;
+}
+
+@keyframes cornerGlitchIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 终端乱码覆盖层 */
+.glitch-terminal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: rgba(10, 13, 22, 0.96);
+    z-index: 9999;
+    overflow: hidden;
+    pointer-events: auto;
+    font-family: monospace, 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #00ff41;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 16px;
+}
+
+.glitch-terminal-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+    flex-shrink: 0;
+    padding: 1px 0;
+    animation: glitchLineIn 0.1s ease-out;
+}
+
+@keyframes glitchLineIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== 多维实体星空 ========== */
+.hex-entity-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #050510;
+}
+
+.hex-stars {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hex-star {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.25;
+    animation: hexStarTwinkle ease-in-out infinite;
+}
+
+@keyframes hexStarTwinkle {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.95; }
+}
+
+/* ========================================================================
+   中央多维实体
+   ======================================================================== */
+
+.hex-entity-center {
+    position: relative;
+    z-index: 2;
+    overflow: visible;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== 主层：白色六边形 + 蓝色呼吸光 ===== */
+.hex-entity-main {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    z-index: 2;
+    opacity: 0;
+    will-change: transform, opacity, filter;
+    animation:
+        centerHexAppear 8s ease-out forwards,
+        hexPulseBreath 11s linear forwards;
+}
+
+/* ===== 呼吸 + 白光爆发（11s 总长，匹配元素存在时间） =====
+   呼吸 1：0–1.5s   （1.5s 周期，快）
+   呼吸 2：1.5–3.75s（2.25s 周期，中）
+   呼吸 3：3.75–7.5s（3.75s 周期，慢）
+   白光爆：7.5–11s （3.5s 从蓝光峰匀速冲顶到纯白）
+*/
+@keyframes hexPulseBreath {
+    /* 0s：蓝光峰 */
+    0%      { filter: drop-shadow(0 0 18px rgba(180, 220, 255, 0.95)) drop-shadow(0 0 48px rgba(120, 180, 255, 0.55)) drop-shadow(0 0 100px rgba(100, 160, 255, 0)); }
+    /* 呼吸 1 */
+    6.82%   { filter: drop-shadow(0 0 6px  rgba(140, 200, 255, 0.5))  drop-shadow(0 0 18px rgba(100, 170, 255, 0.28)) drop-shadow(0 0 60px rgba(100, 160, 255, 0)); }
+    13.64%  { filter: drop-shadow(0 0 18px rgba(180, 220, 255, 0.95)) drop-shadow(0 0 48px rgba(120, 180, 255, 0.55)) drop-shadow(0 0 100px rgba(100, 160, 255, 0)); }
+    /* 呼吸 2 */
+    23.86%  { filter: drop-shadow(0 0 6px  rgba(140, 200, 255, 0.5))  drop-shadow(0 0 18px rgba(100, 170, 255, 0.28)) drop-shadow(0 0 60px rgba(100, 160, 255, 0)); }
+    34.09%  { filter: drop-shadow(0 0 18px rgba(180, 220, 255, 0.95)) drop-shadow(0 0 48px rgba(120, 180, 255, 0.55)) drop-shadow(0 0 100px rgba(100, 160, 255, 0)); }
+    /* 呼吸 3 */
+    51.14%  { filter: drop-shadow(0 0 6px  rgba(140, 200, 255, 0.5))  drop-shadow(0 0 18px rgba(100, 170, 255, 0.28)) drop-shadow(0 0 60px rgba(100, 160, 255, 0)); }
+    68.18%  { filter: drop-shadow(0 0 18px rgba(180, 220, 255, 0.95)) drop-shadow(0 0 48px rgba(120, 180, 255, 0.55)) drop-shadow(0 0 100px rgba(100, 160, 255, 0)); }
+    /* 7.5–11s：白光匀速扩到最大 */
+    100%    { filter:
+                drop-shadow(0 0 5px  rgba(255, 255, 255, 1))
+                drop-shadow(0 0 12px rgba(255, 255, 255, 0.95))
+                drop-shadow(0 0 60px rgba(255, 255, 255, 1))
+                drop-shadow(0 0 180px rgba(245, 250, 255, 0.85))
+                drop-shadow(0 0 400px rgba(210, 225, 255, 0.5)); }
+}
+
+
+
+@keyframes centerHexAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    30% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+}
+
+.hex-entity-bg-hex {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    filter: blur(2px);
+    will-change: opacity;
+    animation: bgHexFadeTwinkle ease-in-out infinite;
+}
+
+@keyframes bgHexFadeTwinkle {
+    0% { opacity: 0; }
+    25% { opacity: 0.3; }
+    50% { opacity: 0.12; }
+    75% { opacity: 0.28; }
+    100% { opacity: 0; }
+}
+
+/* ========== 入侵警告弹窗 ========== */
+.security-warning-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(10, 13, 22, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.security-warning-box {
+    background: #ffffff;
+    border: 2px solid #dc2626;
+    border-radius: 12px;
+    padding: 25px 28px 26px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.security-warning-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;          /* 控制标题行与下一行的间距 */
+}
+
+.security-warning-icon {
+    font-size: 25px;
+    line-height: 1;
+}
+
+.security-warning-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #dc2626;
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+
+.security-warning-detect {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a2233;
+    margin-bottom: 10px;
+}
+
+.security-warning-message {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #6b7a8f;
+    margin-bottom: 22px;
+    text-align: left;
+}
+
+.security-warning-btn {
+    align-self: center;
+    padding: 9px 30px;
+    background: #dc2626;
+    border: 1px solid #dc2626;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.security-warning-btn:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+}
+
+/* ========== 左上角漂浮乱码（无背景无边框） ========== */
+.mini-terminal {
+    position: absolute;
+    top: 24px;
+    left: 26px;
+    z-index: 6;
+    width: 260px;
+    height: 90px;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    font-family: monospace, 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #00ff41;
+    text-shadow: 0 0 6px rgba(0, 255, 65, 0.5);
+}
+
+.mini-terminal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-terminal-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.85;
+    animation: miniTerminalLineIn 0.15s ease-out;
+}
+
+@keyframes miniTerminalLineIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 0.85;
+        transform: translateY(0);
+    }
+}
+
+/* ========== 个人中心横条故障纹理 ========== */
+#profile-scanline {
+    position: fixed;
+    inset: 0;
+    z-index: 9996;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+}
+
+/* 横条扫描线 */
+#profile-scanline::before {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(200, 30, 30, 0.6) 0px,
+        transparent 2px,
+        transparent 5px
+    );
+}
+
+/* 边缘暗红光晕 */
+#profile-scanline::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 30%,
+        rgba(200, 30, 30, 0.35) 100%
+    );
+}
+
+/* 整层出现与消失 */
+#profile-scanline.active {
+    animation: profileScanFade 0.6s ease 1;
+}
+
+/* 横条轻微滚动（CRT 感） */
+#profile-scanline.active::before {
+    animation: profileScanShift 0.6s linear 1;
+}
+
+@keyframes profileScanFade {
+    0%   { opacity: 0; }
+    12%  { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes profileScanShift {
+    0%   { transform: translateY(-8px); }
+    100% { transform: translateY(8px); }
+}
+
+/* ========== 阶段1：绿色横条故障纹理（叠加在终端乱码上） ========== */
+.glitch-scanlines-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.glitch-scanlines-overlay::before {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 65, 0.55) 0px,
+        transparent 2px,
+        transparent 5px
+    );
+}
+
+.glitch-scanlines-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 30%,
+        rgba(0, 255, 65, 0.25) 100%
+    );
+}
+
+.glitch-scanlines-overlay.active {
+    animation: glitchScanFade 0.5s ease 1;
+}
+
+.glitch-scanlines-overlay.active::before {
+    animation: glitchScanShift 0.5s linear 1;
+}
+
+@keyframes glitchScanFade {
+    0%   { opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes glitchScanShift {
+    0%   { transform: translateY(-10px); }
+    100% { transform: translateY(10px); }
+}
+
+/* ========== 阶段3：绿色故障闪屏（复用阶段1纹理，更强） ========== */
+.glitch-warning-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    background: rgba(0, 6, 2, 0.8);
+}
+
+/* 绿色细线：比阶段1更亮 */
+.glitch-warning-flash::before {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 65, 0.9) 0px,
+        transparent 2px,
+        transparent 5px
+    );
+}
+
+/* 边缘绿光 */
+.glitch-warning-flash::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 25%,
+        rgba(0, 255, 65, 0.35) 100%
+    );
+}
+
+.glitch-warning-flash.active {
+    animation: glitchWarningFlash 0.7s ease 1;
+}
+
+.glitch-warning-flash.active::before {
+    animation: glitchLineShift 0.7s linear 1;
+}
+
+/* ========== 第一次：弱版（不刺眼） ========== */
+.glitch-warning-flash.weak::before {
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 65, 0.4) 0px,
+        transparent 2px,
+        transparent 6px
+    );
+}
+
+.glitch-warning-flash.weak::after {
+    background: radial-gradient(
+        ellipse at center,
+        transparent 35%,
+        rgba(0, 255, 65, 0.15) 100%
+    );
+}
+
+.glitch-warning-flash.weak.active {
+    animation: glitchWarningFlashWeak 0.55s ease 1;
+}
+
+.glitch-warning-flash.weak.active::before {
+    animation: glitchLineShiftWeak 0.55s linear 1;
+}
+
+@keyframes glitchWarningFlashWeak {
+    0%   { opacity: 0; }
+    25%  { opacity: 0.7; }
+    65%  { opacity: 0.45; }
+    100% { opacity: 0; }
+}
+
+@keyframes glitchLineShiftWeak {
+    0%   { transform: translateY(-6px); }
+    100% { transform: translateY(6px); }
+}
+
+/* 多次快速闪灭，比阶段1更猛烈 */
+@keyframes glitchWarningFlash {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    25%  { opacity: 0.35; }
+    40%  { opacity: 1; }
+    55%  { opacity: 0.5; }
+    70%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes glitchLineShift {
+    0%   { transform: translateY(-12px); }
+    100% { transform: translateY(12px); }
+}
+
+/* ========== 屏幕震动（作用于全屏层） ========== */
+body.screen-shake .hex-entity-overlay,
+body.screen-shake .security-warning-overlay {
+    animation: screenShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-15px, 8px); }
+    20% { transform: translate(14px, -10px); }
+    30% { transform: translate(-12px, -8px); }
+    40% { transform: translate(15px, 6px); }
+    50% { transform: translate(-13px, 10px); }
+    60% { transform: translate(10px, -8px); }
+    70% { transform: translate(-8px, -5px); }
+    80% { transform: translate(8px, 8px); }
+    90% { transform: translate(-5px, -3px); }
+}
+
+/* ========== 弱震动（第一次用） ========== */
+body.screen-shake-weak .hex-entity-overlay,
+body.screen-shake-weak .security-warning-overlay {
+    animation: screenShakeWeak 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes screenShakeWeak {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-6px, 3px); }
+    30% { transform: translate(5px, -4px); }
+    45% { transform: translate(-4px, -3px); }
+    60% { transform: translate(5px, 2px); }
+    75% { transform: translate(-4px, 3px); }
+    90% { transform: translate(3px, -2px); }
+}

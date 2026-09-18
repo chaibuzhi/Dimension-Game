@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天启科技 · 员工系统</title>
+    <link rel="stylesheet" href="css/intranet.css">
+    <link rel="stylesheet" href="css/intranet-home.css">
+    <link rel="stylesheet" href="css/intranet-project.css">
+    <link rel="stylesheet" href="css/intranet-comm.css">
+    <link rel="stylesheet" href="css/intranet-log.css">
+    <link rel="stylesheet" href="css/intranet-files.css">
+    <link rel="stylesheet" href="css/intranet-profile.css">
+    <link rel="stylesheet" href="css/tqchat-download.css">
+    <link rel="stylesheet" href="css/intranet-glitch.css">
+</head>
+<body>
+
+    <!-- 左侧全高侧栏 -->
+    <aside class="intranet-sidebar">
+        <!-- Logo 置顶 -->
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" width="35" height="35">
+                    <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#38bdf8" stroke-width="1.2" opacity="0.8" />
+                    <polygon points="12,6 17,8.5 17,15.5 12,18 7,15.5 7,8.5" stroke="#2563eb" stroke-width="1" opacity="0.6" />
+                    <circle cx="12" cy="12" r="2" fill="#38bdf8" opacity="0.8" />
+                </svg>
+            </div>
+            <div>
+                <p class="logo-title">天启科技员工系统</p>
+                <p class="logo-sub">Revelation OA System</p>
+            </div>
+        </div>
+
+        <!-- 登录人信息 -->
+        <div class="sidebar-user" id="userCard"></div>
+
+        <!-- 导航按钮 -->
+        <div class="sidebar-nav" id="sidebarNav"></div>
+
+        <!-- 底部：网络状态 + 退出登录 -->
+        <div class="sidebar-footer" id="sidebarFooter"></div>
+    </aside>
+
+    <!-- 右侧内容区 -->
+    <main class="intranet-main" id="intranetMain">
+        <!-- 内容页页眉（固定置顶） -->
+        <header class="content-header">
+            <div>
+                <h1 id="contentHeaderTitle">首页</h1>
+                <p id="contentHeaderSub">HOME</p>
+            </div>
+            <div class="content-header-right">
+                <span id="contentHeaderTime"></span>
+            </div>
+        </header>
+
+        <div id="moduleContainer"></div>
+
+        <footer class="intranet-footer">
+            <p>天启科技员工系统</p>
+            <p class="footer-sub">Revelation OA System</p>
+        </footer>
+    </main>
+
+    <!-- 通知弹窗 -->
+    <div class="notice-modal-overlay hidden" id="noticeModalOverlay">
+        <div class="notice-modal">
+            <button class="notice-modal-close" onclick="closeNotice()">×</button>
+            <div class="notice-modal-title" id="noticeModalTitle"></div>
+            <div class="notice-modal-meta" id="noticeModalMeta"></div>
+            <div class="notice-modal-body" id="noticeModalBody"></div>
+        </div>
+    </div>
+
+        <!-- 数据文件 -->
+        <script src="data/intranet-user.js"></script>
+        <!-- 首页数据 -->
+        <script src="data/intranet-home.js"></script>
+        <!-- 个人中心数据 -->
+        <script src="data/intranet-profile.js"></script>
+        <script src="data/intranet-project.js"></script>
+        <script src="data/intranet-log.js"></script>
+        <script src="data/intranet-chat.js"></script>
+        <script src="data/intranet-files.js"></script>
+
+        <!-- 通用弹窗 -->
+        <script src="js/intranet-modals.js"></script>
+        <!-- 入侵动画 -->
+        <script src="js/intranet-glitch.js"></script>
+
+        <!-- 各模块脚本 -->
+        <script src="js/intranet-home.js"></script>
+        <script src="js/intranet-projects.js"></script>
+        <script src="js/intranet-logs.js"></script>
+        <script src="js/intranet-comm.js"></script>
+        <script src="js/intranet-files.js"></script>
+        <script src="js/intranet-profile.js"></script>
+    
+        <!-- 主文件最后加载 -->
+        <script src="js/intranet.js"></script>
+
+        <!-- 下载安装流程 -->
+        <script src="js/tqchat-download.js"></script>
+</body>
+</html>
