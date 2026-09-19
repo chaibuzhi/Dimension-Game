@@ -415,11 +415,36 @@ async function run() {
     await sleep(400);
     titleEl.style.animationPlayState = 'running';
     actionsEl.style.animationPlayState = 'running';
+
+    // 记录"已经看过本结局"
+    localStorage.setItem('end01_viewed', 'true');
 }
 
 window.addEventListener('load', () => {
-    run();
+    // 如果已经看过本结局，直接渲染全部内容
+    if (localStorage.getItem('end01_viewed') === 'true') {
+        renderInstant();
+    } else {
+        run();
+    }
 });
+
+// ========== 直接渲染（跳过所有动画） ==========
+function renderInstant() {
+    glowLayer.classList.add('visible');
+
+    // 一次性插入所有段落
+    SEGMENTS.forEach(seg => {
+        const p = document.createElement('div');
+        p.className = 'paragraph';
+        p.innerHTML = seg.html;
+        textContainer.appendChild(p);
+    });
+
+    // 显示标题和按钮
+    titleEl.style.animationPlayState = 'running';
+    actionsEl.style.animationPlayState = 'running';
+}
 
 /* ============================================================
    按钮

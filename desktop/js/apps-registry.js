@@ -41,6 +41,17 @@ const appsRegistry = [
         resizable: true
     },
     {
+        id: 'notepad',
+        name: '记事本',
+        icon: '📔',
+        type: 'window',
+        src: 'apps/notepad/notepad.html',
+        width: 520,
+        height: 500,
+        single: true,
+        resizable: true
+    },        
+    {
         id: 'chat',
         name: '天启通',
         icon: '💬',
@@ -59,17 +70,6 @@ const appsRegistry = [
             heightAlt: 680                 // 已登录时的高度
         }
     },
-    {
-        id: 'notepad',
-        name: '记事本',
-        icon: '📔',
-        type: 'window',
-        src: 'apps/notepad/notepad.html',
-        width: 520,
-        height: 500,
-        single: true,
-        resizable: true
-    },        
     // ════════════════════════════════════
     // file/ 目录下的文件（不在桌面显示，通过其他入口打开）
     // ════════════════════════════════════
@@ -79,8 +79,8 @@ const appsRegistry = [
         icon: '📄',
         type: 'window',
         src: 'file/dingagreement.html',
-        width: 900,
-        height: 750,
+        width: 800,
+        height: 620,
         single: true,
         resizable: true,
         desktopIcon: false

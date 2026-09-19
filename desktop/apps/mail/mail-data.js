@@ -881,7 +881,7 @@ const messagePool = {
         bodyHTML: `
             <p>韩老师，您好，我是周小舟。</p>
             <p>之前没敢答应您，是因为公司的规矩特别严，我刚入职没多久，不敢乱说话。</p>
-            <p>我和我亲戚提了您的情况，<strong>她说她认识您，也认识您的妻子丁文倩教授，她愿意给您做内部推荐。</strong></p>
+            <p>我和我亲戚提了您的情况，<strong>她说她认识您，也认识您的妻子丁文倩教授。她很理解您的遭遇和心情，愿意帮您做内部推荐，希望您能快点好起来。</strong></p>
             <div class="recommend-block">
                 <hr>
                 <div class="recommend-row"><span class="recommend-label">推荐人</span><span class="recommend-value">沈曼</span></div>

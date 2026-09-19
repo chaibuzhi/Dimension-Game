@@ -3,14 +3,15 @@ const intranetFilesData = {
     // 通知数据（Hero右侧使用）
     notices: [
         {
-            id: 'maintenance',
-            title: '2026-05-16 · 数据服务器维护通知',
+            id: 'security-warning',
+            title: '2026-06-19 · 异常数据安全警告',
             sender: '安全合规部技术科',
-            modalTitle: '数据服务器维护通知',
-            modalMeta: '安全合规部技术科 · 2026年05月16日',
+            modalTitle: '异常数据安全警告',
+            modalMeta: '安全合规部技术科 · 2026年06月19日',
             modalContent: `
-                <p>为保障平台稳定运行，平台将于5月20日晚24:00进行数据维护，请避开此时段同步文件。</p>
-                <p>维护期间可能无法访问，请提前做好工作安排。</p>
+                <p>在近期的档案审查中，<span style="color:#dc2626; font-weight:600;">发现部分内部资料被人为植入 [ 异常数据 ] 代码。</span>现已启动全面安全排查程序。</p>
+                <p>如员工发现<span style="color:#dc2626; font-weight:600;"> [ 异常数据 ] </span>标记，<strong>请立即上报安全合规部，严禁复制、传播或尝试解码</strong>。</p>
+                <p style="color:#6b7a8f; font-size:13px;">详情见《关于在科研文献中发现 [ 异常数据 ] 的安全通告》</p>
             `
         },
         {

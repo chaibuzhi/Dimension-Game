@@ -27,6 +27,7 @@ function setPlayIcon(isPlaying) {
 // 播放器位于 desktop/apps/audio/ 下，音频文件的 src 是相对桌面根目录的
 const params = new URLSearchParams(window.location.search);
 let audioSrc = params.get('src') || '';
+const audioFileName = params.get('name') || '';
 
 // 把桌面根目录的相对路径转换为播放器目录的相对路径
 if (audioSrc && !audioSrc.startsWith('/') && !audioSrc.startsWith('http')) {
@@ -171,7 +172,7 @@ playBtn.addEventListener('click', function() {
 function showPlaybackError() {
     const title = document.getElementById('audioTitle');
     if (title) {
-        title.textContent = '⚠️ 音频文件加载失败';
+        title.textContent = '⚠️ 加载失败：' + (audioFileName || '音频文件');
         title.style.color = '#ff6b6b';
     }
 }
@@ -210,7 +211,7 @@ audio.addEventListener('loadedmetadata', function() {
     totalTimeEl.textContent = formatTime(audio.duration);
     const title = document.getElementById('audioTitle');
     if (title) {
-        title.textContent = '🎵 录音文件';
+        title.textContent = audioFileName ? '🎵 ' + audioFileName : '🎵 音频文件';
         title.style.color = '';
     }
 });

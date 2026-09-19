@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>桌面</title>
     <link rel="stylesheet" href="css/desktop.css">
+    <link rel="stylesheet" href="css/notebook.css">
 </head>
 <body>
 
@@ -16,6 +17,33 @@
 
     <!-- 渐变光晕 -->
     <div class="vignette"></div>
+
+    <!-- 备忘录便签 -->
+    <div class="notebook" id="notebook">
+        <div class="notebook-header">
+            <span class="notebook-title">备忘录</span>
+            <button class="notebook-close" onclick="handleCloseClick()" title="收起">×</button>
+        </div>
+        <div class="notebook-body" id="notebookBody"></div>
+
+        <!-- 关闭确认覆盖层 -->
+        <div class="notebook-confirm hidden" id="notebookConfirm">
+            <div class="notebook-confirm-text">
+                关闭后将不再收到备忘录更新通知<br>
+                再次打开可恢复通知
+            </div>
+            <div class="notebook-confirm-actions">
+                <button class="notebook-confirm-btn ghost" onclick="cancelCloseNotebook()">取消</button>
+                <button class="notebook-confirm-btn primary" onclick="confirmCloseNotebook()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 便签收起后的小图标 -->
+    <div class="notebook-icon hidden" id="notebookIcon" onclick="openNotebook()" title="备忘录">
+        <span class="notebook-icon-emoji">📒</span>
+        <span class="notebook-icon-label">备忘录</span>
+    </div>
 
     <!-- 桌面 -->
     <div class="desktop" id="desktop">
@@ -74,6 +102,10 @@
 
     <!-- 通知系统 -->
     <script src="js/notifications.js"></script>
+
+    <!-- 备忘录 -->   
+    <script src="js/notebook-data.js"></script>
+    <script src="js/notebook.js"></script>
 
     <!-- 中央调度器 -->
     <script src="js/scheduler.js"></script>

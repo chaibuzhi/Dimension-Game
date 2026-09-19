@@ -1,0 +1,391 @@
+/* ========== 备忘录 · 桌面便签 ========== */
+
+/* ========== 便签主体 ========== */
+.notebook {
+    position: fixed;
+    top: 44px;
+    right: 40px;
+    width: 280px;
+    height: 370px;
+    z-index: 50;
+
+    background:
+        linear-gradient(180deg, #fdf9ec 0%, #f8f0d8 60%, #f2e8c8 100%);
+
+    box-shadow:
+        0 0 0 1px rgba(150, 120, 60, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.25),
+        0 12px 40px rgba(0, 0, 0, 0.45);
+
+    border-radius: 2px;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* 纸张的横线纹理 */
+.notebook::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0,
+            transparent 27px,
+            rgba(140, 100, 50, 0.07) 27px,
+            rgba(140, 100, 50, 0.07) 28px
+        );
+    border-radius: inherit;
+    z-index: 0;
+}
+
+.notebook.hidden {
+    display: none !important;
+}
+
+/* ========== 便签头部 ========== */
+.notebook-header {
+    height: auto;
+    flex-shrink: 0;
+    padding: 14px 16px 9px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgba(140, 100, 50, 0.28);
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.notebook-title {
+    font-family: "Kaiti SC", "KaiTi", "STKaiti", "Songti SC", "SimSun", serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #5a3e1a;
+    padding-left: 0.2em;
+}
+
+.notebook-close {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: rgba(90, 62, 26, 0.5);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    padding: 0;
+    font-family: inherit;
+}
+
+.notebook-close:hover {
+    background: rgba(140, 100, 50, 0.12);
+    color: #5a3e1a;
+}
+
+/* ========== 便签内容区 ========== */
+.notebook-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 16px 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(140, 100, 50, 0.25) transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.notebook-body::-webkit-scrollbar {
+    width: 4px;
+}
+.notebook-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+.notebook-body::-webkit-scrollbar-thumb {
+    background: rgba(140, 100, 50, 0.25);
+    border-radius: 2px;
+}
+.notebook-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(140, 100, 50, 0.45);
+}
+
+.notebook-empty {
+    font-family: "Kaiti SC", "KaiTi", "STKaiti", serif;
+    font-size: 13px;
+    color: rgba(140, 100, 50, 0.5);
+    text-align: center;
+    padding: 40px 0;
+    letter-spacing: 0.1em;
+}
+
+/* ========== 单条笔记 ========== */
+.notebook-entry {
+    padding: 10px 0;
+    margin-bottom: 4px;
+    border-radius: 3px;
+    transition: background 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.notebook-entry:last-child {
+    margin-bottom: 0;
+}
+
+/* 时间戳：手写小注 */
+.notebook-time {
+    font-family: "Kaiti SC", "KaiTi", "STKaiti", serif;
+    font-size: 12px;
+    color: #a07040;
+    letter-spacing: 0.1em;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* 心里话 */
+.notebook-lines {
+    margin-bottom: 6px;
+}
+
+.notebook-line {
+    font-family: "Kaiti SC", "KaiTi", "STKaiti", "Songti SC", serif;
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #3a2e1f;
+    letter-spacing: 0.02em;
+}
+
+/* 新笔记出现时，只高亮"行动目标"，整条笔记不高亮 */
+
+/* 新笔记的子提示也高亮 */
+.notebook-hint.is-new {
+    background:
+        linear-gradient(180deg,
+            transparent 48%,
+            rgba(255, 220, 100, 0.55) 48%,
+            rgba(255, 220, 100, 0.55) 95%,
+            transparent 95%);
+    border-radius: 1px;
+}
+
+/* ========== 悬停：整条一起亮（已完成的不响应） ========== */
+.notebook-entry:not(.is-done):hover .notebook-line,
+.notebook-entry:not(.is-done):hover .notebook-hint {
+    color: #a05020;
+}
+
+.notebook-entry:not(.is-done):hover .notebook-time {
+    color: #c06020;
+}
+
+.notebook-entry:not(.is-done):hover .notebook-arrow {
+    color: #d07020;
+}
+
+/* 已完成的条目：悬停时无任何视觉变化 */
+.notebook-entry.is-done {
+    cursor: default;
+}
+
+/* ========== 已完成——整条褪色（心里话不划线） ========== */
+.notebook-entry.is-done .notebook-line {
+    color: rgba(90, 62, 26, 0.55);
+}
+
+.notebook-entry.is-done .notebook-time {
+    color: rgba(160, 112, 64, 0.5);
+}
+
+/* ========== 子提示 ========== */
+.notebook-hints {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: 2px;
+    margin-top: 4px;
+}
+
+.notebook-hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-family: "Kaiti SC", "KaiTi", "STKaiti", "Songti SC", serif;
+    font-size: 14px;
+    line-height: 1.85;
+    color: #6a5030;
+    letter-spacing: 0.02em;
+    padding: 1px 4px;
+    margin-left: -4px;
+    border-radius: 2px;
+    transition: background 0.15s;
+    cursor: pointer;
+}
+
+.notebook-arrow {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: #a07040;
+    margin-top: 3px;
+    font-weight: 700;
+}
+
+.notebook-hint-text {
+    flex: 1;
+}
+
+/* 子提示已完成 */
+.notebook-hint.is-done .notebook-hint-text {
+    color: rgba(90, 62, 26, 0.4);
+    text-decoration: line-through;
+    text-decoration-color: rgba(140, 100, 50, 0.5);
+    text-decoration-thickness: 1.5px;
+}
+
+.notebook-hint.is-done .notebook-arrow {
+    color: rgba(160, 112, 64, 0.4);
+}
+
+/* ========== 收起后的小图标——桌面式竖排图标 ========== */
+.notebook-icon {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 50;
+    width: 76px;
+    padding: 10px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+    text-align: center;
+}
+
+.notebook-icon.hidden {
+    display: none !important;
+}
+
+.notebook-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.notebook-icon-emoji {
+    font-size: 36px;
+    line-height: 1.2;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    transition: transform 0.2s;
+}
+
+.notebook-icon:hover .notebook-icon-emoji {
+    transform: scale(1.06);
+}
+
+.notebook-icon-label {
+    font-size: 12px;
+    color: var(--text);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+/* ========== 关闭确认覆盖层 ========== */
+.notebook-confirm {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 48px;
+    z-index: 10;
+
+    /* 只保留一点点米黄叠色，模糊交给 .notebook-body.blurred */
+    background: rgba(250, 243, 224, 0.35);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    padding: 20px 24px;
+
+    animation: notebookConfirmIn 0.22s ease;
+}
+
+.notebook-confirm.hidden {
+    display: none !important;
+}
+
+@keyframes notebookConfirmIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.notebook-confirm-text {
+    font-family: 'Segoe UI', 'Microsoft YaHei UI', 'PingFang SC', system-ui, sans-serif;
+    font-size: 13.5px;
+    font-weight: 400;
+    line-height: 1.9;
+    color: #5a3e1a;
+    text-align: center;
+    letter-spacing: 0.04em;
+}
+
+.notebook-confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.notebook-confirm-btn {
+    padding: 7px 20px;
+    border-radius: 5px;
+    font-size: 12.5px;
+    font-family: 'Segoe UI', 'Microsoft YaHei UI', 'PingFang SC', system-ui, sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+}
+
+.notebook-confirm-btn.ghost {
+    background: rgba(255, 255, 255, 0.4);
+    color: #6a4a1c;
+    border: 1px solid rgba(140, 100, 50, 0.35);
+}
+
+.notebook-confirm-btn.ghost:hover {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(140, 100, 50, 0.6);
+}
+
+.notebook-confirm-btn.primary {
+    background: #8a6a30;
+    color: #faf3e0;
+    border: 1px solid #8a6a30;
+}
+
+.notebook-confirm-btn.primary:hover {
+    background: #6a5020;
+    border-color: #6a5020;
+}
+
+/* 当确认层打开时，body 内容被模糊 */
+.notebook-body.blurred {
+    filter: blur(5px);
+    transition: filter 0.25s ease;
+    pointer-events: none;
+}

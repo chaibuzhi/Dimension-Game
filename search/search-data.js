@@ -130,7 +130,7 @@ const searchDatabase = [
         url: 'www.energy-watch.cn/geds/2026-05-24',
         source: '能源观察',
         desc: '5月18日，全球能源发展峰会在西延举行。天启科技丁文倩教授就《φ能量的储能特性与理论极限》作专题报告，遭多位学者质疑。',
-        keywords: ['全球能源发展峰会','GEDS','丁文倩','凝聚态φ能量：储能机制与可控释放'],
+        keywords: ['全球能源发展峰会','GEDS','丁文倩','凝聚态φ能量：储能机制与可控释放','φ能量'],
         target: '../web/nygc/geds.html',
         fuzzy: false,
         priority: 2
@@ -144,7 +144,7 @@ const searchDatabase = [
         url: 'www.frontier-physics-review.cn/people/dingwenqian',
         source: '前沿物理评论',
         desc: 'GEDS峰会结束后，本刊在西延酒店对丁文倩教授进行专访。她谈及φ能量研究、加入天启科技的原因，以及即将启程的南非勘探行动。',
-        keywords: ['前沿物理评论'],
+        keywords: ['前沿物理评论','丁文倩','φ能量'],
         target: '../web/qywl/interview.html',
         fuzzy: false,
         priority: 2

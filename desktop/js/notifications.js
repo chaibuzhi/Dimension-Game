@@ -135,6 +135,16 @@ const Notifications = (function() {
             };
         }
 
+        // 备忘录更新
+        if (eventId && eventId.startsWith('notebook_update_')) {
+            return {
+                icon: '📒',
+                title: '备忘录已更新',
+                subtitle: '',
+                appId: null
+            };
+        }
+                
         // 默认
         return {
             icon: '📩',

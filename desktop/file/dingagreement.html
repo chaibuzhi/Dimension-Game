@@ -211,9 +211,9 @@
         .modal-box {
             background: #ffffff;
             border-radius: 10px;
-            padding: 28px;
+            padding: 24px 22px;
             width: 90%;
-            max-width: 380px;
+            max-width: 300px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
         }
@@ -222,21 +222,26 @@
             font-size: 12px;
             margin-bottom: 10px;
             text-align: center;
+            min-height: 0;
+        }
+
+        .sign-error:not(:empty) {
             min-height: 18px;
         }
         .modal-box h3 {
-            margin-bottom: 12px;
-            font-size: 16px;
+            margin-bottom: 10px;
+            font-size: 15px;
             color: #1a1a1a;
         }
         .modal-box p {
-            font-size: 13px;
+            font-size: 12.5px;
             color: #666;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             line-height: 1.7;
         }
         .modal-box input {
             width: 100%;
+            max-width: 220px;
             padding: 10px 14px;
             border: 1px solid #d2d2d7;
             border-radius: 6px;
@@ -244,11 +249,16 @@
             margin-bottom: 12px;
             outline: none;
             font-family: var(--font);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
         }
         .modal-box input:focus {
             border-color: var(--accent);
         }
         .modal-box .modal-actions {
+            margin-top: 18px;
             display: flex;
             gap: 10px;
             justify-content: center;
@@ -312,7 +322,7 @@
         <div class="doc-page">
             <div class="doc-header">
                 <div class="company-name">关于丁文倩意外身故事宜的确认函</div>
-                <div class="doc-number">编号：TQ-HR-2026-0715</div>
+                <div class="doc-number">编号：TQ-SEC-2026-0715</div>
             </div>
 
             <div class="doc-divider"></div>
@@ -389,22 +399,22 @@
 
     <!-- 操作按钮 -->
     <div class="action-bar" id="actionBar">
-        <button class="btn btn-sign" onclick="openSignModal()">签署确认</button>
+        <button class="btn btn-sign" onclick="openSignModal()">确认签署</button>
         <button class="btn btn-refuse" onclick="openRefuseModal()">拒绝签署</button>
     </div>
 
     <!-- 签署弹窗 -->
     <div class="modal-overlay hidden" id="signModal">
-        <div class="modal-box">
-            <h3>请确认您的签名</h3>
-            <p>请输入您的姓名：</p>
-            <input type="text" id="signInput" placeholder="请输入姓名" onkeydown="if(event.key==='Enter') confirmSign()">
-            <div class="sign-error" id="signError"></div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeSignModal()">取消</button>
-                <button class="btn-confirm" onclick="confirmSign()">确认签名</button>
-            </div>
+    <div class="modal-box">
+        <h3>确认签署</h3>
+        <p>请确认您的签名</p>
+        <input type="text" id="signInput" placeholder="请输入姓名" onkeydown="if(event.key==='Enter') confirmSign()">
+        <div class="sign-error" id="signError"></div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeSignModal()">取消</button>
+            <button class="btn-confirm" onclick="confirmSign()">签署</button>
         </div>
+    </div>
     </div>
 
     <!-- 签约成功弹窗 -->
@@ -421,8 +431,8 @@
     <!-- 拒绝确认弹窗 -->
     <div class="modal-overlay hidden" id="refuseModal">
         <div class="modal-box">
-            <h3>确定拒绝签署</h3>
-            <p style="color:#c0392b;">拒绝签署将失去赔偿金，《科研成果协议》与《保密协议》依旧有效。</p>
+            <h3>拒绝签署</h3>
+            <p style="color:#c0392b;">拒绝签署协议将失去全部赔偿金<br>《科研成果协议》与《保密协议》依旧有效</p>
             <div class="modal-actions">
                 <button class="btn-cancel" onclick="closeRefuseModal()">返回签署</button>
                 <button class="btn-confirm danger" onclick="confirmRefuse()">坚持拒绝</button>

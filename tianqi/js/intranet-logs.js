@@ -31,7 +31,7 @@ function renderLogs() {
                     <div class="log-empty-row">
                         <p>此部分内容已于 <strong>2026年7月15日</strong> 被手动清除。</p>
                         <p>如需恢复，请联系安全合规部技术科。</p>
-                        <button class="log-restore-btn" onclick="showToast('当前账号权限不足')">申请恢复</button>
+                        <button class="log-restore-btn" onclick="markRestoreClicked(); showToast('当前账号权限不足')">申请恢复</button>
                         <p class="log-restore-hint" id="logRestoreHint"></p>
                     </div>
                 </div>

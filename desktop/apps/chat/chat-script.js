@@ -375,7 +375,18 @@ function renderContactList() {
 
 // ========== 选择联系人 ==========
 function selectContact(contactId) {
+    const prevId = currentChatId;
     currentChatId = contactId;
+
+    // 玩家从何旭切到别的联系人 → 认为"看完了"
+    if (prevId === 'hexu' && contactId !== 'hexu') {
+        const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+        if (!triggers.hexu_viewed_complete) {
+            triggers.hexu_viewed_complete = Date.now();
+            localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+        }
+    }
+
     renderContactList();
 
     if (contactId === 'mystery') {

@@ -255,6 +255,15 @@ function toggleTracking(el) {
 }
 
 function openAccidentReport() {
+    // 标记：打开过事故报告密码弹窗
+    (function() {
+        const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+        if (!triggers.opened_accident_modal) {
+            triggers.opened_accident_modal = Date.now();
+            localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+        }
+    })();
+
     const modal = document.createElement('div');
     modal.className = 'project-password-modal';
     modal.id = 'accidentModal';

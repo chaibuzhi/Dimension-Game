@@ -8,6 +8,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>论文 · 天启科技内部文献</title>
     <link rel="stylesheet" href="css/paper.css">
+
+    <style>
+        /* ========== 反色闪烁（作用在 html 上，确保全页反色） ========== */
+        html.invert-flash {
+            animation: paperInvertFlash 0.4s steps(2, end) 3;
+        }
+        @keyframes paperInvertFlash {
+            0%   { filter: invert(0); }
+            50%  { filter: invert(1); }
+            100% { filter: invert(0); }
+        }
+
+        /* ========== 全屏震动 ========== */
+        body.screen-shake {
+            animation: paperScreenShake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+        @keyframes paperScreenShake {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-7px, 4px); }
+            20% { transform: translate(6px, -5px); }
+            30% { transform: translate(-5px, -4px); }
+            40% { transform: translate(7px, 3px); }
+            50% { transform: translate(-6px, 5px); }
+            60% { transform: translate(5px, -4px); }
+            70% { transform: translate(-4px, -3px); }
+            80% { transform: translate(4px, 4px); }
+            90% { transform: translate(-2px, -2px); }
+        }
+
+        /* ========== 故障扫描线覆盖层 ========== */
+        .paper-glitch-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2147483646;
+            opacity: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(200, 20, 20, 0.9) 0px,
+                rgba(200, 20, 20, 0.5) 2px,
+                transparent 3px,
+                transparent 7px
+            );
+        }
+        .paper-glitch-overlay.active {
+            animation: paperGlitchFlash 2.2s ease 1;
+        }
+        @keyframes paperGlitchFlash {
+            0%   { opacity: 0; }
+            8%   { opacity: 1; }
+            18%  { opacity: 0.35; }
+            30%  { opacity: 1; }
+            42%  { opacity: 0.4; }
+            54%  { opacity: 0.95; }
+            66%  { opacity: 0.45; }
+            78%  { opacity: 0.85; }
+            90%  { opacity: 0.3; }
+            100% { opacity: 0; }
+        }
+        /* ========== 全屏巨大异常数据（跟随反色闪烁） ========== */
+        .paper-glitch-fullscreen {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 2147483647;
+            padding: 0 5vw;
+        }
+
+        .paper-glitch-fullscreen.active {
+            display: flex;
+            animation: fullscreenFlicker 0.4s steps(2, end) 3;
+        }
+
+        @keyframes fullscreenFlicker {
+            0%   { opacity: 0;   transform: translate(0, 0); }
+            20%  { opacity: 1;   transform: translate(-5px, 3px); }
+            40%  { opacity: 0.55; transform: translate(6px, -4px); }
+            60%  { opacity: 1;   transform: translate(-4px, -3px); }
+            80%  { opacity: 0.7; transform: translate(5px, 4px); }
+            100% { opacity: 1;   transform: translate(0, 0); }
+        }
+
+        .paper-glitch-fullscreen-text {
+            font-family: "SimSun", "Songti SC", serif;
+            font-weight: 900;
+            font-size: clamp(32px, 6.5vw, 88px);
+            color: #ffffff;
+            letter-spacing: 0.12em;
+            text-align: center;
+            line-height: 1.35;
+            word-break: break-all;
+            text-shadow:
+                0 0 12px rgba(255, 255, 255, 0.9),
+                0 0 30px rgba(255, 40, 40, 1),
+                0 0 55px rgba(255, 20, 20, 0.8),
+                0 0 95px rgba(255, 0, 0, 0.5);
+        }
+    </style>
+
 </head>
 <body>
     <div class="paper-container" id="paperContainer">
@@ -46,6 +148,15 @@
                     </div>
                 `;
                 return;
+            }
+
+            // 标记：打开过"安全通告"论文
+            if (id === 'security-notice') {
+                const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+                if (!triggers.opened_security_notice) {
+                    triggers.opened_security_notice = Date.now();
+                    localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+                }
             }
 
             const paper = papersData[id];
@@ -91,6 +202,181 @@
                     </div>
                 </article>
             `;
+
+            // 许远峰论文：初始化多维实体影像的点击交互
+            if (id === 'entity-overview') {
+                initDwstInteraction();
+            }
+        }
+
+        // ============================================================
+        // 许远峰论文：点击多维实体影像 → 触发反色/故障/音效 → 显示异常数据
+        // ============================================================
+
+        // 震撼警告音效
+        function playAnomalySound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                if (ctx.state === 'suspended') ctx.resume();
+                const now = ctx.currentTime;
+
+                // 1. 高频尖叫（主音）
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'sawtooth';
+                osc1.frequency.setValueAtTime(2600, now);
+                osc1.frequency.exponentialRampToValueAtTime(1900, now + 0.5);
+                gain1.gain.setValueAtTime(0.0001, now);
+                gain1.gain.exponentialRampToValueAtTime(0.075, now + 0.008);
+                gain1.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.6);
+
+                // 2. 第二层高频（错开 60ms，更刺耳）
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'square';
+                osc2.frequency.setValueAtTime(3400, now + 0.06);
+                osc2.frequency.exponentialRampToValueAtTime(2800, now + 0.46);
+                gain2.gain.setValueAtTime(0.0001, now + 0.06);
+                gain2.gain.exponentialRampToValueAtTime(0.045, now + 0.065);
+                gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now + 0.06);
+                osc2.stop(now + 0.5);
+
+                // 3. 低频压迫（下坠感）
+                const bass = ctx.createOscillator();
+                const bassGain = ctx.createGain();
+                bass.type = 'sawtooth';
+                bass.frequency.setValueAtTime(110, now);
+                bass.frequency.exponentialRampToValueAtTime(45, now + 0.85);
+                bassGain.gain.setValueAtTime(0.0001, now);
+                bassGain.gain.exponentialRampToValueAtTime(0.11, now + 0.02);
+                bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+                bass.connect(bassGain);
+                bassGain.connect(ctx.destination);
+                bass.start(now);
+                bass.stop(now + 0.95);
+
+                // 4. 噪点爆发（两段）
+                const makeNoise = (startTime, vol, dur) => {
+                    const bufferSize = Math.floor(ctx.sampleRate * dur);
+                    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+                    }
+                    const noise = ctx.createBufferSource();
+                    noise.buffer = buffer;
+                    const noiseGain = ctx.createGain();
+                    noiseGain.gain.value = vol;
+                    noise.connect(noiseGain);
+                    noiseGain.connect(ctx.destination);
+                    noise.start(startTime);
+                };
+
+                makeNoise(now, 0.09, 0.5);
+                makeNoise(now + 0.25, 0.07, 0.4);
+            } catch (e) {}
+        }
+
+        function triggerAnomalySequence(overlay) {
+            // 1. 反色 3 次
+            document.documentElement.classList.add('invert-flash');
+
+            // 2. 全屏震动
+            document.body.classList.add('screen-shake');
+
+            // 3. 故障扫描线
+            let glitch = document.getElementById('paperGlitchOverlay');
+            if (!glitch) {
+                glitch = document.createElement('div');
+                glitch.id = 'paperGlitchOverlay';
+                glitch.className = 'paper-glitch-overlay';
+                document.body.appendChild(glitch);
+            }
+            glitch.classList.remove('active');
+            void glitch.offsetWidth;
+            glitch.classList.add('active');
+
+            // 4. 全屏巨大异常数据（跟随反色闪烁）
+            let fullscreen = document.getElementById('paperGlitchFullscreen');
+            if (!fullscreen) {
+                fullscreen = document.createElement('div');
+                fullscreen.id = 'paperGlitchFullscreen';
+                fullscreen.className = 'paper-glitch-fullscreen';
+                fullscreen.innerHTML = '<div class="paper-glitch-fullscreen-text">[异常数据1] bWFzdGVya2V5IGh</div>';
+                document.body.appendChild(fullscreen);
+            }
+            fullscreen.classList.remove('active');
+            void fullscreen.offsetWidth;
+            fullscreen.classList.add('active');
+
+            // 5. 音效
+            playAnomalySound();
+
+            // 6. 清理动画状态
+            //    反色 0.4s × 3 = 1.2s；震动 0.7s
+            setTimeout(() => {
+                document.documentElement.classList.remove('invert-flash');
+            }, 1300);
+            setTimeout(() => {
+                document.body.classList.remove('screen-shake');
+            }, 900);
+
+            // 7. 反色结束 → 移除全屏文字（故障线仍在闪）
+            setTimeout(() => {
+                fullscreen.classList.remove('active');
+                setTimeout(() => {
+                    if (fullscreen.parentElement) fullscreen.remove();
+                }, 100);
+            }, 1300);
+
+            // 8. 反色结束后 → 图片上的文字以"故障效果"出现
+            setTimeout(() => {
+                overlay.classList.add('visible');
+            }, 1350);
+        }
+
+        function initDwstInteraction() {
+            const frame = document.getElementById('dwst2Frame');
+            const overlay = document.getElementById('anomalyOverlay');
+            if (!frame || !overlay) return;
+
+            // 检查是否已经发现过
+            let state = {};
+            try { state = JSON.parse(localStorage.getItem('intranet_state') || '{}'); } catch {}
+            const alreadySeen = !!state.dwst_anomaly_seen;
+
+            if (alreadySeen) {
+                // 已发现过 → 直接显示浮层，不绑定点击
+                overlay.classList.add('visible');
+                return;
+            }
+
+            // 未发现 → 加可点击样式 + 绑定点击
+            frame.classList.add('clickable');
+
+            frame.addEventListener('click', function() {
+                if (frame.dataset.triggered === 'true') return;
+                frame.dataset.triggered = 'true';
+
+                // 移除悬停/可点击效果
+                frame.classList.remove('clickable');
+
+                // 触发动画
+                triggerAnomalySequence(overlay);
+
+                // 写入状态
+                let s = {};
+                try { s = JSON.parse(localStorage.getItem('intranet_state') || '{}'); } catch {}
+                s.dwst_anomaly_seen = Date.now();
+                localStorage.setItem('intranet_state', JSON.stringify(s));
+            });
         }
 
         // ========== 渲染锁定状态 ==========

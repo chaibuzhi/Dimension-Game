@@ -46,6 +46,13 @@
         function openIdLightbox() {
             const lb = document.getElementById('idLightbox');
             if (lb) lb.classList.add('active');
+
+            // 标记：玩家查看了工牌细节——视为"发现丁文倩工号"
+            const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+            if (!triggers.visited_ding_id) {
+                triggers.visited_ding_id = Date.now();
+                localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+            }
         }
 
         function closeIdLightbox() {

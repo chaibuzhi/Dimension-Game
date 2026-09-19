@@ -341,16 +341,24 @@ function refreshCurrentView() {
 function loginMail() {
     const addr = document.getElementById('mailAddress').value.trim().toLowerCase();
     const pwd = document.getElementById('mailPassword').value.trim();
+    const errorEl = document.getElementById('loginError');
 
-    if (addr === 'hanxiu@mail.com' && pwd === '20220803') {
-        currentUser = 'hanxiu';
-        enterMailbox('韩休 &lt;hanxiu@mail.com&gt;');
-    } else if (addr === 'prof.wq.ding@mail.com' && pwd === '20220803') {
-        currentUser = 'dingwenqian';
-        enterMailbox('丁文倩 &lt;prof.wq.ding@mail.com&gt;');
-    } else {
-        document.getElementById('loginError').textContent = '邮箱地址或密码错误，请检查后重试。';
+    // 第一步：检查邮箱地址
+    if (addr !== 'hanxiu@mail.com') {
+        errorEl.textContent = '请输入正确的邮箱地址';
+        return;
     }
+
+    // 第二步：检查密码
+    if (pwd !== '20220803') {
+        errorEl.textContent = '密码错误，请输入正确密码';
+        return;
+    }
+
+    // 通过
+    errorEl.textContent = '';
+    currentUser = 'hanxiu';
+    enterMailbox('韩休 &lt;hanxiu@mail.com&gt;');
 }
 
 function enterMailbox(userInfo) {
@@ -845,9 +853,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedUser === 'hanxiu') {
         currentUser = 'hanxiu';
         enterMailbox('韩休 &lt;hanxiu@mail.com&gt;');
-    } else if (savedUser === 'dingwenqian') {
-        currentUser = 'dingwenqian';
-        enterMailbox('丁文倩 &lt;prof.wq.ding@mail.com&gt;');
     }
 });
 

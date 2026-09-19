@@ -69,6 +69,15 @@ function openCloudNotice(id) {
     const notice = intranetFilesData.notices.find(n => n.id === id);
     if (!notice) return;
 
+    // 标记：打开过云数据中心的异常数据通知
+    if (id === 'security-warning') {
+        const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+        if (!triggers.opened_data_notice) {
+            triggers.opened_data_notice = Date.now();
+            localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+        }
+    }
+
     showNoticeModal(
         notice.modalTitle,
         notice.modalMeta,
@@ -114,4 +123,13 @@ function showToast(message) {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
     }, 1000);
+}
+
+// ========== 备忘录触发：点击"申请恢复" ==========
+function markRestoreClicked() {
+    const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+    if (!triggers.clicked_restore) {
+        triggers.clicked_restore = Date.now();
+        localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+    }
 }

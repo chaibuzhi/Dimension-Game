@@ -115,6 +115,7 @@
             color: rgba(120, 180, 255, 0.55);
             transform-origin: center center;
             animation: hexExpand 16s linear infinite;
+            animation-fill-mode: backwards;    /* 延迟期间应用 0% 关键帧（不可见） */
             will-change: transform, opacity;
         }
         .hex-shape svg {
@@ -135,10 +136,10 @@
             90%  { opacity: 0.05; }
             100% { transform: scale(1.4); opacity: 0; }
         }
-        .hex-shape:nth-child(1) { animation-delay: 0s; }
-        .hex-shape:nth-child(2) { animation-delay: 4s; }
-        .hex-shape:nth-child(3) { animation-delay: 8s; }
-        .hex-shape:nth-child(4) { animation-delay: 12s; }
+        .hex-shape:nth-child(1) { animation-delay: -10s; }
+        .hex-shape:nth-child(2) { animation-delay: -6s; }
+        .hex-shape:nth-child(3) { animation-delay: -2s; }
+        .hex-shape:nth-child(4) { animation-delay: 2s; }
 
         /* ========== 第一阶段：叙事文字 ========== */
         .narrative-container {
@@ -547,6 +548,23 @@
             50% { opacity: 0.45; }
         }
 
+        /* ========== 设备提示 ========== */
+        .device-hint {
+            font-family: var(--font-sans);
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            color: var(--text-dim);
+            opacity: 0;
+            animation: hintReveal 1.2s ease 3.2s forwards;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+        }
+
         /* ========== 滚动条 ========== */
         ::-webkit-scrollbar {
             width: 8px;
@@ -670,6 +688,7 @@
         <div class="click-hint">
             点击 <span class="bracket">[ 任意处 ]</span> 开始游戏
         </div>
+        <div class="device-hint">建议用电脑游玩，分辨率不低于 1920 × 1080</div>
     </div>
 
 <script>
@@ -680,6 +699,34 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('glowLayer').classList.add('visible');
     }, 300);
+
+    // 如果玩家已经开始过游戏，跳过动画，直接显示全部文案
+    if (localStorage.getItem('game_started') === 'true') {
+        // 让容器和所有文字都立即显示（无动画）
+        narrativeContainer.style.animation = 'none';
+        narrativeContainer.style.opacity = '1';
+
+        const paragraphs = narrativeContainer.querySelectorAll('.narrative p, .bold-line');
+        paragraphs.forEach(el => {
+            el.style.animation = 'none';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+
+        // 高亮句的两条横线也直接展开
+        narrativeContainer.querySelectorAll('.bold-marker, .bold-marker-bottom').forEach(el => {
+            el.style.animation = 'none';
+            el.style.width = '30px';
+            el.style.opacity = '0.9';
+        });
+
+        // 按钮直接显示
+        const btnContainer = narrativeContainer.querySelector('.btn-container');
+        if (btnContainer) {
+            btnContainer.style.animation = 'none';
+            btnContainer.style.opacity = '1';
+        }
+    }
 });
 
 /* ============================================================
@@ -740,6 +787,8 @@ const hexLayer = document.getElementById('hexLayer');
 let enteredTitleStage = false;
 
 btnStart.addEventListener('click', function() {
+    localStorage.setItem('game_started', 'true');
+
     setTimeout(() => {
         openingAudio.currentTime = 0;
         openingAudio.play().catch(() => {});

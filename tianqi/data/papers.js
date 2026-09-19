@@ -290,14 +290,14 @@ const papersData = {
                 <p>其释放的巨大能量，可摧毁周边地质结构，造成人员死亡或不可逆的器质性损伤。</p>
                 <p><strong>至今确认的接触案例中，接触者全部死亡，无任何幸存记录！</strong></p>
             </div>
-            <p class="legacy-data-anomaly">
-                <span class="hidden-password">
-                    <span class="hidden-label">[异常数据1] </span><span class="hidden-key">bWFzdGVya2V5IGh</span>
-                </span>
-            </p>
             
             <figure class="legacy-image">
-                <img src="image/paper_dwst2.webp" alt="2005年 天启能源研究所 可可西里科考行动真实影像">
+                <div class="legacy-image-frame" id="dwst2Frame">
+                    <img src="image/paper_dwst2.webp" alt="2005年 天启能源研究所 可可西里科考行动真实影像">
+                    <div class="legacy-anomaly-overlay" id="anomalyOverlay">
+                        <span class="legacy-anomaly-text">[异常数据1] bWFzdGVya2V5IGh</span>
+                    </div>
+                </div>
                 <figcaption>2005年　天启能源研究所　可可西里科考行动真实影像</figcaption>
             </figure>
 
@@ -524,7 +524,7 @@ const papersData = {
 
                 <div class="chronicle-epilogue">
                     <p>自1969年至今，人类已追逐多维实体半个多世纪，对它的认知从“未知物质”到“终极能源”到如今的“远期战略目标”。</p>
-                    <p>我们仍然不能预测它、接近它、捕获它，但我们从未停下。</p><span class="hidden-password"><span class="hidden-label">Search</span><span class="hidden-key">异常</span></span>
+                    <p>我们仍然不能预测它、接近它、捕获它，但我们从未停下。</p><span class="hidden-password"><span class="hidden-label">Search</span><span class="hidden-key">异常</span><span class="hidden-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrange</span><span class="hidden-key">[异常数据1]+[异常数据2]</span></span>
                 </div>
             `
         },
