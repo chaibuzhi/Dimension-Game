@@ -35,7 +35,7 @@ const chatMessages = {
             sender: 'system',
             type: 'card',
             title: '欢迎使用天启通',
-            text: '本应用为内部通讯工具，聊天记录均受公司安全合规部监管'
+            text: '本应用为内部通讯工具，通讯记录均受公司安全合规部监管'
         },
         {
             id: 'notice-2',

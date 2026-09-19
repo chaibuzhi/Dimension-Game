@@ -249,7 +249,7 @@ function showChatView() {
 function renderEmptyContacts() {
     document.getElementById('contactList').innerHTML = `
         <div style="text-align:center; color:var(--text-muted); font-size:12px; padding:40px 16px; line-height:1.8;">
-            暂无联系人<br>请先同步聊天记录
+            暂无联系人<br>请先同步通讯记录
         </div>
     `;
     document.getElementById('chatHeaderName').textContent = '联系人';
@@ -412,7 +412,7 @@ function renderMessages(contactId) {
     const contact = chatContacts.find(c => c.id === contactId);
 
     if (messages.length === 0) {
-        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:40px 0;">暂无聊天记录</div>';
+        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:40px 0;">暂无通讯记录</div>';
         document.getElementById('choiceButtons').classList.add('hidden');
         return;
     }
@@ -550,7 +550,7 @@ function showImportDialog() {
     showModal({
         title: '同步记录',
         content: `
-            <p>请输入对方工号，同步聊天记录。</p>
+            <p>请输入对方工号，同步通讯记录。</p>
             <input type="text" id="importEmpIdInput" placeholder="输入工号" autocomplete="off">
         `,
         actions: [
@@ -571,13 +571,34 @@ function confirmImport() {
         return;
     }
 
+    // 检查是否已经导入过 → 直接显示"已恢复"，不再走进度条
+    if (importedContacts.includes(contact.id)) {
+        const titleEl = document.getElementById('modalTitle');
+        const contentEl = document.getElementById('modalContent');
+        const actionsEl = document.getElementById('modalActions');
+
+        titleEl.textContent = '同步记录';
+        contentEl.innerHTML = `
+            <p style="text-align:center; padding:20px 0; font-size:13px; color:var(--text-dim);">
+                通讯记录已恢复
+            </p>
+        `;
+        actionsEl.innerHTML = `<button class="modal-btn primary" data-close-modal="true">确认</button>`;
+        actionsEl.querySelector('[data-close-modal]').addEventListener('click', function() {
+            closeModal();
+            renderContactList();
+            selectContact(contact.id);
+        });
+        return;
+    }
+
     const titleEl = document.getElementById('modalTitle');
     const contentEl = document.getElementById('modalContent');
     const actionsEl = document.getElementById('modalActions');
 
     titleEl.textContent = '同步记录';
     contentEl.innerHTML = `
-        <p>正在下载聊天记录...</p>
+        <p>正在下载通讯记录...</p>
         <div class="modal-progress-track">
             <div class="modal-progress-fill" id="importProgressFill"></div>
         </div>
@@ -855,7 +876,7 @@ document.getElementById('modalOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
 });
 
-// ========== 聊天记录中文件点击处理 ==========
+// ========== 通讯记录中文件点击处理 ==========
 function handleChatFileClick(fileKey) {
     switch (fileKey) {
         case 'phi-origin':

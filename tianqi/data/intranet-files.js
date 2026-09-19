@@ -292,7 +292,7 @@ const intranetFilesData = {
             showInCard: false,
             searchable: true,
             highlight: 'red',
-            keywords: ['异常', '异常数据', '安全通告', 'masterkey']
+            keywords: ['异常', '异常数据', '安全通告', 'masterkey', '关于在科研文献中发现 [ 异常数据 ] 的安全通告']
         },        
 
         // ════════════════════════════════════
@@ -581,7 +581,7 @@ const intranetFilesData = {
             showInCard: false,
             searchable: true,
             highlight: 'red',
-            keywords: ['异常', '异常数据', '安全通告', 'masterkey']
+            keywords: ['异常', '异常数据', '安全通告', 'masterkey', '关于在科研文献中发现 [ 异常数据 ] 的安全通告']
         },        
     ]
 };

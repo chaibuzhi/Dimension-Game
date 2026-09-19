@@ -220,7 +220,7 @@ function renderMysteryHistory() {
     const contact = chatContacts.find(c => c.id === 'mystery');
 
     if (messages.length === 0) {
-        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:40px 0;">暂无聊天记录</div>';
+        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:40px 0;">暂无通讯记录</div>';
         document.getElementById('choiceButtons').classList.add('hidden');
         return;
     }

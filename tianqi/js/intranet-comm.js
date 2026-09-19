@@ -70,7 +70,7 @@ function selectCommContact(el, name) {
     if (body) {
         body.innerHTML = `
             <div class="comm-cleared-message">
-                <p>与 <strong>${name}</strong> 的聊天记录已于 <strong>2026年7月15日</strong> 被手动清除。</p>
+                <p>与 <strong>${name}</strong> 的通讯记录已于 <strong>2026年7月15日</strong> 被手动清除。</p>
                 <p>如需恢复，请联系安全合规部技术科。</p>
                 <button class="comm-restore-btn" onclick="markRestoreClicked(); showToast('当前账号权限不足')">申请恢复</button>
                 <p class="comm-restore-hint" id="commRestoreHint"></p>
