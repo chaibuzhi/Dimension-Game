@@ -398,7 +398,7 @@ function logoutMail() {
     setMailState('loggedIn', null);
     document.getElementById('mailView').classList.remove('active');
     document.getElementById('loginView').style.display = 'flex';
-    document.getElementById('mailAddress').value = '';
+    document.getElementById('mailAddress').value = 'hanxiu@mail.com';
     document.getElementById('mailPassword').value = '';
     document.getElementById('loginError').textContent = '';
 }
