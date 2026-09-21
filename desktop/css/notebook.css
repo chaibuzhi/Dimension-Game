@@ -177,6 +177,17 @@
     border-radius: 1px;
 }
 
+/* 永久高亮：和普通荧光笔一样，只是不消失 */
+.notebook-hint.is-always-highlight {
+    background:
+        linear-gradient(180deg,
+            transparent 48%,
+            rgba(255, 220, 100, 0.55) 48%,
+            rgba(255, 220, 100, 0.55) 95%,
+            transparent 95%);
+    border-radius: 1px;
+}
+
 /* ========== 悬停：整条一起亮（已完成的不响应） ========== */
 .notebook-entry:not(.is-done):hover .notebook-line,
 .notebook-entry:not(.is-done):hover .notebook-hint {
@@ -388,4 +399,61 @@
     filter: blur(5px);
     transition: filter 0.25s ease;
     pointer-events: none;
+}
+
+/* ========== 结尾标记 ========== */
+.notebook-badge {
+    margin-top: 28px;
+    text-align: center;
+    font-family:
+        'Source Han Serif SC',
+        'Source Han Serif CN',
+        'Noto Serif SC',
+        'Songti SC',
+        'STZhongsong',
+        'SimSun',
+        Georgia,
+        serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    padding-left: 0.3em;
+    color: #5a3e1a;
+    line-height: 1.4;
+    user-select: none;
+}
+
+/* ========== 移动端适配 ========== */
+@media (max-width: 600px) {
+    .notebook {
+        top: 20px;
+        right: 12px;
+        width: 240px;
+        max-width: calc(100vw - 24px);
+        height: 55vh;
+        max-height: 420px;
+    }
+
+    .notebook-icon {
+        top: 20px;
+        right: 12px;
+        width: 64px;
+        padding: 8px 4px;
+    }
+
+    .notebook-icon-emoji {
+        font-size: 30px;
+    }
+
+    .notebook-icon-label {
+        font-size: 11px;
+    }
+
+    .notebook-confirm {
+        padding: 16px 16px;
+    }
+
+    .notebook-confirm-text {
+        font-size: 12.5px;
+    }
 }

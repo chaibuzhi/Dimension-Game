@@ -48,6 +48,18 @@ function renderProjects() {
 
 function showProjectDetail(projectId) {
     currentProjectDetail = projectId;
+
+    // 记录浏览（成就系统）
+    (function() {
+        let seen = {};
+        try { seen = JSON.parse(localStorage.getItem('explore_seen') || '{}'); } catch {}
+        seen.projects = seen.projects || [];
+        if (!seen.projects.includes(projectId)) {
+            seen.projects.push(projectId);
+            localStorage.setItem('explore_seen', JSON.stringify(seen));
+        }
+    })();
+
     const container = document.getElementById('moduleContainer');
 
     let project = null;

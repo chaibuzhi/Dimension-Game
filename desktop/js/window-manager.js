@@ -35,11 +35,13 @@ const WindowManager = (function() {
             icon,
             width,
             height,
-            contentHTML,       // 直接 HTML 内容
-            iframeSrc,          // iframe 地址
-            folderId,           // 文件夹数据ID
+            contentHTML,
+            iframeSrc,
+            folderId,
             single,
-            resizable          // 是否可拉伸
+            resizable,
+            minWidth,
+            minHeight
         } = options;
 
         // 单例检查
@@ -126,9 +128,9 @@ const WindowManager = (function() {
         // 绑定按钮事件
         bindWindowEvents(windowId, windowEl);
 
-        // 如果可拉伸，绑定 resize
+        // 如果可拉伸，绑定 resize（可传自定义最小值）
         if (resizable && !options.customTitlebar) {
-            bindResize(windowEl);
+            bindResize(windowEl, options.minWidth, options.minHeight);
         }
 
         // 如果是文件夹，绑定文件点击
@@ -291,12 +293,12 @@ const WindowManager = (function() {
     }
 
     // ========== 窗口拉伸 ==========
-    function bindResize(windowEl) {
+    function bindResize(windowEl, minW, minH) {
         const handle = windowEl.querySelector('.window-resize-handle');
         if (!handle) return;
 
-        const MIN_W = 320;
-        const MIN_H = 240;
+        const MIN_W = minW || 320;
+        const MIN_H = minH || 240;
 
         let isResizing = false;
         let startX = 0, startY = 0;
@@ -427,7 +429,9 @@ const WindowManager = (function() {
                 iframeSrc: iframeSrc,
                 single: app.single,
                 darkWindow: app.darkWindow || false,
-                resizable: app.resizable
+                resizable: app.resizable,
+                minWidth: app.minWidth,
+                minHeight: app.minHeight
             });
             return;
         }
@@ -455,6 +459,11 @@ const WindowManager = (function() {
         // 先加载图片获取真实尺寸
         const img = new Image();
         img.onload = function() {
+            // 记录浏览（成就系统）
+            if (typeof markExplore === 'function') {
+                markExplore('photos', app.id);
+            }
+
             const maxWidth = app.width || 560;
             const maxHeight = app.height || 480;
             const imgRatio = img.naturalWidth / img.naturalHeight;

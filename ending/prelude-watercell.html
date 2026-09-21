@@ -7,6 +7,7 @@
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>多维实体 · 水牢</title>
+    <script src="../desktop/js/playtime.js"></script>
     <style>
         * {
             margin: 0;
@@ -383,6 +384,11 @@
 
 <script>
 /* ============================================================
+   记录：玩家打开过水牢预告页
+   ============================================================ */
+localStorage.setItem('watercell_visited', 'true');
+
+/* ============================================================
    背景粒子
    ============================================================ */
 (function initParticles() {
@@ -440,10 +446,24 @@ setTimeout(() => {
 /* ============================================================
    回到桌面
    ============================================================ */
-document.getElementById('btnBack').addEventListener('click', (e) => {
-    e.stopPropagation();
-    window.location.href = '../desktop/index-hanxiu.html';
-});
+// 检查是否回顾模式
+const isReview = new URLSearchParams(window.location.search).get('review') === 'true';
+const btnBack = document.getElementById('btnBack');
+
+if (isReview) {
+    // 回顾模式：隐藏"回到桌面"按钮
+    btnBack.style.display = 'none';
+} else {
+    // 正常模式：绑定点击事件
+    btnBack.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // 标记进入通关后模式
+        localStorage.setItem('post_ending_mode', 'true');
+        // 和葬礼页的"时光回溯"一样，返回桌面后弹一次成就通知
+        localStorage.setItem('achievement_hint_pending', 'true');
+        window.location.href = '../desktop/index-hanxiu.html';
+    });
+}
 </script>
 </body>
 </html>

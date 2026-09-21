@@ -1,7 +1,38 @@
 // ========== 桌面核心逻辑 ==========
-
 document.addEventListener('DOMContentLoaded', function() {
 
+    // ========== 通关后模式：应用浅色主题 ==========
+    if (localStorage.getItem('post_ending_mode') === 'true') {
+        document.body.classList.add('post-ending');
+    }
+
+    // ========== 成就系统：记录首次打开时间 ==========
+    (function() {
+        const KEY = 'achievements_state';
+        let state = {};
+        try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
+        if (!state.first_open) {
+            state.first_open = Date.now();
+            localStorage.setItem(KEY, JSON.stringify(state));
+        }
+    })();    
+
+    // ========== 成就系统：扫描 + 桌面提示 ==========
+    (function() {
+        // 扫描一次（写入 unlocked）
+        if (typeof window.scanAchievements === 'function') {
+            window.scanAchievements();
+        }
+
+        // 检查是否有待发的"成就已更新"提示
+        if (localStorage.getItem('achievement_hint_pending') === 'true') {
+            localStorage.removeItem('achievement_hint_pending');
+            const queue = JSON.parse(localStorage.getItem('scheduled_notifications') || '[]');
+            queue.push({ eventId: 'achievement_hint', showAt: Date.now() + 3000 });
+            localStorage.setItem('scheduled_notifications', JSON.stringify(queue));
+        }
+    })();
+    
     function createParticles() {
         const container = document.getElementById('particles');
         if (!container) return;
@@ -67,7 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const now = new Date();
         const timeEl = document.getElementById('taskbarTime');
         if (timeEl) {
-            timeEl.innerHTML = '2026年7月18日<br>' +
+            const dateStr = document.body.classList.contains('post-ending')
+                ? '2026年7月22日'
+                : '2026年7月18日';
+            timeEl.innerHTML = dateStr + '<br>' +
                 String(now.getHours()).padStart(2, '0') + ':' +
                 String(now.getMinutes()).padStart(2, '0');
         }
@@ -100,11 +134,10 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="start-menu-item" data-action="achievement">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 2.5H13V7C13 9.8 10.8 12 8 12C5.2 12 3 9.8 3 7V2.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-                    <path d="M6 11.5V13.5H10V11.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M3 5H1.5M13 5H14.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <polygon points="8,1.5 14,5 14,11 8,14.5 2,11 2,5" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linejoin="round"/>
+                    <polygon points="8,4.5 11.5,6.5 11.5,9.5 8,11.5 4.5,9.5 4.5,6.5" stroke="currentColor" stroke-width="0.6" fill="none" stroke-linejoin="round" opacity="0.5"/>
                 </svg>
-                解锁成就
+                查看成就
             </div>
             <div class="start-menu-divider"></div>
             <div class="start-menu-item" data-action="restart">

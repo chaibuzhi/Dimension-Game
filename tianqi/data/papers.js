@@ -177,7 +177,7 @@ const papersData = {
 
             <h2 class="modern-h2">五、结论与展望</h2>
             <p>若本假说成立，φ 能量将不再是三维空间内的异常能量，而是：</p>
-            <p class="modern-conclusion">一种来自额外维度空间的新能量形态。<span class="hidden-password"><span class="hidden-label">[异常数据2] </span><span class="hidden-key">hcHB5YmlydGhkYXk=</span></span></p>
+            <p class="modern-conclusion" id="modernConclusion">一种来自额外维度空间的新能量形态。<span class="hidden-password modern-anomaly" id="modernAnomaly"><span class="hidden-label">[异常数据2] </span><span class="hidden-key">hcHB5YmlydGhkYXk=</span></span></p>
             <p class="modern-derivation-lead">核心推论</p>
             <div class="modern-derivation-list">
                 <div class="modern-derivation-item">
@@ -524,7 +524,7 @@ const papersData = {
 
                 <div class="chronicle-epilogue">
                     <p>自1969年至今，人类已追逐多维实体半个多世纪，对它的认知从“未知物质”到“终极能源”到如今的“远期战略目标”。</p>
-                    <p>我们仍然不能预测它、接近它、捕获它，但我们从未停下。</p><span class="hidden-password"><span class="hidden-label">Search</span><span class="hidden-key">异常</span><span class="hidden-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrange</span><span class="hidden-key">[异常数据1]+[异常数据2]</span></span>
+                    <p class="chronicle-final-line" id="chronicleFinalLine">我们仍然不能预测它、接近它、捕获它，但我们从未停下。</p><span class="hidden-password chronicle-anomaly" id="chronicleAnomaly"><span class="hidden-label">Search</span><span class="hidden-key">异常</span><span class="hidden-label">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrange</span><span class="hidden-key">[异常数据1]+[异常数据2]</span></span>
                 </div>
             `
         },

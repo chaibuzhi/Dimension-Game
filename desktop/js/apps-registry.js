@@ -111,15 +111,15 @@ const appsRegistry = [
     },
     {
         id: 'achievement',
-        name: '解锁成就',
-        icon: '🏆',
+        name: '查看成就',
+        icon: '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:-2px;"><polygon points="8,1.5 14,5 14,11 8,14.5 2,11 2,5" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linejoin="round"/><polygon points="8,4.5 11.5,6.5 11.5,9.5 8,11.5 4.5,9.5 4.5,6.5" stroke="currentColor" stroke-width="0.6" fill="none" stroke-linejoin="round" opacity="0.5"/></svg>',
         type: 'window',
-        src: 'file/achievement.html',
-        width: 820,
+        src: 'apps/achievement/achievement.html',
+        width: 700,
         height: 560,
         single: true,
         desktopIcon: false,
-        resizable: true
+        resizable: false
     },
     {
         id: 'about',
@@ -127,7 +127,7 @@ const appsRegistry = [
         icon: '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:-2px;"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 7.5V11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.8" fill="currentColor"/></svg>',
         type: 'window',
         src: 'file/about.html',
-        width: 820,
+        width: 710,
         height: 560,
         single: true,
         resizable: true,

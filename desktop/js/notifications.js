@@ -144,7 +144,17 @@ const Notifications = (function() {
                 appId: null
             };
         }
-                
+
+        // 成就系统提示
+        if (eventId === 'achievement_hint') {
+            return {
+                icon: '🏆',
+                title: '成就已更新',
+                subtitle: '前往桌面查看',
+                appId: 'achievement'
+            };
+        }           
+             
         // 默认
         return {
             icon: '📩',

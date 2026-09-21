@@ -7,6 +7,7 @@
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>结局 · 不谨慎的侦探</title>
+    <script src="../desktop/js/playtime.js"></script>
     <style>
         :root {
             --bg: #060a1c;
@@ -154,6 +155,17 @@
             margin-bottom: 0;
         }
 
+        /* 回顾模式：所有段落整体一次性淡入 */
+        .paragraph.review-fade {
+            opacity: 0;
+            animation: reviewFadeAll 1.2s ease 0.3s forwards;
+        }
+
+        @keyframes reviewFadeAll {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        
         .char {
             display: inline-block;
             opacity: 0;
@@ -421,26 +433,34 @@ async function run() {
 }
 
 window.addEventListener('load', () => {
-    if (localStorage.getItem('end02_viewed') === 'true') {
-        renderInstant();
+    const isReview = new URLSearchParams(window.location.search).get('review') === 'end02';
+
+    if (isReview || localStorage.getItem('end02_viewed') === 'true') {
+        renderInstant(isReview);
     } else {
         run();
     }
 });
 
 // ========== 直接渲染（跳过所有动画） ==========
-function renderInstant() {
+function renderInstant(isReview) {
     glowLayer.classList.add('visible');
 
     SEGMENTS.forEach(seg => {
         const p = document.createElement('div');
         p.className = 'paragraph';
+        if (isReview) p.classList.add('review-fade');
         p.innerHTML = seg.html;
         textContainer.appendChild(p);
     });
 
     titleEl.style.animationPlayState = 'running';
-    actionsEl.style.animationPlayState = 'running';
+
+    if (isReview) {
+        actionsEl.style.display = 'none';
+    } else {
+        actionsEl.style.animationPlayState = 'running';
+    }
 }
 
 /* ============================================================

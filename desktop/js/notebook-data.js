@@ -104,8 +104,8 @@ const NOTEBOOK_NOTES = [
     {
         id: 9,
         lines: [
-            '她的masterkey是happybirthday',
-            '文倩，是你留给我的线索吗？',
+            'Masterkey是happybirthday',
+            '文倩，是你留给我的吗',
             '这是祝福，还是你的遗言？'
         ],
         appear: (s) => s.dingwenqianLocked,
@@ -148,8 +148,7 @@ const NOTEBOOK_NOTES = [
     {
         id: 12,
         lines: [
-            '文倩，我来了',
-            '等我'
+            '不管要付出什么代价，我都要找到她'
         ],
         appear: (s) => s.hasReadCode,
         done: (s) => !!s.examAnswers,
@@ -157,6 +156,22 @@ const NOTEBOOK_NOTES = [
             { id: '12-1', text: '成为天启探索者',
               appear: (s) => true,
               done: (s) => !!s.examAnswers }
+        ]
+    },
+    {
+        id: 13,
+        lines: [
+            '文倩，我来了',
+            '等我'
+        ],
+        appear: (s) => s.postEndingMode,
+        done: () => false,
+        badge: '- END -',
+        hints: [
+            { id: '13-1', text: '入职天启科技',
+              appear: (s) => true,
+              done: () => false,
+              alwaysHighlight: true }
         ]
     }
 ];
@@ -188,6 +203,7 @@ function getNotebookGlobalState() {
         tqchatLocked: localStorage.getItem('tqchat_locked') === 'true',
         jobApplyAttempted: localStorage.getItem('job_apply_attempted') === 'true',
         examAnswers: localStorage.getItem('exam_answers'),
-        hasReadCode: hasReadCode
+        hasReadCode: hasReadCode,
+        postEndingMode: localStorage.getItem('post_ending_mode') === 'true'
     };
 }

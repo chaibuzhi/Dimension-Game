@@ -102,6 +102,17 @@
 
             const news = sortedNews[currentIndex];
 
+            // 记录浏览（成就系统）
+            (function() {
+                let seen = {};
+                try { seen = JSON.parse(localStorage.getItem('explore_seen') || '{}'); } catch {}
+                seen.news = seen.news || [];
+                if (!seen.news.includes(newsId)) {
+                    seen.news.push(newsId);
+                    localStorage.setItem('explore_seen', JSON.stringify(seen));
+                }
+            })();
+
             // 上一篇 = 日期更新的（排序中更靠前，index 更小）
             const prevNews = currentIndex > 0 ? sortedNews[currentIndex - 1] : null;
             // 下一篇 = 日期更旧的（排序中更靠后，index 更大）

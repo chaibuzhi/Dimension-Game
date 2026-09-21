@@ -207,6 +207,16 @@
             if (id === 'entity-overview') {
                 initDwstInteraction();
             }
+
+            // 编年史：点击高亮句 → 异常数据浮现
+            if (id === 'chronicle') {
+                initChronicleInteraction();
+            }
+
+            // φ能量起源假说：点击结论 → 异常数据浮现
+            if (id === 'phi-energy-storage') {
+                initPhiInteraction();
+            }
         }
 
         // ============================================================
@@ -379,6 +389,69 @@
             });
         }
 
+        // ============================================================
+        // 编年史结尾：点击高亮句 → 异常数据浮现
+        // ============================================================
+
+        function initChronicleInteraction() {
+            const line = document.getElementById('chronicleFinalLine');
+            const anomaly = document.getElementById('chronicleAnomaly');
+            if (!line || !anomaly) return;
+
+            // 检查是否已经揭晓过
+            let state = {};
+            try { state = JSON.parse(localStorage.getItem('intranet_state') || '{}'); } catch {}
+            const alreadySeen = !!state.chronicle_anomaly_seen;
+
+            if (alreadySeen) {
+                line.classList.add('revealed');
+                anomaly.classList.add('visible');
+                return;
+            }
+
+            line.addEventListener('click', function() {
+                if (line.classList.contains('revealed')) return;
+                line.classList.add('revealed');
+                anomaly.classList.add('visible');
+
+                let s = {};
+                try { s = JSON.parse(localStorage.getItem('intranet_state') || '{}'); } catch {}
+                s.chronicle_anomaly_seen = Date.now();
+                localStorage.setItem('intranet_state', JSON.stringify(s));
+            });
+        }
+
+        // ============================================================
+        // φ能量论文：点击结论 → 异常数据浮现
+        // ============================================================
+
+        function initPhiInteraction() {
+            const conclusion = document.getElementById('modernConclusion');
+            const anomaly = document.getElementById('modernAnomaly');
+            if (!conclusion || !anomaly) return;
+
+            let state = {};
+            try { state = JSON.parse(localStorage.getItem('intranet_state') || '{}'); } catch {}
+            const alreadySeen = !!state.phi_anomaly_seen;
+
+            if (alreadySeen) {
+                conclusion.classList.add('revealed');
+                anomaly.classList.add('visible');
+                return;
+            }
+
+            conclusion.addEventListener('click', function() {
+                if (conclusion.classList.contains('revealed')) return;
+                conclusion.classList.add('revealed');
+                anomaly.classList.add('visible');
+
+                let s = {};
+                try { s = JSON.parse(localStorage.getItem('intranet_state') || '{}'); } catch {}
+                s.phi_anomaly_seen = Date.now();
+                localStorage.setItem('intranet_state', JSON.stringify(s));
+            });
+        }
+        
         // ========== 渲染锁定状态 ==========
         function renderSealedPaper(paper) {
             const container = document.getElementById('paperContainer');
@@ -431,6 +504,33 @@
 
         // 初始化
         renderPaper();
+
+        // 记录论文阅读（翻到底算读完）
+        (function() {
+            let marked = false;
+            const paperId = getPaperIdFromUrl();
+            if (!paperId) return;
+
+            function tryMark() {
+                if (marked) return;
+                if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 50) {
+                    marked = true;
+                    let seen = {};
+                    try { seen = JSON.parse(localStorage.getItem('explore_seen') || '{}'); } catch {}
+                    seen.papers = seen.papers || [];
+                    if (!seen.papers.includes(paperId)) {
+                        seen.papers.push(paperId);
+                        localStorage.setItem('explore_seen', JSON.stringify(seen));
+                    }
+                    window.removeEventListener('scroll', tryMark);
+                    window.removeEventListener('resize', tryMark);
+                }
+            }
+            window.addEventListener('scroll', tryMark);
+            window.addEventListener('resize', tryMark);
+            // 延迟检查初始状态（等图片加载完，页面高度可能变化）
+            setTimeout(tryMark, 1500);
+        })();
     </script>
 </body>
 </html>

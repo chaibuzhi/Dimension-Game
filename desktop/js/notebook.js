@@ -112,11 +112,16 @@
 
                 const hintSilent = ns.silent && ns.silent[h.id];
 
+                // 标记 alwaysHighlight 的子提示：永远高亮
+                const alwaysHi = h.alwaysHighlight === true;
+                const isNew = alwaysHi ? true : (!ns.seen[h.id] && !hintSilent);
+
                 hints.push({
                     id: h.id,
                     text: h.text,
                     isDone: hintDone,
-                    isNew: !ns.seen[h.id] && !hintSilent
+                    isNew: isNew,
+                    alwaysHighlight: alwaysHi
                 });
             });
 
@@ -126,6 +131,7 @@
                 id: def.id,
                 lines: def.lines,
                 hints: hints,
+                badge: def.badge || null,
                 appearTime: ns.appears[def.id],
                 doneTime: ns.dones[def.id] || null,
                 isDone: isDone,
@@ -228,12 +234,17 @@
                 note.hints.forEach(hint => {
                     const hDone = hint.isDone ? ' is-done' : '';
                     const hNew = hint.isNew ? ' is-new' : '';
-                    html += `<div class="notebook-hint${hDone}${hNew}" data-hint-id="${hint.id}">
+                    const hAlways = hint.alwaysHighlight ? ' is-always-highlight' : '';
+                    html += `<div class="notebook-hint${hDone}${hNew}${hAlways}" data-hint-id="${hint.id}">
                         <span class="notebook-arrow">▸</span>
                         <span class="notebook-hint-text">${escapeHtml(hint.text)}</span>
                     </div>`;
                 });
                 html += `</div>`;
+            }
+
+            if (note.badge) {
+                html += `<div class="notebook-badge">${escapeHtml(note.badge)}</div>`;
             }
 
             html += `</div>`;
@@ -323,7 +334,18 @@
         if (!confirmEl || !bodyEl) return;
 
         if (confirmEl.classList.contains('hidden')) {
-            // 第一次点 → 打开确认 + 模糊 body
+            const ns = getState();
+
+            // 已经警告过 → 直接关闭
+            if (ns.closeWarned) {
+                closeNotebook();
+                return;
+            }
+
+            // 第一次 → 记录 + 弹出确认层
+            ns.closeWarned = true;
+            saveState(ns);
+
             positionConfirmLayer();
             confirmEl.classList.remove('hidden');
             bodyEl.classList.add('blurred');
@@ -366,7 +388,8 @@
         'notebook_triggers', 'mail_code_ready',
         'agreement_signed', 'intranet_login',
         'dingwenqian_locked', 'tqchat_locked',
-        'job_apply_attempted', 'exam_answers'
+        'job_apply_attempted', 'exam_answers',
+        'post_ending_mode'
     ];
 
     // ========== 快照：把关注的键拼成字符串，用于比较变化 ==========

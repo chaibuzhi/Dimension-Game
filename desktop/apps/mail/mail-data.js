@@ -207,8 +207,8 @@ const messagePool = {
                     <p>3. 测试结果仅用于招聘评定，全程严格保密。</p>
                     <p>请您于 24 小时内点击下方链接进入测试，逾期视为自动放弃应聘资格。</p>
                     <div style="text-align:center; margin:32px 0 28px;">
-                        <a class="exam-button" href="javascript:void(0)"
-                        onclick="localStorage.setItem('exam_started', 'true'); window.top.location.href = '../../../tianqi/exam.html';">
+                    <a class="exam-button" href="javascript:void(0)"
+                    onclick="window.top.location.href = '../../../tianqi/exam.html';">
                             <span class="exam-btn-glow"></span>
                             <span class="exam-btn-scan"></span>
                             <span class="exam-btn-text">开 始 测 试</span>

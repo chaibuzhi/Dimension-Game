@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon/favicon.ico" sizes="any">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成就</title>
+<link rel="stylesheet" href="achievement-style.css">
+</head>
+<body data-theme="main">
+
+    <div id="bgParticles"></div>
+
+    <header class="top-nav">
+        <div class="tabs">
+            <div class="tab active" data-tab="home">首 页</div>
+            <div class="tab" data-tab="main">主 线</div>
+            <div class="tab" data-tab="explore">探 索</div>
+            <div class="tab" data-tab="ending">结 局</div>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <div class="home-view active" id="homeView">
+            <div class="home-layout">
+
+                <!-- 顶部：标题 -->
+                <div class="home-header">
+                    <div class="home-title">游玩成就</div>
+                    <div class="home-subtitle">ACHIEVEMENTS</div>
+                </div>
+
+                <!-- 中部：圆圈 + 进度条 -->
+                <div class="home-body">
+                    <div class="home-ring-side">
+                        <div class="home-ring-wrap">
+                            <svg class="home-ring" viewBox="0 0 140 140">
+                                <circle class="ring-bg" cx="70" cy="70" r="65"/>
+                                <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="65"/>
+                            </svg>
+                            <div class="home-ring-center">
+                                <div class="home-ring-num" id="ringNum">0</div>
+                                <div class="home-ring-total" id="ringTotal">/ 0 已解锁</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="home-cats-side">
+                        <div class="home-cats" id="homeCats"></div>
+                    </div>
+                </div>
+
+                <!-- 底部：时间信息 -->
+                <div class="home-footer">
+                    <div class="home-meta-item">
+                        <div class="home-meta-label">登录时间</div>
+                        <div class="home-meta-value" id="statFirstOpen">—</div>
+                    </div>
+                    <div class="home-meta-divider"></div>
+                    <div class="home-meta-item">
+                        <div class="home-meta-label">游玩时长</div>
+                        <div class="home-meta-value" id="statDuration">—</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="detail-view" id="detailView" data-tab="main">
+            <div class="wall-side">
+                <div class="page-label">
+                    <div class="page-label-row">
+                        <span class="page-label-zh" id="pageLabelZh">主线成就</span>
+                        <span class="page-label-count" id="pageLabelCount">0 / 10</span>
+                    </div>
+                    <span class="page-label-en" id="pageLabelEn">MAIN ACHIEVEMENTS</span>
+                </div>
+                <div class="wall" id="wall"></div>
+            </div>
+            <div class="detail-side">
+                <div class="postcard" id="postcard"></div>
+            </div>
+        </div>
+
+    </div>
+
+<script src="achievement-data.js"></script>
+<script src="achievement-script.js"></script>
+</body>
+</html>

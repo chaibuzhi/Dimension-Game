@@ -7,6 +7,7 @@
 <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>结局 · 葬礼</title>
+<script src="../desktop/js/playtime.js"></script>
 <style>
     * {
         margin: 0;
@@ -1227,6 +1228,11 @@ const MusicManager = (function() {
    存档
    ============================================================ */
 const STORAGE_KEY = 'prologue_progress';
+// 预设路径（玩家没走过对应结局时使用）
+const PRESET_PATHS = {
+    end03: { choiceA: 'A1' },
+    end04: { choiceA: 'A2', choiceB: 'B2' }
+};
 function loadProgress() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
     catch { return {}; }
@@ -1590,7 +1596,7 @@ function playPrologueEnd() {
     const el = document.createElement('div');
     el.className = 'prologue-end';
     el.innerHTML = `
-        <span class="end-text">序 章 · 完</span>
+        <span class="end-text">空 棺 · 完</span>
         <span class="end-line"></span>
     `;
     storyEl.appendChild(el);
@@ -2100,9 +2106,28 @@ function runPathB2() {
     ]));
 }
 
-function runEnding03() { enqueue(ENDING_03.slice()); }
-function runEnding04() { enqueue(ENDING_04.slice()); }
-function runEnding05() { enqueue(ENDING_05.slice()); }
+function runEnding03() {
+    recordEndingPath('end03');
+    enqueue(ENDING_03.slice());
+}
+function runEnding04() {
+    recordEndingPath('end04');
+    enqueue(ENDING_04.slice());
+}
+function runEnding05() {
+    recordEndingPath('end05');
+    enqueue(ENDING_05.slice());
+}
+
+// 记录当前会话的选择路径到 progress.ending_paths
+function recordEndingPath(key) {
+    progress.ending_paths = progress.ending_paths || {};
+    progress.ending_paths[key] = {
+        choiceA: progress.choiceA,
+        choiceB: progress.choiceB || null
+    };
+    saveProgress(progress);
+}
 
 /* ============================================================
    重选结局：保留开场，从选项 A 重开
@@ -2371,7 +2396,16 @@ function handleButtonAction(action) {
     if (action === 'back') {
         localStorage.removeItem('exam_answers');
         localStorage.removeItem('exam_passed');
-        localStorage.removeItem(STORAGE_KEY);
+
+        // 保留 ending_paths，清空其他进度
+        const preserved = {};
+        try {
+            const old = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (old.ending_paths) preserved.ending_paths = old.ending_paths;
+        } catch {}
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(preserved));
+
+        localStorage.setItem('achievement_hint_pending', 'true');
         window.location.href = '../desktop/index-hanxiu.html';
     } else if (action === 'reselect') {
         restartFromChoiceA();
@@ -2405,26 +2439,18 @@ function renderReviewActions() {
     const endings = [
         { key: 'e03', label: '结局 · 听话的丈夫' },
         { key: 'e04', label: '结局 · 没有终点的调查' },
-        { key: 'e05', label: '结局 · 通往真相的路', note: '你走过的路' }
+        { key: 'e05', label: '结局 · 通往真相的路' }
     ];
 
     endings.forEach(e => {
         const btn = document.createElement('div');
         btn.className = 'ending-btn review-btn';
-        if (e.note) btn.classList.add('has-note');
         btn.dataset.endingKey = e.key;
 
         const textWrap = document.createElement('span');
         textWrap.className = 'review-text';
         textWrap.textContent = e.label;
         btn.appendChild(textWrap);
-
-        if (e.note) {
-            const note = document.createElement('span');
-            note.className = 'review-note';
-            note.textContent = e.note;
-            btn.appendChild(note);
-        }
 
         btn.addEventListener('click', (ev) => {
             ev.stopPropagation();
@@ -2522,30 +2548,15 @@ async function playReviewEnding(key) {
 }
 
 function playReviewContent(key) {
-    let items = [];
+    // key: 'e03' / 'e04' / 'e05' → 'end03' / 'end04' / 'end05'
+    const targetKey = 'end' + key.slice(1);
 
-    if (key === 'e03') {
-        items = [
-            { type: 'echo', text: '你选择了：什么也不做，转身接过话筒，发表悼词。' },
-            ...PATH_A1_POST,
-            ...ENDING_03
-        ];
-    } else if (key === 'e04') {
-        items = [
-            { type: 'echo', text: '你选择了：坚持开棺，把戒指放进棺木。' },
-            ...PATH_A2_POST,
-            { type: 'echo', text: '你选择了：大打出手。' },
-            ...PATH_B2_POST,
-            ...ENDING_04
-        ];
-    } else if (key === 'e05') {
-        items = buildActualPath();
-    }
-
-    items = filterEndingActions(items);
+    // 侧栏模式：不含葬礼开场（已有的屏幕内容保留）
+    const items = buildPath(targetKey, false);
+    const filtered = filterEndingActions(items);
 
     isAutoMode = false;
-    items.forEach(item => renderFast(item));
+    filtered.forEach(item => renderFast(item));
 
     // 释放高度锁定
     requestAnimationFrame(() => {
@@ -2563,26 +2574,43 @@ function playReviewContent(key) {
     }
 }
 
-function buildActualPath() {
-    const items = [];
-    const choiceA = progress.choiceA;
-    const choiceB = progress.choiceB;
+// 构建某个结局的完整内容
+// includeOpening: 是否包含葬礼开场（PRE_CHOICE_A）
+function buildPath(targetKey, includeOpening) {
+    // 从 ending_paths 取，取不到用预设
+    const path = (progress.ending_paths && progress.ending_paths[targetKey])
+        || PRESET_PATHS[targetKey];
 
-    if (choiceA === 'A1') {
+    if (!path) return [];
+
+    const items = [];
+
+    // 是否包含葬礼开场
+    if (includeOpening) {
+        items.push(...PRE_CHOICE_A);
+    }
+
+    // 选项 A 的回声 + 后续
+    if (path.choiceA === 'A1') {
         items.push({ type: 'echo', text: '你选择了：什么也不做，转身接过话筒，发表悼词。' });
         items.push(...PATH_A1_POST);
-    } else if (choiceA === 'A2') {
+    } else if (path.choiceA === 'A2') {
         items.push({ type: 'echo', text: '你选择了：坚持开棺，把戒指放进棺木。' });
         items.push(...PATH_A2_POST);
-        if (choiceB === 'B1') {
+        if (path.choiceB === 'B1') {
             items.push({ type: 'echo', text: '你选择了：不再挣扎。' });
             items.push(...PATH_B1_POST);
-        } else if (choiceB === 'B2') {
+        } else if (path.choiceB === 'B2') {
             items.push({ type: 'echo', text: '你选择了：大打出手。' });
             items.push(...PATH_B2_POST);
         }
     }
-    items.push(...ENDING_05);
+
+    // 结局
+    if (targetKey === 'end03') items.push(...ENDING_03);
+    else if (targetKey === 'end04') items.push(...ENDING_04);
+    else if (targetKey === 'end05') items.push(...ENDING_05);
+
     return items;
 }
 
@@ -2655,6 +2683,32 @@ async function playIntro() {
     }, 1400);
 }
 
+// ============================================================
+// 回顾模式（从成就面板打开，?review=endXX）
+// ============================================================
+
+function renderReviewMode(targetKey) {
+    // 隐藏底部 UI
+    document.getElementById('uiZone').style.display = 'none';
+    document.getElementById('clickHint').style.display = 'none';
+
+    // 清空 story
+    storyEl.innerHTML = '';
+
+    // 构建完整内容（含葬礼开场）
+    const items = buildPath(targetKey, true);
+    const filtered = filterEndingActions(items);
+
+    // 直接渲染（无动画）
+    isAutoMode = false;
+    isReviewMode = true;
+
+    filtered.forEach(item => renderFast(item));
+
+    // 滚到顶部
+    window.scrollTo(0, 0);
+}
+
 /* ============================================================
    音乐开关按钮
    ============================================================ */
@@ -2679,6 +2733,20 @@ async function playIntro() {
    启动
    ============================================================ */
 window.addEventListener('load', async () => {
+    // ========== 回顾模式 ==========
+    const params = new URLSearchParams(window.location.search);
+    const reviewTarget = params.get('review');   // 'end03' / 'end04' / 'end05'
+
+    if (reviewTarget && ['end03', 'end04', 'end05'].includes(reviewTarget)) {
+        document.getElementById('blackout').style.display = 'none';
+        document.getElementById('light-beam').style.display = 'none';
+
+        MusicManager.start('end01');
+        renderReviewMode(reviewTarget);
+        return;
+    }
+
+    // ========== 正常模式 ==========
     if (progress.visitedChoiceA) {
         document.getElementById('blackout').style.display = 'none';
         document.getElementById('light-beam').style.display = 'none';

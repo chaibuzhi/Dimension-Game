@@ -7,6 +7,7 @@
 <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>线上综合能力评估 · 天启科技</title>
+<script src="../desktop/js/playtime.js"></script>
 <style>
 /* ========== 让背景色可平滑过渡 ========== */
 @property --bg-outer {
@@ -127,6 +128,92 @@ body.phase-result {
     opacity: 0;
     transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.55, 0, 1, 0.45);
     transform: translate(-50%, calc(-50% - 180px));
+}
+
+/* ========== 结果页滚动条：暗红定制（防呼吸灯闪烁） ========== */
+body.result-mode {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    /* Firefox：thumb 和 track 都用不透明色 */
+    scrollbar-color: #8a2a2a var(--bg-outer);
+}
+
+/* Chrome / Edge / Safari */
+body.result-mode::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* 轨道：用当前 phase 的 --bg-outer —— 不透明，和背景外围色一致 */
+body.result-mode::-webkit-scrollbar-track {
+    background: var(--bg-outer);
+    margin: 8px 0;
+}
+
+/* 拇指：不透明的暗红渐变 */
+body.result-mode::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        #8a2a2a 0%,
+        #6c2020 100%
+    );
+    border-radius: 6px;
+    border: 2px solid var(--bg-outer);
+    background-clip: padding-box;
+}
+
+body.result-mode::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+        180deg,
+        #a03434 0%,
+        #7a2626 100%
+    );
+    background-clip: padding-box;
+}
+
+body.result-mode::-webkit-scrollbar-corner {
+    background: var(--bg-outer);
+}
+
+/* 可跳转时：空白区显示手型 */
+body.result-mode.can-continue {
+    cursor: pointer;
+}
+
+/* 卡片和错题区内部：保持默认光标 */
+body.result-mode.can-continue .result-body,
+body.result-mode.can-continue .result-wrong {
+    cursor: default;
+}
+
+/* ========== 结果页：允许滚动 ========== */
+body.result-mode {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body.result-mode .scene {
+    position: static;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.result-mode .scene-inner {
+    position: static;
+    transform: none;
+    transition: none;
+    will-change: auto;
+    margin: auto;
+    width: calc(100% - 160px);
+    max-width: 860px;
+    padding: 60px 0 100px;
+    box-sizing: border-box;
+}
+
+body.result-mode .scene-inner.exiting {
+    transform: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 .question-text {
@@ -1084,6 +1171,79 @@ body.shake .scene {
 }
 
 .hidden { display: none !important; }
+
+/* ========== 错题列表 ========== */
+.result-wrong {
+    max-width: 540px;
+    margin: 32px auto 0;
+    padding: 20px 24px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    text-align: left;
+    opacity: 0;
+    animation: charIn 0.9s ease 3.3s forwards;
+}
+
+.result-wrong-title {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    padding-left: 0.2em;
+    margin-bottom: 16px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.result-wrong-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.result-wrong-item {
+    padding-bottom: 14px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.result-wrong-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.result-wrong-q {
+    font-size: 13.5px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+}
+
+.result-wrong-q strong {
+    color: var(--accent-glow);
+    font-weight: 600;
+}
+
+.result-wrong-a {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 12.5px;
+}
+
+.wrong-label {
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    padding-left: 0.15em;
+    flex-shrink: 0;
+}
+
+.wrong-value {
+    color: #ff6b6b;
+    letter-spacing: 0.02em;
+    word-break: break-word;
+}
+
 </style>
 </head>
 <body class="phase-1">
@@ -1513,7 +1673,7 @@ const QUESTIONS = [
       text: '她的 **MasterKey** 是什么？',
       correct: ['happybirthday'] },
     { part: 4, type: 'single', id: 'q20',
-      text: '**HappyBrithday** 代表了什么？',
+      text: '**HappyBirthday** 代表了什么？',
       options: ['生日快乐', '她的死讯', '她的遗言', '她留下的线索'] },
     { part: 4, type: 'single', id: 'q21', special: 'hexagon-target', forceCorrect: true,
       text: '谁造成了她的 **"死亡"** ？',
@@ -1547,9 +1707,10 @@ const QUESTIONS = [
     { part: 5, type: 'single', id: 'q30',
       text: '什么是 **真相** ？',
       options: ['多维实体的秘密', '丁文倩的死因'] },
-    { part: 5, type: 'single', id: 'q31',
+    { part: 5, type: 'single', id: 'q31', special: 'exit-exam',
       text: '为了真相 你愿意 **放弃** 什么？',
       options: ['生命', '退出测试'],
+      exitOption: '退出测试',
       correct: '生命' }
 ];
 
@@ -2024,6 +2185,12 @@ function selectOption(el, q) {
         return;
     }
 
+    // 退出测试
+    if (q.special === 'exit-exam' && el.dataset.value === q.exitOption) {
+        setTimeout(() => exitExam(), 600);
+        return;
+    }
+
     const value = el.dataset.custom
         ? (el.querySelector('.opt-custom-input').value.trim() || el.dataset.value)
         : el.dataset.value;
@@ -2308,6 +2475,29 @@ async function showNotLoveAnimation() {
     playQuestion();
 }
 
+// 退出测试：清空进度，返回桌面（和时光回溯一致）
+async function exitExam() {
+    isLocked = true;
+
+    // 清空测试状态
+    localStorage.removeItem('exam_answers');
+    localStorage.removeItem('exam_passed');
+
+    // 保留 ending_paths，清空 prologue_progress 的其他进度
+    const preserved = {};
+    try {
+        const old = JSON.parse(localStorage.getItem('prologue_progress') || '{}');
+        if (old.ending_paths) preserved.ending_paths = old.ending_paths;
+    } catch {}
+    localStorage.setItem('prologue_progress', JSON.stringify(preserved));
+
+    // 黑幕淡入后跳转
+    const veil = document.getElementById('transition-veil');
+    veil.classList.add('active');
+    await wait(1200);
+    window.location.href = '../desktop/index-hanxiu.html';
+}
+
 async function advance() {
     if (isAdvancing) return;
     isAdvancing = true;
@@ -2496,6 +2686,26 @@ function renderWelcome() {
     });
 }
 
+// 把玩家答案格式化成可读文本
+function formatWrongAnswer(val, q) {
+    if (val === undefined || val === null) return '（未作答）';
+
+    if (q.type === 'multiple') {
+        if (!Array.isArray(val) || val.length === 0) return '（未选择）';
+        return val.join('、');
+    }
+
+    if (typeof val === 'string' && val.trim() === '') return '（未填写）';
+    return String(val);
+}
+
+// 转义 HTML 特殊字符
+function escapeHtml(text) {
+    return String(text).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+}
+
 /* ============================================================
    结果页
    ============================================================ */
@@ -2503,35 +2713,56 @@ async function renderResult() {
     localStorage.setItem('exam_answers', JSON.stringify(answers));
 
     let correctCount = 0, totalCorrect = 0;
+    const wrongQuestions = [];   // ← 新增
+
     QUESTIONS.forEach(q => {
         if (!q.correct) return;
         totalCorrect++;
+
         const val = answers[q.id];
+        let isCorrect = false;
+
         if (q.type === 'multiple') {
             if (Array.isArray(val)
                 && val.length === q.correct.length
                 && q.correct.every(c => val.includes(c))) {
-                correctCount++;
+                isCorrect = true;
             }
-            return;
-        }
-        if (Array.isArray(q.correct)) {
+        } else if (Array.isArray(q.correct)) {
             if (q.keywordMatch) {
-                const norm = (val || '').toLowerCase();
-                if (q.correct.some(k => norm.includes(k.toLowerCase()))) correctCount++;
+                const norm = (val || '').toLowerCase().replace(/\s+/g, '');
+                if (q.correct.some(k => norm.includes(k.toLowerCase().replace(/\s+/g, '')))) isCorrect = true;
             } else {
-                if (q.correct.some(k => String(val) === k)) correctCount++;
+                const norm = String(val).toLowerCase().replace(/\s+/g, '');
+                if (q.correct.some(k => norm === k.toLowerCase().replace(/\s+/g, ''))) isCorrect = true;
             }
-            return;
+        } else {
+            if (val === q.correct) isCorrect = true;
         }
-        if (val === q.correct) correctCount++;
+
+        if (isCorrect) {
+            correctCount++;
+        } else {
+            // 记录错题
+            wrongQuestions.push({
+                id: q.id,
+                text: resolveText(q.text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'),
+                answer: formatWrongAnswer(val, q)
+            });
+        }
     });
     const passed = correctCount === totalCorrect;
 
     localStorage.setItem('exam_passed', passed ? 'true' : 'false');
 
+    // 记录第一次考试成绩（仅写一次）
+    if (!localStorage.getItem('exam_first_result')) {
+        localStorage.setItem('exam_first_result', passed ? 'true' : 'false');
+    }
+
     AudioEngine.submit();
     document.body.className = passed ? 'phase-result' : 'phase-5';
+    document.body.classList.add('result-mode');
     await wait(700);
 
     document.getElementById('progress-rail').innerHTML = '';
@@ -2572,6 +2803,25 @@ async function renderResult() {
             ${statusRow}
         `;
 
+    const wrongHTML = wrongQuestions.length > 0
+        ? `
+            <div class="result-wrong">
+                <div class="result-wrong-title">以下题目未能通过核验</div>
+                <div class="result-wrong-list">
+                    ${wrongQuestions.map(w => `
+                        <div class="result-wrong-item">
+                            <div class="result-wrong-q">${w.text}</div>
+                            <div class="result-wrong-a">
+                                <span class="wrong-label">你的答案</span>
+                                <span class="wrong-value">${escapeHtml(w.answer)}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `
+        : '';
+
     inner.innerHTML = `
         <div class="result-page ${passed ? 'passed' : 'failed'}" id="resultPage">
             <div class="result-brand">Tianqi Explorer Program</div>
@@ -2579,6 +2829,7 @@ async function renderResult() {
             <div class="result-body">
                 ${bodyText}
             </div>
+            ${wrongHTML}
             <div class="countdown-text">
                 <span class="countdown-line"></span>
                 <span>请按 <span class="continue-word">[ 任意处 ]</span> 继续</span>
@@ -2603,12 +2854,23 @@ async function renderResult() {
 
     // ========== 等待玩家点击 ==========
     let canContinue = false;
-    setTimeout(() => { canContinue = true; }, 5500);
+    setTimeout(() => {
+        canContinue = true;
+        document.body.classList.add('can-continue');
+    }, 5500);
 
-    const continueHandler = async () => {
+    const continueHandler = async (e) => {
         if (!canContinue) return;
+
+        // 点击评估卡片或错题区内部时，不跳转（防止误触）
+        if (e && e.type === 'click' &&
+            (e.target.closest('.result-body') || e.target.closest('.result-wrong'))) {
+            return;
+        }
+
         document.removeEventListener('click', continueHandler);
         document.removeEventListener('keydown', continueHandler);
+        document.body.classList.remove('can-continue');
 
         // 1. 卡片退场
         const resultPage = document.getElementById('resultPage');

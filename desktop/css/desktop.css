@@ -919,3 +919,251 @@ body {
     box-shadow: 0 0 0 2px rgba(20, 20, 35, 0.9);
     pointer-events: none;
 }
+
+/* ========== 通关后模式：水牢配色 ========== */
+body.post-ending {
+    /* 背景：暖冷融合，比水牢页稍暗一档 */
+    background:
+        radial-gradient(ellipse 80% 60% at 18% 12%, rgba(200, 165, 100, 0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 90% 70% at 82% 88%, rgba(50, 110, 165, 0.18) 0%, transparent 65%),
+        linear-gradient(150deg, #ece5d3 0%, #e3e6eb 50%, #d6dfe9 100%);
+    background-attachment: fixed;
+
+    --text: #1a2a3a;
+    --text-dim: #5a6a7a;
+    --text-muted: #8a95a5;
+}
+
+body.post-ending .particle {
+    background: rgba(105, 105, 110, 0.55);
+}
+
+body.post-ending .vignette {
+    background:
+        radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(60, 70, 85, 0.14) 100%);
+}
+
+/* ========== 任务栏：青蓝玻璃 ========== */
+body.post-ending .taskbar {
+    background: rgba(82, 102, 114, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.post-ending .start-button {
+    color: #ecf2f7;
+}
+body.post-ending .start-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.post-ending .taskbar-window-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ecf2f7;
+}
+body.post-ending .taskbar-window-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+body.post-ending .taskbar-window-btn.active {
+    background: rgba(120, 180, 230, 0.4);
+    border-color: rgba(160, 210, 245, 0.6);
+}
+body.post-ending .taskbar-window-btn.minimized {
+    opacity: 0.6;
+}
+
+body.post-ending .taskbar-time {
+    color: #ecf2f7;
+}
+body.post-ending .taskbar-time:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.post-ending .taskbar-notification-area {
+    color: #d0dae2;
+}
+body.post-ending .taskbar-notification-area:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 通知红点：外环改成和新任务栏同色 */
+body.post-ending .notification-badge {
+    box-shadow: 0 0 0 2px rgba(147, 161, 171, 0.94);
+}
+
+/* ========== 桌面图标 ========== */
+body.post-ending .desktop-icon {
+    color: #1a2a3a;
+}
+body.post-ending .desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+body.post-ending .desktop-icon.selected {
+    background: rgba(74, 143, 200, 0.2);
+    outline: 1px solid rgba(74, 143, 200, 0.5);
+}
+body.post-ending .desktop-icon .icon-label {
+    color: #1a2a3a;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.75);
+}
+
+/* ========== 开始菜单：深灰青蓝毛玻璃 ========== */
+body.post-ending .start-menu {
+    background: linear-gradient(
+        160deg,
+        rgba(72, 92, 104, 0.72) 0%,
+        rgba(58, 76, 88, 0.78) 100%
+    );
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 10px 40px rgba(20, 40, 55, 0.4),
+        0 0 0 1px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+body.post-ending .start-menu-item {
+    color: #ecf2f7;
+}
+body.post-ending .start-menu-item svg {
+    color: #b8c6d2;
+}
+body.post-ending .start-menu-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+body.post-ending .start-menu-item:hover svg {
+    color: #ffffff;
+}
+
+body.post-ending .start-menu-divider {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* ========== 通知卡片：深灰青蓝毛玻璃 ========== */
+body.post-ending .notice-card {
+    background: linear-gradient(
+        135deg,
+        rgba(78, 98, 110, 0.72) 0%,
+        rgba(62, 82, 94, 0.78) 100%
+    );
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 8px 24px rgba(20, 40, 55, 0.4),
+        0 0 24px rgba(100, 140, 180, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+body.post-ending .notice-title {
+    color: #ecf2f7;
+}
+body.post-ending .notice-subtitle {
+    color: #c0ccd6;
+}
+body.post-ending .notice-preview {
+    color: #9aa8b4;
+}
+body.post-ending .notice-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+body.post-ending .notice-close {
+    background: rgba(255, 255, 255, 0.12);
+    color: #c0ccd6;
+}
+body.post-ending .notice-close:hover {
+    background: rgba(255, 95, 87, 0.28);
+    color: #ffffff;
+}
+
+/* ========== 通知中心面板：深灰青蓝毛玻璃 ========== */
+body.post-ending .notice-panel {
+    background: linear-gradient(
+        160deg,
+        rgba(72, 92, 104, 0.74) 0%,
+        rgba(58, 76, 88, 0.8) 100%
+    );
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 10px 40px rgba(20, 40, 55, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+body.post-ending .notice-panel-header {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 60%
+    );
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.post-ending .notice-panel-title {
+    color: #ecf2f7;
+}
+
+body.post-ending .notice-panel-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+body.post-ending .notice-panel-item:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 80%
+    );
+}
+
+body.post-ending .notice-panel-item-title {
+    color: #ecf2f7;
+}
+body.post-ending .notice-panel-item-subtitle {
+    color: #c0ccd6;
+}
+body.post-ending .notice-panel-item-preview {
+    color: #9aa8b4;
+}
+body.post-ending .notice-panel-item-time {
+    color: #9aa8b4;
+}
+body.post-ending .notice-panel-icon {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.post-ending .notice-panel-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* ========== 备忘录：柔和阴影，图标无阴影 ========== */
+body.post-ending .notebook {
+    box-shadow:
+        0 0 0 1px rgba(150, 120, 60, 0.1),
+        0 2px 6px rgba(80, 70, 50, 0.08),
+        0 8px 20px rgba(80, 70, 50, 0.1);
+}
+
+body.post-ending .notebook-icon-emoji {
+    filter: none;
+}
+
+body.post-ending .notebook-icon-label {
+    text-shadow: none;
+}

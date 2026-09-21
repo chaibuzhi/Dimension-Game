@@ -7,6 +7,7 @@
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>结局 · 平凡的一生</title>
+    <script src="../desktop/js/playtime.js"></script>
     <style>
         :root {
             --bg: #060a1c;
@@ -149,6 +150,17 @@
             color: var(--text);
             word-break: break-word;
             min-height: 1.7em;
+        }
+
+        /* 回顾模式：所有段落整体一次性淡入 */
+        .paragraph.review-fade {
+            opacity: 0;
+            animation: reviewFadeAll 1.2s ease 0.3s forwards;
+        }
+
+        @keyframes reviewFadeAll {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
         .paragraph:last-of-type {
             margin-bottom: 0;
@@ -421,29 +433,38 @@ async function run() {
 }
 
 window.addEventListener('load', () => {
-    // 如果已经看过本结局，直接渲染全部内容
-    if (localStorage.getItem('end01_viewed') === 'true') {
-        renderInstant();
+    const isReview = new URLSearchParams(window.location.search).get('review') === 'end01';
+
+    // 回顾模式 或 已看过 → 直接渲染
+    if (isReview || localStorage.getItem('end01_viewed') === 'true') {
+        renderInstant(isReview);
     } else {
         run();
     }
 });
 
 // ========== 直接渲染（跳过所有动画） ==========
-function renderInstant() {
+function renderInstant(isReview) {
     glowLayer.classList.add('visible');
 
     // 一次性插入所有段落
     SEGMENTS.forEach(seg => {
         const p = document.createElement('div');
         p.className = 'paragraph';
+        if (isReview) p.classList.add('review-fade');
         p.innerHTML = seg.html;
         textContainer.appendChild(p);
     });
 
-    // 显示标题和按钮
+    // 显示标题
     titleEl.style.animationPlayState = 'running';
-    actionsEl.style.animationPlayState = 'running';
+
+    // 回顾模式不显示按钮
+    if (isReview) {
+        actionsEl.style.display = 'none';
+    } else {
+        actionsEl.style.animationPlayState = 'running';
+    }
 }
 
 /* ============================================================

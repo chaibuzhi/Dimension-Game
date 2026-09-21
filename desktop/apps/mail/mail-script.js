@@ -227,9 +227,9 @@ function isThreadActionRequired(threadId, thread) {
         return localStorage.getItem('agreement_signed') !== 'true';
     }
 
-    // 面试邀请：未点击开始测试前一直高亮
+    // 面试邀请：未完成测试前一直高亮
     if (lastOther.id === 'tq-hr-001') {
-        return localStorage.getItem('exam_started') !== 'true';
+        return !localStorage.getItem('exam_answers');
     }    
 
     // 有回复选项的邮件：回复选项还没被使用
@@ -244,9 +244,21 @@ function isThreadActionRequired(threadId, thread) {
 
 function markThreadSeen(threadId, thread) {
     const lastOther = getLastOtherMessage(thread);
+    const stateKey = getStateKeyByThreadId(threadId);
+
     if (lastOther) {
-        const stateKey = getStateKeyByThreadId(threadId);
         setMailReadState(stateKey, lastOther.id);
+    }
+
+    // 记录玩家真正点开过的线程（用于成就系统）
+    if (stateKey) {
+        let seen = {};
+        try { seen = JSON.parse(localStorage.getItem('explore_seen') || '{}'); } catch {}
+        seen.mails = seen.mails || [];
+        if (!seen.mails.includes(stateKey)) {
+            seen.mails.push(stateKey);
+            localStorage.setItem('explore_seen', JSON.stringify(seen));
+        }
     }
 }
 
