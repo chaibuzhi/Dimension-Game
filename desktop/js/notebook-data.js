@@ -4,7 +4,7 @@
 const NOTEBOOK_NOTES = [
     {
         id: 1,
-        lines: ['那个天启科技的人让我查收邮件'],
+        lines: ['已经好几天没有查看邮箱了'],
         appear: (s) => true,
         done: (s) => s.mailState.loggedIn === 'hanxiu',
         noNotify: true,   // 首次出现时不推送通知（游戏刚进来）
