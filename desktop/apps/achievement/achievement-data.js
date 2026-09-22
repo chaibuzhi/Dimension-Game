@@ -147,7 +147,7 @@ const ALL_ACHIEVEMENTS = [
         condition: '通过最终测试',
         keyword: '欢迎加入天启科技',
         desc: '棺木内空无一物，你知道，她在等你',
-        check: () => localStorage.getItem('exam_passed') === 'true'
+        check: () => achRead('endings_unlocked').end05 === true
     },
     {
         id: 'main_continue',

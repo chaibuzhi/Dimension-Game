@@ -61,9 +61,9 @@ function checkDwqAudioTrigger() {
     if (elapsed >= WAIT_MS) {
         const st = getTqchatState();
         if (!st.mysteryUnlocked && !st.friendRequestPending) {
-            triggerFriendRequest(); // 只设置状态，不负责通知
+            triggerFriendRequest();
         }
-        localStorage.removeItem('dwq_audio_opened_time');
+        // 不删 dwq_audio_opened_time——成就判定要用
     } else {
         if (dwqAudioCheckTimer) clearTimeout(dwqAudioCheckTimer);
         dwqAudioCheckTimer = setTimeout(checkDwqAudioTrigger, WAIT_MS - elapsed + 500);
@@ -483,10 +483,11 @@ function renderMessages(contactId) {
                     </div>
                 `;
             } else {
+                const textHTML = linkifyMasterkey(msg.text);
                 html += `
                     <div class="msg-row them">
                         ${renderAvatar(contact, 'msg-avatar', '⬡')}
-                        <div class="msg-bubble">${msg.text}</div>
+                        <div class="msg-bubble">${textHTML}</div>
                     </div>
                 `;
             }
@@ -892,6 +893,21 @@ function handleChatFileClick(fileKey) {
     }
 }
 
+// ========== MasterKey 链接识别（仅识别这一条特定 URL） ==========
+function linkifyMasterkey(text) {
+    if (!text) return text;
+    return text.replace(
+        /https:\/\/rtinternal\.secure\/mk\/DWQ-A09/g,
+        '<span class="msg-link" onclick="openMasterkeyWindow()">$&</span>'
+    );
+}
+
+function openMasterkeyWindow() {
+    if (window.parent && window.parent.WindowManager) {
+        window.parent.WindowManager.openApp('masterkey');
+    }
+}
+
 // ========== 检查输入框是否被锁定 ==========
 function isInputLocked() {
     const st = getTqchatState();
@@ -941,3 +957,4 @@ window.addEventListener('storage', function(e) {
         return;
     }
 });
+

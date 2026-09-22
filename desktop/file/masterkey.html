@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>密钥管理</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { height: 100%; }
+body {
+    min-height: 100%;
+    overflow-y: auto;
+    background: radial-gradient(ellipse at center, #0a1420 0%, #03060c 75%);
+    color: #d5deee;
+    font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 0;
+    position: relative;
+}
+
+/* ========== 滚动条 ========== */
+body::-webkit-scrollbar {
+    width: 6px;
+}
+body::-webkit-scrollbar-track {
+    background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,
+        rgba(74, 143, 216, 0.3),
+        rgba(122, 184, 255, 0.15));
+    border-radius: 3px;
+}
+body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg,
+        rgba(74, 143, 216, 0.55),
+        rgba(122, 184, 255, 0.3));
+}
+body::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* ========== 背景六边形 ========== */
+.hex-bg {
+    position: fixed;
+    top: 50%; left: 50%;
+    width: 200vmax; height: 200vmax;
+    margin-top: -100vmax; margin-left: -100vmax;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.1;
+    animation: hexRotate 140s linear infinite;
+    transform-origin: center center;
+}
+@keyframes hexRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ========== 主容器 ========== */
+.page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    padding: 22px 34px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========== 顶部抬头 ========== */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(120, 180, 255, 0.14);
+    margin-bottom: 20px;
+    gap: 10px;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #d5deee;
+    letter-spacing: 0.03em;
+    min-width: 0;
+}
+.header-left svg {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+}
+.header-left span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ========== 右上角：监控中 ========== */
+.monitor-tag {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: #4a5a75;
+    letter-spacing: 0.22em;
+    padding-left: 0.22em;
+    user-select: none;
+}
+.rec-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2ec77a;
+    flex-shrink: 0;
+    animation: recPulse 1.6s ease-in-out infinite;
+}
+@keyframes recPulse {
+    0%, 100% {
+        opacity: 0.55;
+        transform: scale(0.9);
+        box-shadow:
+            0 0 4px rgba(46, 199, 122, 0.5),
+            0 0 10px rgba(46, 199, 122, 0.25);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+        box-shadow:
+            0 0 8px rgba(46, 199, 122, 0.95),
+            0 0 18px rgba(46, 199, 122, 0.6);
+    }
+}
+
+/* ========== 主体 ========== */
+.page-body {
+    flex: 1;
+}
+.greeting {
+    font-size: 15px;
+    color: #d5deee;
+    margin-bottom: 6px;
+}
+.greeting .name {
+    color: #7ab8ff;
+    font-weight: 600;
+    margin-left: 6px;
+    text-shadow: 0 0 12px rgba(120, 184, 255, 0.45);
+}
+.desc {
+    font-size: 12px;
+    color: #6a7a95;
+    margin-bottom: 22px;
+    letter-spacing: 0.02em;
+}
+
+/* ========== 表单 ========== */
+.form {
+    border-radius: 6px;
+}
+.field {
+    margin-bottom: 14px;
+}
+.field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #8a9ab5;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+}
+.field input {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(120, 180, 255, 0.15);
+    border-radius: 6px;
+    color: #d5deee;
+    font-size: 14px;
+    font-family: inherit;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+.field input:focus {
+    border-color: rgba(122, 184, 255, 0.5);
+    background: rgba(0, 0, 0, 0.46);
+    box-shadow:
+        0 0 0 3px rgba(74, 143, 216, 0.08),
+        0 0 20px rgba(122, 184, 255, 0.06);
+}
+
+/* ========== 错误提示 ========== */
+.error-msg {
+    min-height: 20px;
+    font-size: 12px;
+    color: #c83030;
+    text-align: center;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.error-msg.visible { opacity: 1; }
+
+/* ========== 提交按钮 ========== */
+.btn-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+}
+.btn-submit {
+    padding: 11px 48px;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #7ab8ff;
+    background: rgba(74, 143, 216, 0.08);
+    border: 1px solid rgba(122, 184, 255, 0.32);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, color 0.25s;
+}
+.btn-submit:hover {
+    background: rgba(74, 143, 216, 0.16);
+    border-color: rgba(122, 184, 255, 0.6);
+    color: #c8e0ff;
+    box-shadow: 0 0 24px rgba(74, 143, 216, 0.15);
+}
+.btn-submit:active {
+    transform: translateY(1px);
+}
+
+/* ========== 覆盖层：全屏毛玻璃 ========== */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 24px;
+    background: rgba(3, 8, 16, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+.overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.overlay-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #c83030;
+    letter-spacing: 0.18em;
+    padding-left: 0.18em;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 1.4;
+    text-shadow:
+        0 0 12px rgba(200, 48, 48, 0.7),
+        0 0 28px rgba(200, 48, 48, 0.4);
+}
+
+.overlay-main {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.1em;
+    padding-left: 0.1em;
+    margin-bottom: 28px;
+    text-align: center;
+    line-height: 1.5;
+    text-shadow:
+        0 0 12px rgba(200, 48, 48, 0.95),
+        0 0 28px rgba(200, 48, 48, 0.7),
+        0 0 54px rgba(200, 48, 48, 0.4);
+}
+
+.overlay-warn {
+    font-size: 13px;
+    color: #c83030;
+    line-height: 2;
+    text-align: center;
+    letter-spacing: 0.06em;
+    padding-left: 0.06em;
+    margin-bottom: 32px;
+}
+
+.btn-close {
+    padding: 8px 30px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    color: #8a9ab5;
+    background: transparent;
+    border: 1px solid rgba(120, 180, 255, 0.22);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.25s;
+}
+.btn-close:hover {
+    background: rgba(74, 143, 216, 0.1);
+    border-color: rgba(122, 184, 255, 0.5);
+    color: #c8e0ff;
+    box-shadow: 0 0 20px rgba(74, 143, 216, 0.15);
+}
+</style>
+</head>
+<body>
+
+    <!-- 背景六边形 pattern -->
+    <svg class="hex-bg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <pattern id="hexPattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+                <polygon points="30,0 60,15 60,45 30,60 0,45 0,15"
+                         fill="none" stroke="rgba(120,180,255,0.6)" stroke-width="1"/>
+                <polygon points="60,26 90,41 90,71 60,86 30,71 30,41"
+                         fill="none" stroke="rgba(120,180,255,0.3)" stroke-width="0.5"/>
+            </pattern>
+        </defs>
+        <rect width="400" height="400" fill="url(#hexPattern)"/>
+    </svg>
+
+    <div class="page">
+        <!-- 顶部抬头 -->
+        <div class="page-header">
+            <div class="header-left">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#38bdf8" stroke-width="1.2" opacity="0.8"/>
+                    <polygon points="12,6 17,8.5 17,15.5 12,18 7,15.5 7,8.5" stroke="#2563eb" stroke-width="1" opacity="0.6"/>
+                    <circle cx="12" cy="12" r="2" fill="#38bdf8" opacity="0.8"/>
+                </svg>
+                <span>天启科技 · 密钥管理</span>
+            </div>
+            <div class="monitor-tag">
+                <span class="rec-dot"></span>
+                <span>监控中</span>
+            </div>
+        </div>
+
+        <!-- 主体 -->
+        <div class="page-body">
+            <div class="greeting">您好<span class="name">丁文倩</span></div>
+            <div class="desc">MasterKey 为个人专属密钥，仅允许修改一次</div>
+
+            <form class="form" id="form" autocomplete="off" novalidate>
+                <div class="field">
+                    <label for="oldKey">原 MasterKey</label>
+                    <input type="text" id="oldKey" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="field">
+                    <label for="newKey">新 MasterKey</label>
+                    <input type="text" id="newKey" autocomplete="off" spellcheck="false">
+                </div>
+                <div class="field">
+                    <label for="confirmKey">确认新 MasterKey</label>
+                    <input type="text" id="confirmKey" autocomplete="off" spellcheck="false">
+                </div>
+
+                <div class="error-msg" id="errorMsg"></div>
+
+                <div class="btn-row">
+                    <button type="submit" class="btn-submit" id="btnSubmit">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 覆盖层：全屏毛玻璃 -->
+    <div class="overlay" id="overlay">
+        <div class="overlay-title">修改失败</div>
+        <div class="overlay-main">该密钥已被修改</div>
+        <div class="overlay-warn">
+            MasterKey 为个人专属密钥<br>
+            严禁传播、盗用、转借或外泄
+        </div>
+        <button type="button" class="btn-close" id="btnClose">关闭</button>
+    </div>
+
+<script>
+(function() {
+    const ORIGINAL_KEY = 'Master-DWQ-016';
+
+    const form = document.getElementById('form');
+    const oldKey = document.getElementById('oldKey');
+    const newKey = document.getElementById('newKey');
+    const confirmKey = document.getElementById('confirmKey');
+    const errorMsg = document.getElementById('errorMsg');
+    const overlay = document.getElementById('overlay');
+    const btnClose = document.getElementById('btnClose');
+
+    function showError(text) {
+        errorMsg.textContent = text;
+        errorMsg.classList.add('visible');
+    }
+
+    function clearError() {
+        errorMsg.textContent = '';
+        errorMsg.classList.remove('visible');
+    }
+
+    [oldKey, newKey, confirmKey].forEach(input => {
+        input.addEventListener('input', clearError);
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const oldVal = oldKey.value.trim();
+        const newVal = newKey.value.trim();
+        const confirmVal = confirmKey.value.trim();
+
+        if (!oldVal || !newVal || !confirmVal) {
+            showError('请输入密钥');
+            return;
+        }
+
+        if (oldVal !== ORIGINAL_KEY) {
+            showError('密钥错误');
+            return;
+        }
+
+        if (newVal !== confirmVal) {
+            showError('两次输入的密钥不一致');
+            return;
+        }
+
+        clearError();
+        overlay.classList.add('visible');
+    });
+
+    btnClose.addEventListener('click', function() {
+        if (window.parent && window.parent.WindowManager) {
+            window.parent.WindowManager.closeWindow('masterkey');
+        }
+    });
+})();
+</script>
+</body>
+</html>

@@ -457,8 +457,6 @@ if (isReview) {
     // 正常模式：绑定点击事件
     btnBack.addEventListener('click', (e) => {
         e.stopPropagation();
-        // 标记进入通关后模式
-        localStorage.setItem('post_ending_mode', 'true');
         // 和葬礼页的"时光回溯"一样，返回桌面后弹一次成就通知
         localStorage.setItem('achievement_hint_pending', 'true');
         window.location.href = '../desktop/index-hanxiu.html';

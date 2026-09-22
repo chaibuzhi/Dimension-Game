@@ -1,0 +1,231 @@
+文件夹 PATH 列表
+卷序列号为 65F3-3762
+C:.
+|   index.html
+|   tree.txt
+|   
++---desktop
+|   |   index-hanxiu.html
+|   |   
+|   +---apps
+|   |   +---achievement
+|   |   |       achievement-data.js
+|   |   |       achievement-script.js
+|   |   |       achievement-style.css
+|   |   |       achievement.html
+|   |   |       
+|   |   +---audio
+|   |   |       audio-script.js
+|   |   |       audio-style.css
+|   |   |       audio.html
+|   |   |       
+|   |   +---chat
+|   |   |       chat-data.js
+|   |   |       chat-mystery.js
+|   |   |       chat-script.js
+|   |   |       chat-sfx.js
+|   |   |       chat-style.css
+|   |   |       chat.html
+|   |   |       
+|   |   +---mail
+|   |   |       mail-data.js
+|   |   |       mail-script.js
+|   |   |       mail-style.css
+|   |   |       mail.html
+|   |   |       
+|   |   +---notepad
+|   |   |       notepad.html
+|   |   |       
+|   |   \---viewer
+|   |           viewer-script.js
+|   |           viewer-style.css
+|   |           viewer.html
+|   |           
+|   +---css
+|   |       desktop.css
+|   |       notebook.css
+|   |       
+|   +---file
+|   |       about.html
+|   |       dingagreement.html
+|   |       itinerary.html
+|   |       photo-viewer.html
+|   |       titleevaluation.html
+|   |       
+|   +---image
+|   |       dind_die.webp
+|   |       hanxiu.webp
+|   |       marry01.webp
+|   |       marry02.webp
+|   |       marry03.webp
+|   |       marry04.webp
+|   |       marry05.webp
+|   |       qq.webp
+|   |       
+|   \---js
+|           apps-registry.js
+|           desktop.js
+|           explore-tracker.js
+|           folder-data.js
+|           modal-data.js
+|           notebook-data.js
+|           notebook.js
+|           notifications.js
+|           playtime.js
+|           scheduler.js
+|           window-manager.js
+|           
++---ending
+|       e1ordinary.html
+|       e2detective.html
+|       e3funeral.html
+|       prelude-watercell.html
+|       
++---favicon
+|       apple-touch-icon.png
+|       favicon.ico
+|       favicon.svg
+|       
++---music
+|       dwq-recording.mp3
+|       end01.mp3
+|       end02.mp3
+|       exam-bgm.mp3
+|       exam-dwq.mp3
+|       exam-dwst.mp3
+|       glitch.mp3
+|       mystery.mp3
+|       opening.mp3
+|       
++---search
+|       search-data.js
+|       search.html
+|       
++---tianqi
+|   |   apply.html
+|   |   exam.html
+|   |   home.html
+|   |   intranet.html
+|   |   news-detail.html
+|   |   news.html
+|   |   paper.html
+|   |   
+|   +---css
+|   |       apply.css
+|   |       home.css
+|   |       intranet-comm.css
+|   |       intranet-files.css
+|   |       intranet-glitch.css
+|   |       intranet-home.css
+|   |       intranet-log.css
+|   |       intranet-profile.css
+|   |       intranet-project.css
+|   |       intranet.css
+|   |       news.css
+|   |       paper-chronicle.css
+|   |       paper-legacy.css
+|   |       paper-modern.css
+|   |       paper.css
+|   |       tqchat-download.css
+|   |       
+|   +---data
+|   |       intranet-chat.js
+|   |       intranet-files.js
+|   |       intranet-home.js
+|   |       intranet-log.js
+|   |       intranet-profile.js
+|   |       intranet-project.js
+|   |       intranet-user.js
+|   |       news-data.js
+|   |       papers.js
+|   |       
+|   +---image
+|   |   |   marry_broken.webp
+|   |   |   news01_1.webp
+|   |   |   news02_1.webp
+|   |   |   news02_2.webp
+|   |   |   news02_id.webp
+|   |   |   news03_1.webp
+|   |   |   news03_2.webp
+|   |   |   news04_1.webp
+|   |   |   news05_1.webp
+|   |   |   news06_1.webp
+|   |   |   news07_1.webp
+|   |   |   news07_2.webp
+|   |   |   news08_1.webp
+|   |   |   news09_1.webp
+|   |   |   news09_2.webp
+|   |   |   news09_3.webp
+|   |   |   news09_4.webp
+|   |   |   news09_5.webp
+|   |   |   paper_dwst1.webp
+|   |   |   paper_dwst2.webp
+|   |   |   profile_ding_01.webp
+|   |   |   profile_ding_02.webp
+|   |   |   profile_ding_03.webp
+|   |   |   research-1.webp
+|   |   |   research-2.webp
+|   |   |   research-3.webp
+|   |   |   team_dwq.webp
+|   |   |   team_hx.webp
+|   |   |   team_ljl.webp
+|   |   |   team_lm.webp
+|   |   |   team_sd.webp
+|   |   |   team_sm.webp
+|   |   |   team_wnq.webp
+|   |   |   team_zmy.webp
+|   |   |   
+|   |   \---bar
+|   |           bar_dwq.webp
+|   |           bar_hx.webp
+|   |           bar_ljl.webp
+|   |           bar_lm.webp
+|   |           bar_sd.webp
+|   |           bar_sm.webp
+|   |           bar_wnq.webp
+|   |           bar_zmy.webp
+|   |           
+|   \---js
+|           apply.js
+|           intranet-comm.js
+|           intranet-files.js
+|           intranet-glitch.js
+|           intranet-home.js
+|           intranet-logs.js
+|           intranet-modals.js
+|           intranet-profile.js
+|           intranet-projects.js
+|           intranet.js
+|           site-components.js
+|           tqchat-download.js
+|           
+\---web
+    |   web-hook.js
+    |   
+    +---dkqy
+    |       accident.html
+    |       
+    +---image
+    |       web_3questions.webp
+    |       web_accident.webp
+    |       web_geds.webp
+    |       web_interview.webp
+    |       web_interview_rec1.webp
+    |       web_interview_rec2.webp
+    |       web_interview_rec3.webp
+    |       
+    +---nea
+    |       list.html
+    |       
+    +---nygc
+    |       geds.html
+    |       
+    +---qywl
+    |       interview.html
+    |       
+    +---wechat
+    |       3questions.html
+    |       
+    \---xybbs
+            job.html
+            

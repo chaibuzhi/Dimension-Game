@@ -145,6 +145,19 @@ const appsRegistry = [
         resizable: true,
         desktopIcon: false
     },
+    {
+    id: 'masterkey',
+    name: '天启科技 · MasterKey 密钥管理',
+    icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:-2px;"><polygon points="12,2 21,7 21,17 12,22 3,17 3,7" stroke="#38bdf8" stroke-width="1.2" opacity="0.8"/><polygon points="12,6 17,8.5 17,15.5 12,18 7,15.5 7,8.5" stroke="#2563eb" stroke-width="1" opacity="0.6"/><circle cx="12" cy="12" r="2" fill="#38bdf8" opacity="0.8"/></svg>',
+    type: 'window',
+    src: 'file/masterkey.html',
+    width: 560,
+    height: 500,
+    single: true,
+    resizable: false,
+    darkWindow: true,
+    desktopIcon: false
+    },
     // ════════════════════════════════════
     // 照片（不在桌面显示，通过文件夹打开）
     // ════════════════════════════════════

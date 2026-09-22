@@ -402,7 +402,7 @@ const chatMessages = {
         { date: '2026-03-10', sender: 'them', text: '随时都在' },
 
         { date: '2026-03-17', time: '10:04', sender: 'them', text: '丁教授，这是你的masterkey：Master-DWQ-016' },
-        { date: '2026-03-17', sender: 'them', text: '密钥修改入口：https://tqsecure.com/masterkey#016' },
+        { date: '2026-03-17', sender: 'them', text: '密钥修改入口：https://rtinternal.secure/mk/DWQ-A09' },
         { date: '2026-03-17', sender: 'them', text: '密钥只能修改一次，改完后仅你本人知晓，务必妥善保存，不得外泄' },
         { date: '2026-03-17', sender: 'me', text: '收到，已修改' },
         { date: '2026-03-17', sender: 'them', text: '丁教授，天启保存着全球最完整的φ能量研究档案' },

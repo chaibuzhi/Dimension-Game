@@ -1590,6 +1590,11 @@ function playEndingTitle(seg) {
     storyEl.appendChild(el);
 
     markEndingUnlocked(seg.text);
+
+    // 通关标记：看到 end05 标题 = 成为天启探索者
+    if (ENDING_KEY_MAP[seg.text] === 'end05') {
+        localStorage.setItem('post_ending_mode', 'true');
+    }
 }
 
 function playPrologueEnd() {
@@ -1780,6 +1785,10 @@ function renderFast(item) {
         storyEl.appendChild(el);
 
         markEndingUnlocked(item.text);
+
+        if (ENDING_KEY_MAP[item.text] === 'end05') {
+            localStorage.setItem('post_ending_mode', 'true');
+        }
     } else if (item.type === 'prologue-end') {
         const el = document.createElement('div');
         el.className = 'prologue-end';
@@ -2049,7 +2058,6 @@ const ENDING_05 = [
         ]},
         { type: 'ending-title', text: '结局 · 通往真相的路' },
         { type: 'ending-actions', buttons: [
-            { label: '时 光 回 溯', action: 'back', tip: '回到桌面重新开始测试' },
             { label: '继 续 前 行', action: 'continue' },
             { label: '全 部 结 局', action: 'review' }
         ]}

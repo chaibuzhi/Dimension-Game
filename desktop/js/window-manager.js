@@ -465,13 +465,16 @@ const WindowManager = (function() {
             return;
         }
 
+        // 记录浏览（成就系统）——玩家点开就算，不等图片加载
+        if (typeof markExplore === 'function') {
+            markExplore('photos', app.id);
+        } else {
+            console.warn('[成就系统] markExplore 未加载，照片浏览未记录。检查 explore-tracker.js 的加载顺序。');
+        }
+
         // 先加载图片获取真实尺寸
         const img = new Image();
         img.onload = function() {
-            // 记录浏览（成就系统）
-            if (typeof markExplore === 'function') {
-                markExplore('photos', app.id);
-            }
 
             const maxWidth = app.width || 560;
             const maxHeight = app.height || 480;
