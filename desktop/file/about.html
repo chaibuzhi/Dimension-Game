@@ -128,6 +128,58 @@ body {
     transition: color 0.25s;
 }
 
+/* 导航项作为链接 */
+.nav-item-link {
+    text-decoration: none;
+}
+
+/* ===== 侧边栏底部：群号 + 二维码 ===== */
+.sidebar-community {
+    flex-shrink: 0;
+    padding: 4px 12px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.community-num {
+    font-size: 11px;
+    color: #8a9aae;
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+.community-qr {
+    display: block;
+    width: 132px;
+    height: 132px;
+    padding: 6px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow:
+        0 1px 3px rgba(74, 143, 200, 0.08),
+        0 4px 14px rgba(74, 143, 200, 0.1);
+    transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 0.35s ease;
+    text-decoration: none;
+}
+
+.community-qr:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 2px 6px rgba(74, 143, 200, 0.12),
+        0 10px 26px rgba(74, 143, 200, 0.18);
+}
+
+.community-qr img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
 /* ========== 内容区 ========== */
 .content {
     flex: 1;
@@ -772,7 +824,10 @@ body {
     .intro-desc { font-size: 13px; }
     .thanks-hex { width: 92px; height: 106px; }
     .thanks-hex-name { font-size: 12px; }
-    .thanks-grid { gap: 14px 10px; }
+    .thanks-grid { gap: 14px 10px; }    
+    .sidebar-community {
+        display: none;
+    }
 }
 </style>
 </head>
@@ -820,8 +875,22 @@ body {
                 </svg>
                 <span>鸣谢</span>
             </div>
+            <a class="nav-item nav-item-link" href="https://qm.qq.com/q/zlooCGT3QO" target="_blank" rel="noopener">
+                <svg class="nav-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="5.5" cy="6" r="2" stroke="currentColor" stroke-width="1.1"/>
+                    <circle cx="10.5" cy="6" r="2" stroke="currentColor" stroke-width="1.1"/>
+                    <path d="M2 13.5 C 2 11.5 3.5 10 5.5 10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    <path d="M14 13.5 C 14 11.5 12.5 10 10.5 10" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+                <span>加入社群</span>
+            </a>
         </nav>
-
+        <div class="sidebar-community">
+            <div class="community-num">QQ群 · 545215090</div>
+            <a class="community-qr" href="https://qm.qq.com/q/zlooCGT3QO" target="_blank" rel="noopener" title="点击加群">
+                <img src="../image/qq.webp" alt="QQ群二维码">
+            </a>
+        </div>
     </aside>
 
     <!-- ========== 内容区 ========== -->
@@ -955,20 +1024,16 @@ body {
                     <p class="page-subtitle">Author</p>
                 </div>
 
-                <div class="author-wrap">
+                                <div class="author-wrap">
                     <div class="author-card">
-
                         <div class="author-name">柴不知</div>
                         <div class="author-name-en">CHAIBUZHI</div>
-
                         <div class="author-divider"></div>
-
                         <div class="author-desc">
                             <p>独立开发</p>
                             <p>一个不懂编程的小白</p>
                             <p>感谢游玩，如遇 BUG 欢迎反馈</p>
                         </div>
-
                         <div class="author-contacts">
                             <a class="author-btn" href="https://space.bilibili.com/21368964" target="_blank" rel="noopener">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
@@ -976,7 +1041,13 @@ body {
                                 </svg>
                                 B站
                             </a>
-
+                            <a class="author-btn" href="https://www.xiaohongshu.com/user/profile/5b4333356b58b701c631ac86" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="2.5" y="3" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.1"/>
+                                    <path d="M5 6.5h6M5 8.5h6M5 10.5h3.5" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/>
+                                </svg>
+                                小红书
+                            </a>
                             <button class="author-btn" id="qqLink" type="button">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2C6.48 2 2 6.04 2 11c0 2.79 1.36 5.29 3.5 6.94V22l4.18-2.29c.73.14 1.51.21 2.32.21 5.52 0 10-4.04 10-9S17.52 2 12 2z"/>
@@ -984,12 +1055,10 @@ body {
                                 QQ
                             </button>
                         </div>
-
                         <div class="qq-fallback" id="qqFallback">
                             未能唤起 QQ，请手动添加：<strong id="qqCopyText">252117332</strong>
                             <button type="button" onclick="copyQQ()">复制</button>
                         </div>
-
                     </div>
                 </div>
 
@@ -1056,7 +1125,6 @@ body {
 
             </div>
         </section>
-
     </main>
 
 <script>
