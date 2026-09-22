@@ -369,15 +369,14 @@ body {
 }
 .win-btn .btn-symbol {
     display: none;
-    font-size: 9px;
-    line-height: 1;
-    font-weight: 800;
-    user-select: none;
+    width: 10px;
+    height: 10px;
+    color: #522f07;
     pointer-events: none;
-    color: #522f07;          /* 深棕色 */
+    user-select: none;
 }
 .win-btn.win-close .btn-symbol {
-    color: #75440c;          /* 深棕色，与最小化按钮一致 */
+    color: #75440c;
 }
 .window-controls:hover .win-btn .btn-symbol {
     display: block;

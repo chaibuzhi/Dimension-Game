@@ -98,8 +98,17 @@ const WindowManager = (function() {
                 <div class="window-titlebar" data-drag-handle>
                     <span class="window-title">${icon ? icon + ' ' : ''}${title}</span>
                     <div class="window-controls">
-                        <button class="win-btn win-min" title="最小化"><span class="btn-symbol">−</span></button>
-                        <button class="win-btn win-close" title="关闭"><span class="btn-symbol">×</span></button>
+                        <button class="win-btn win-min" title="最小化">
+                            <svg class="btn-symbol" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="2" y1="5" x2="8" y2="5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                        <button class="win-btn win-close" title="关闭">
+                            <svg class="btn-symbol" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="2.5" y1="2.5" x2="7.5" y2="7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                                <line x1="7.5" y1="2.5" x2="2.5" y2="7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
                 <div class="window-body">${bodyHTML}</div>
