@@ -718,7 +718,8 @@ const messagePool = {
         },
         bodyHTML: `
             <p>行。</p>
-            <p><strong>你等我消息，推荐信息我这边落实了发你邮箱。</strong></p>
+            <p><strong>推荐信息我去落实，会要点时间。</p>
+            <P>你先去忙你的，有了我发你邮箱。</strong></P>
             <p>记住我们的约定。</p>
         `
     },

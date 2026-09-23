@@ -1,5 +1,5 @@
 // ========== 备忘录 · 数据定义 ==========
-// 12 条笔记
+// 13 条笔记（含 2b）
 
 const NOTEBOOK_NOTES = [
     {
@@ -18,9 +18,23 @@ const NOTEBOOK_NOTES = [
         id: 2,
         lines: ['文倩在天启科技工作了五年，但从来不跟我谈起工作，她到底在做什么？'],
         appear: (s) => s.agreementSigned,
-        done: (s) => !!s.triggers.visited_ding_id,
+        done: (s) => !!s.triggers.visited_tianqi_home || !!s.triggers.visited_ding_id,
         hints: [
             { id: '2-1', text: '搜搜这家公司',
+              appear: (s) => true,
+              done: (s) => !!s.triggers.visited_tianqi_home || !!s.triggers.visited_ding_id }
+        ]
+    },
+    {
+        id: '2b',
+        lines: [
+        '官网的新闻篇篇体面，对她的后事却只有冰冷的协议',
+        '或许我该进她的员工系统看看'
+        ],
+        appear: (s) => !!s.triggers.visited_tianqi_home || !!s.triggers.visited_ding_id,
+        done: (s) => !!s.triggers.visited_ding_id,
+        hints: [
+            { id: '2b-1', text: '调查官网',
               appear: (s) => true,
               done: (s) => !!s.triggers.visited_ding_id }
         ]
@@ -138,11 +152,14 @@ const NOTEBOOK_NOTES = [
         done: (s) => s.hasReadCode,
         hints: [
             { id: '11-1', text: '找到能帮忙的人',
-              appear: (s) => true,
-              done: (s) => !!(s.mailContactUnlocked.laoliu || s.mailContactUnlocked.xiaozhou) },
+            appear: (s) => true,
+            done: (s) => !!(s.mailContactUnlocked.laoliu || s.mailContactUnlocked.xiaozhou) },
             { id: '11-2', text: '获得推荐码',
-              appear: (s) => !!(s.mailContactUnlocked.laoliu || s.mailContactUnlocked.xiaozhou),
-              done: (s) => s.hasReadCode }
+            appear: (s) => !!(s.mailContactUnlocked.laoliu || s.mailContactUnlocked.xiaozhou),
+            done: (s) => s.hasReadCode },
+            { id: '11-3', text: '等老刘的消息',
+            appear: (s) => s.mailCodeReady.laoliu === true,   // ← 只绑老刘
+            done: (s) => s.hasReadCode }
         ]
     },
     {

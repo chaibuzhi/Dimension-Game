@@ -80,11 +80,14 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 30px 20px 20px;
-    gap: 16px;
     flex-wrap: wrap;
+    align-items: flex-start;
     align-content: flex-start;
+    gap: 16px;
+    padding: 30px 20px calc(20px + var(--taskbar-height));
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 .desktop-icon {
     display: flex;
@@ -623,7 +626,7 @@ body {
 /* ========== 响应式 ========== */
 @media (max-width: 700px) {
     .desktop-icons {
-        padding: 16px 10px;
+        padding: 16px 10px calc(10px + var(--taskbar-height));
         gap: 10px;
     }
     .desktop-icon {

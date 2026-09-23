@@ -438,8 +438,20 @@ function login() {
     window.location.href = 'intranet.html';
 }
 
+// ========== 记录：玩家进入过天启科技官网 ==========
+function markTianqiHomeVisited() {
+    const triggers = JSON.parse(localStorage.getItem('notebook_triggers') || '{}');
+    if (!triggers.visited_tianqi_home) {
+        triggers.visited_tianqi_home = Date.now();
+        localStorage.setItem('notebook_triggers', JSON.stringify(triggers));
+    }
+}
+
 // ========== 初始化站点公共组件 ==========
 function initSiteComponents() {
+    // 记录官网访问（备忘录进度用）
+    markTianqiHomeVisited();
+
     // 注入公共 CSS
     injectSiteCSS();
 
