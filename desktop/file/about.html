@@ -720,6 +720,16 @@ body {
     justify-content: center;
 }
 
+/* 两列网格：用于名字较长的分组 */
+.thanks-names-2col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 20px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
 .thanks-name {
     display: inline-flex;
     align-items: baseline;
@@ -1109,18 +1119,19 @@ body {
                     </div>
                 </div>
 
-                <!-- 宣传支持 -->
+                <!-- 宣发支持 -->
                 <div class="thanks-section">
                     <div class="thanks-section-title">
                         <span class="line"></span>
                         <div class="thanks-title-text">
-                            <span class="thanks-title-zh">宣传支持</span>
-                            <span class="thanks-title-en">Promotion</span>
+                            <span class="thanks-title-zh">宣发支持</span>
+                            <span class="thanks-title-en">Publicity Support</span>
                         </div>
                         <span class="line"></span>
                     </div>
-                    <div class="thanks-names">
-                        <span class="thanks-empty">暂无</span>
+                    <div class="thanks-names-2col">
+                        <span class="thanks-name"><span class="at">@</span>小刀一把唰唰</span>
+                        <span class="thanks-name"><span class="at">@</span>你急什么_鹅肥瘦</span>
                     </div>
                 </div>
 
