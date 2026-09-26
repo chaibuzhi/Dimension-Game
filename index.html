@@ -352,10 +352,9 @@
             opacity: 0;
             transition: opacity 0.9s ease;
         }
-        .title-container.visible {
+        .title-container.clickable {
             cursor: pointer;
         }
-
         .title-inner {
             text-align: center;
             position: relative;
@@ -527,9 +526,11 @@
             letter-spacing: 0.25em;
             color: var(--text-dim);
             opacity: 0;
-            animation: hintReveal 1.2s ease 2.4s forwards;
             white-space: nowrap;
             user-select: none;
+        }
+        .click-hint.reveal {
+            animation: hintReveal 1.2s ease forwards;
         }
         .click-hint .bracket {
             color: var(--accent-glow);
@@ -559,11 +560,13 @@
             letter-spacing: 0.18em;
             color: var(--text-dim);
             opacity: 0;
-            animation: hintReveal 1.2s ease 3.2s forwards;
             white-space: nowrap;
             user-select: none;
             pointer-events: none;
         }
+        .device-hint.reveal {
+            animation: hintReveal 1.2s ease forwards;
+        }        
 
         /* ========== 滚动条 ========== */
         ::-webkit-scrollbar {
@@ -753,7 +756,7 @@ window.addEventListener('load', () => {
 /* ============================================================
    音效
    ============================================================ */
-const openingAudio = new Audio('music/opening.mp3');
+const openingAudio = new Audio('/music/opening.mp3');
 openingAudio.volume = 1;
 openingAudio.loop = false;
 
@@ -785,6 +788,7 @@ const titleContainer = document.getElementById('titleContainer');
 const hexLayer = document.getElementById('hexLayer');
 
 let enteredTitleStage = false;
+let titleClickable = false;
 
 btnStart.addEventListener('click', function() {
     localStorage.setItem('game_started', 'true');
@@ -801,6 +805,14 @@ btnStart.addEventListener('click', function() {
         hexLayer.classList.add('visible');
         titleContainer.classList.add('visible');
         enteredTitleStage = true;
+
+        // 防误触：2.5 秒后标题动画播完，才允许点击
+        setTimeout(() => {
+            titleClickable = true;
+            titleContainer.classList.add('clickable');
+            document.querySelector('.click-hint').classList.add('reveal');
+            document.querySelector('.device-hint').classList.add('reveal');
+        }, 2500);
     }, 800);
 });
 
@@ -809,14 +821,16 @@ btnStart.addEventListener('click', function() {
    ============================================================ */
 titleContainer.addEventListener('click', function() {
     if (!enteredTitleStage) return;
+    if (!titleClickable) return;
 
     enteredTitleStage = false;
+    titleClickable = false;
     titleContainer.style.pointerEvents = 'none';
 
     titleContainer.classList.add('fade-out');
 
     setTimeout(() => {
-        window.location.href = 'desktop/index-hanxiu.html';
+        window.location.href = 's1coffin/desktop/index-hanxiu.html';
     }, 950);
 });
 </script>

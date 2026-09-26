@@ -1,0 +1,2772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>结局 · 葬礼</title>
+<script src="../desktop/js/playtime.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        min-height: 100%;
+        overflow-y: scroll;
+    }
+
+    body {
+        min-height: 100%;
+    }
+
+    body {
+        background:
+            radial-gradient(ellipse 100% 60% at 50% 0%, rgba(255, 252, 245, 0.95) 0%, transparent 60%),
+            radial-gradient(ellipse 100% 70% at 50% 100%, rgba(240, 232, 218, 0.85) 0%, transparent 60%),
+            #f7f3eb;
+        color: #2a2520;
+        font-family: 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', 'Songti SC', 'STZhongsong', Georgia, serif;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 2.15;
+        letter-spacing: 0.03em;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        cursor: pointer;
+        position: relative;
+    }
+
+    /* ========== 音乐开关 ========== */
+    .music-toggle {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 100;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 252, 245, 0.88);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(180, 165, 140, 0.35);
+        cursor: pointer;
+        color: #8a6f47;
+        opacity: 0.75;
+        transition: opacity 0.35s ease,
+                    background 0.35s ease,
+                    border-color 0.35s ease,
+                    box-shadow 0.35s ease,
+                    transform 0.25s ease;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .music-toggle:hover {
+        opacity: 1;
+        background: rgba(255, 252, 245, 0.98);
+        border-color: #8a6f47;
+        box-shadow: 0 4px 16px rgba(180, 150, 100, 0.18);
+    }
+
+    .music-toggle:active {
+        transform: scale(0.94);
+    }
+
+    .music-toggle svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 22px;
+        height: 22px;
+        margin: -11px 0 0 -11px;
+        display: block;
+        transform-origin: center center;
+    }
+
+    .music-toggle .svg-play {
+        animation: musicSpin 3s linear infinite;
+    }
+
+    .music-toggle .svg-mute {
+        display: none;
+    }
+
+    .music-toggle.muted .svg-play {
+        display: none;
+    }
+
+    .music-toggle.muted .svg-mute {
+        display: block;
+    }
+
+    @keyframes musicSpin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .music-toggle.muted {
+        opacity: 0.55;
+        color: #a8a29a;
+    }
+
+    .music-toggle.muted:hover {
+        opacity: 0.9;
+    }
+
+    @media (max-width: 680px) {
+        .music-toggle {
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .music-toggle svg {
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+        }
+    }
+
+    /* ========== 灰烬层 ========== */
+    #ash-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .ash {
+        position: absolute;
+        background: rgba(160, 145, 118, 0.6);
+        border-radius: 50%;
+        animation: ashFloat linear infinite;
+        will-change: transform, opacity;
+    }
+
+    @keyframes ashFloat {
+        0% {
+            transform: translate(0, 105vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.5;
+        }
+        50% {
+            transform: translate(26px, 55vh) rotate(180deg);
+            opacity: 0.7;
+        }
+        90% {
+            opacity: 0.4;
+        }
+        100% {
+            transform: translate(-14px, -8vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* ========== 故事容器 ========== */
+    #story {
+        position: relative;
+        z-index: 2;
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 140px 44px 220px;
+        transition: padding-bottom 0.6s ease;
+    }
+
+    body.with-ui #story {
+        padding-bottom: 90px;
+    }
+
+    /* ========== 章节标题 ========== */
+    .chapter-title {
+        text-align: center;
+        margin-bottom: 88px;
+        opacity: 0;
+        animation: fadeSlow 2.4s ease forwards;
+    }
+
+    .chapter-title .title-hex {
+        display: block;
+        width: 32px;
+        height: 36px;
+        margin: 0 auto 26px;
+        opacity: 0.55;
+    }
+
+    .chapter-title .title-hex polygon {
+        fill: none;
+        stroke: #b39968;
+        stroke-width: 1;
+    }
+
+    .chapter-title .title-hex .hex-inner {
+        stroke: #c8bda8;
+        stroke-width: 0.6;
+        opacity: 0.5;
+    }
+
+    .chapter-title .title-text {
+        font-size: 12px;
+        letter-spacing: 0.7em;
+        color: #b0a698;
+        padding-left: 0.7em;
+        font-weight: 400;
+        display: block;
+    }
+
+    @keyframes fadeSlow {
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* ========== 场景抬头 ========== */
+    .scene-marker {
+        margin-bottom: 64px;
+        text-align: center;
+        opacity: 0;
+        animation: fadeSlow 2.4s ease forwards;
+    }
+
+    .scene-marker .scene-time {
+        font-size: 12px;
+        letter-spacing: 0.4em;
+        color: #a49a8a;
+        padding-left: 0.4em;
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    .scene-marker .scene-place {
+        font-size: 13px;
+        letter-spacing: 0.32em;
+        color: #8a8070;
+        padding-left: 0.32em;
+        display: block;
+    }
+
+    /* ========== 段落 ========== */
+    .paragraph {
+        margin-bottom: 42px;
+        line-height: 2.15;
+        color: #2a2520;
+        word-break: break-word;
+    }
+
+    .paragraph .line {
+        display: block;
+        margin-bottom: 0;
+    }
+
+    .paragraph .line.blank {
+        display: block;
+        height: 1lh;
+    }
+
+    @supports not (height: 1lh) {
+        .paragraph .line.blank {
+            height: 2.15em;
+        }
+    }
+
+    .paragraph .line.dialog {
+        color: #9a7b52;
+        letter-spacing: 0.05em;
+        font-size: 16.5px;
+    }
+
+    /* ========== 加粗句 ========== */
+    .bold-line {
+        margin: 56px auto;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a1612;
+        letter-spacing: 0.15em;
+        line-height: 1.95;
+        padding-left: 0.15em;
+        max-width: 90%;
+    }
+
+    .bold-line .bold-text {
+        display: block;
+    }
+
+    .bold-line .bold-text .bold-text-line {
+        display: block;
+    }
+
+    .bold-line .bold-marker,
+    .bold-line .bold-marker-bottom {
+        display: block;
+        width: 0;
+        height: 2px;
+        background: #b39968;
+        opacity: 0;
+        margin: 0 auto;
+        border-radius: 1px;
+        transition: width 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+                    opacity 0.6s ease;
+    }
+
+    .bold-line .bold-marker {
+        margin-bottom: 20px;
+    }
+
+    .bold-line .bold-marker-bottom {
+        margin-top: 20px;
+    }
+
+    .bold-line.lines-visible .bold-marker,
+    .bold-line.lines-visible .bold-marker-bottom {
+        width: 30px;
+        opacity: 0.75;
+    }
+
+    /* ========== 段内纪念碑 ========== */
+    .paragraph .line.monument-inline {
+        display: block;
+        text-align: center;
+        margin: 32px 0;
+        font-size: 18px;
+        color: #1a1612;
+        letter-spacing: 0.15em;
+        padding-left: 0.15em;
+        font-weight: 600;
+        line-height: 1.95;
+    }
+
+    .paragraph .line.monument-inline::before,
+    .paragraph .line.monument-inline::after {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 2px;
+        background: #b39968;
+        vertical-align: middle;
+        position: relative;
+        top: -3px;
+        opacity: 0;
+        border-radius: 1px;
+        transition: width 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+                    opacity 0.6s ease;
+    }
+
+    .paragraph .line.monument-inline::before {
+        margin-right: 20px;
+    }
+
+    .paragraph .line.monument-inline::after {
+        margin-left: 20px;
+    }
+
+    .paragraph .line.monument-inline.lines-visible::before,
+    .paragraph .line.monument-inline.lines-visible::after {
+        width: 30px;
+        opacity: 0.75;
+    }
+
+    /* ========== 独立墓碑块 ========== */
+    .monument {
+        margin: 48px 0;
+        text-align: center;
+    }
+
+    .monument .monument-name {
+        font-size: 18px;
+        color: #3a322a;
+        letter-spacing: 0.42em;
+        padding-left: 0.42em;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    .monument .monument-years {
+        font-size: 12px;
+        color: #9a9080;
+        letter-spacing: 0.42em;
+        padding-left: 0.42em;
+        display: block;
+    }
+
+    .monument .monument-line {
+        display: inline-block;
+        width: 22px;
+        height: 2px;
+        background: #c8bda8;
+        vertical-align: middle;
+        margin: 0 16px;
+        opacity: 0.65;
+        border-radius: 1px;
+    }
+
+    /* ========== 逐字动画 ========== */
+    .char {
+        display: inline-block;
+        opacity: 0;
+        animation: charAppear 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        will-change: opacity, filter, transform;
+    }
+
+    @keyframes charAppear {
+        from {
+            opacity: 0;
+            filter: blur(4px);
+            transform: translateY(6px);
+        }
+        to {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+    }
+
+    .paragraph.finished .char,
+    .bold-line.finished .char,
+    .monument.finished .char {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+        animation: none;
+    }
+
+    /* ========== 选项 ========== */
+    .choices {
+        margin: 64px auto 20px;
+        max-width: 400px;
+        opacity: 0;
+        animation: fadeSlow 1.4s ease 0.3s forwards;
+    }
+
+    .choices-prompt {
+        font-size: 12px;
+        color: #a49a8a;
+        letter-spacing: 0.4em;
+        padding-left: 0.4em;
+        margin-bottom: 36px;
+        text-align: center;
+    }
+
+    .choice {
+        display: block;
+        padding: 18px 24px 18px 52px;
+        position: relative;
+        color: #4a3826;
+        cursor: pointer;
+        font-size: 16px;
+        letter-spacing: 0.08em;
+        line-height: 1.75;
+        transition: color 0.5s ease,
+                    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
+                    background 0.5s ease;
+        user-select: none;
+        text-align: left;
+        border-radius: 4px;
+    }
+
+    .choice::before {
+        content: '';
+        position: absolute;
+        left: 26px;
+        top: 50%;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        border: 1.5px solid #c0a878;
+        background: transparent;
+        transform: translateY(-50%);
+        transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .choice:hover {
+        color: #8a6f47;
+        transform: translateX(8px);
+        background: rgba(180, 150, 100, 0.05);
+    }
+
+    .choice:hover::before {
+        border-color: #8a6f47;
+        background: #8a6f47;
+        box-shadow: 0 0 0 4px rgba(180, 150, 100, 0.15);
+    }
+
+    .choice.disabled {
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+    }
+
+    .choice.selected {
+        color: #8a6f47;
+        pointer-events: none;
+        font-weight: 500;
+    }
+
+    .choice.selected::before {
+        border-color: #8a6f47;
+        background: #8a6f47;
+        box-shadow: 0 0 0 4px rgba(180, 150, 100, 0.2);
+    }
+
+    /* ========== 结局标题 ========== */
+    .ending-title {
+        margin: 120px auto 60px;
+        text-align: center;
+        opacity: 0;
+        animation: fadeSlow 2s ease 0.6s forwards;
+    }
+
+    .ending-title .ending-hex {
+        display: block;
+        width: 40px;
+        height: 45px;
+        margin: 0 auto 26px;
+        opacity: 0.6;
+    }
+
+    .ending-title .ending-hex polygon {
+        fill: none;
+        stroke: #b39968;
+        stroke-width: 1.2;
+    }
+
+    .ending-title .ending-label {
+        font-size: 17px;
+        letter-spacing: 0.5em;
+        color: #8a6f47;
+        padding-left: 0.5em;
+        font-weight: 500;
+        display: block;
+    }
+
+    /* ========== 序章 · 完 ========== */
+    .prologue-end {
+        margin: 140px 0 60px;
+        text-align: center;
+        opacity: 0;
+        animation: fadeSlow 2.4s ease 1s forwards;
+    }
+
+    .prologue-end .end-text {
+        font-size: 16px;
+        letter-spacing: 0.6em;
+        color: #b0a698;
+        padding-left: 0.6em;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .prologue-end .end-line {
+        display: block;
+        width: 40px;
+        height: 2px;
+        background: #c8bda8;
+        margin: 22px auto 0;
+        opacity: 0.6;
+        border-radius: 1px;
+    }
+
+    /* ========== 底部按钮（胶囊样式） ========== */
+    .ending-actions {
+        margin-top: 72px;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        opacity: 0;
+        animation: fadeSlow 1.6s ease 1.6s forwards;
+    }
+
+    .ending-btn {
+        display: inline-block;
+        padding: 12px 28px;
+        padding-left: calc(28px + 0.2em);
+        font-size: 14px;
+        font-family: inherit;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        color: #6a5a48;
+        white-space: nowrap;
+        background: transparent;
+        border: 1px solid rgba(138, 111, 71, 0.5);
+        border-radius: 50px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.3s ease,
+                    border-color 0.3s ease,
+                    color 0.3s ease,
+                    box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        user-select: none;
+    }
+
+    .ending-btn:hover {
+        background: rgba(138, 111, 71, 0.08);
+        border-color: #8a6f47;
+        color: #3a2a18;
+        box-shadow: 0 4px 20px rgba(138, 111, 71, 0.15);
+    }
+
+    .ending-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(138, 111, 71, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.4s, height 0.4s;
+    }
+
+    .ending-btn:hover::after {
+        width: 300px;
+        height: 300px;
+    }
+
+    /* ========== 点击提示 ========== */
+    .click-hint {
+        position: fixed;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        letter-spacing: 0.4em;
+        color: #b0a698;
+        padding-left: 0.4em;
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+    }
+
+    .click-hint.visible {
+        opacity: 0.75;
+    }
+
+    .click-hint .hint-word {
+        color: #8a6f47;
+        animation: hintPulse 2.4s ease-in-out infinite;
+        display: inline-block;
+    }
+
+    @keyframes hintPulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.4;
+        }
+    }
+
+    /* ========== 滚动条 ========== */
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(200, 190, 175, 0.4);
+        border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(200, 190, 175, 0.7);
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 680px) {
+        body {
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        #story {
+            padding: 100px 26px 180px;
+        }
+
+        .bold-line,
+        .paragraph .line.monument-inline {
+            font-size: 17px;
+        }
+
+        .chapter-title {
+            margin-bottom: 68px;
+        }
+
+        .scene-marker {
+            margin-bottom: 50px;
+        }
+
+        .paragraph {
+            margin-bottom: 34px;
+        }
+
+        .monument {
+            margin: 40px 0;
+        }
+
+        .choices {
+            margin-top: 50px;
+        }
+
+        .ending-actions {
+            gap: 12px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ending-btn {
+            font-size: 13px;
+            padding: 10px 32px;
+            padding-left: calc(32px + 0.2em);
+        }
+    }
+
+    /* ========== 黑场遮罩 ========== */
+    #blackout {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 3000;
+        pointer-events: none;
+        overflow: hidden;
+        opacity: 1;
+        transition: opacity 2.2s ease;
+    }
+
+    #blackout.fade-out {
+        opacity: 0;
+    }
+
+    #blackoutParticles {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 2.5s ease;
+    }
+
+    #blackoutParticles.visible {
+        opacity: 1;
+    }
+
+    .bp {
+        position: absolute;
+        background: rgba(160, 145, 118, 0.6);
+        border-radius: 50%;
+        animation: bpFloat linear infinite;
+        will-change: transform, opacity;
+    }
+
+    @keyframes bpFloat {
+        0%   {
+            transform: translate(0, 105vh) rotate(0deg);
+            opacity: 0;
+        }
+        10%  {
+            opacity: 0.5;
+        }
+        50%  {
+            transform: translate(26px, 55vh) rotate(180deg);
+            opacity: 0.7;
+        }
+        90%  {
+            opacity: 0.4;
+        }
+        100% {
+            transform: translate(-14px, -8vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* ========== 暖光光束 ========== */
+    #light-beam {
+        position: fixed;
+        inset: 0;
+        z-index: 3001;
+        pointer-events: none;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 1.4s ease;
+    }
+
+    #light-beam .beam-core {
+        position: absolute;
+        top: -100vmax;
+        left: 50%;
+        width: 200vmax;
+        height: 200vmax;
+        margin-left: -100vmax;
+        background: radial-gradient(
+            circle at center,
+            rgba(255, 252, 235, 1) 0%,
+            rgba(255, 248, 215, 0.88) 12%,
+            rgba(255, 240, 190, 0.58) 30%,
+            rgba(255, 232, 170, 0.26) 55%,
+            rgba(255, 225, 155, 0.09) 78%,
+            transparent 100%
+        );
+        transform-origin: center center;
+        transform: scale(0.25);
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    #light-beam .beam-core.expanding {
+        animation: beamExpand 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    @keyframes beamExpand {
+        0%   {
+            transform: scale(0.25);
+            opacity: 0;
+        }
+        30%  {
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    /* ========== 回顾模式 UI 区 ========== */
+    #uiZone {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 0 44px 200px;
+        box-sizing: border-box;
+        display: none;
+    }
+
+    #uiZone.visible {
+        display: block;
+    }
+
+    #uiZone .ui-row {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    #uiZone .ending-actions {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 0;
+        opacity: 1;
+        animation: none;
+    }
+
+    #uiZone .review-actions {
+        position: absolute;
+        left: calc(100% + 28px);
+        top: 4px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        opacity: 0;
+        animation: fadeSlow 0.9s ease forwards;
+        white-space: nowrap;
+    }
+
+    #uiZone .review-btn {
+        background: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 4px 8px !important;
+        font-size: 14px;
+        font-family: inherit;
+        font-weight: 400;
+        letter-spacing: 0.18em;
+        color: #9a9080;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        transition: color 0.35s ease,
+                    transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+        position: relative;
+        user-select: none;
+        overflow: visible !important;
+        text-align: left;
+    }
+
+    #uiZone .review-btn::after {
+        display: none !important;
+    }
+
+    #uiZone .review-text {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    #uiZone .review-text::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        border: 1px solid #c8bda8;
+        background: transparent;
+        transition: all 0.35s ease;
+        flex-shrink: 0;
+    }
+
+    #uiZone .review-btn:hover {
+        color: #4a3826;
+        transform: translateX(4px);
+    }
+
+    #uiZone .review-btn:hover .review-text::before {
+        background: #8a6f47;
+        border-color: #8a6f47;
+        box-shadow: 0 0 0 4px rgba(180, 150, 100, 0.12);
+    }
+
+    #uiZone .review-btn.selected {
+        color: #8a6f47;
+        font-weight: 500;
+    }
+
+    #uiZone .review-btn.selected .review-text::before {
+        background: #8a6f47;
+        border-color: #8a6f47;
+        box-shadow: 0 0 0 4px rgba(180, 150, 100, 0.2);
+    }
+
+    #uiZone .review-note {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: #b0a698;
+        font-weight: 400;
+        margin-left: 17px;
+        line-height: 1.2;
+    }
+
+    /* ========== 白场过渡 ========== */
+    #whiteFlash {
+        position: fixed;
+        inset: 0;
+        background: #f7f3eb;
+        z-index: 2500;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.42s ease;
+    }
+
+    #whiteFlash.active {
+        opacity: 1;
+    }
+
+    /* ========== 选择回响 ========== */
+    .choice-echo {
+        margin: 44px auto;
+        text-align: center;
+        font-size: 13px;
+        letter-spacing: 0.18em;
+        padding-left: 0.18em;
+        color: #a49a8a;
+        opacity: 0;
+        animation: fadeSlow 1.4s ease forwards;
+    }
+
+    .choice-echo::before,
+    .choice-echo::after {
+        content: '';
+        display: inline-block;
+        width: 18px;
+        height: 1px;
+        background: #c8bda8;
+        vertical-align: middle;
+        margin: 0 14px;
+        opacity: 0.7;
+        position: relative;
+        top: -2px;
+    }
+
+    /* ========== 回顾模式直接渲染的淡入 ========== */
+    @keyframes reviewFadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    .review-fade-in {
+        animation: reviewFadeIn 1.4s ease forwards !important;
+    }
+
+    /* ========== 全局 hover 提示 ========== */
+    .global-tip {
+        position: fixed;
+        transform: translateX(-50%);
+        font-size: 11px;
+        color: #a49a8a;
+        letter-spacing: 0.12em;
+        padding-left: 0.12em;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        z-index: 200;
+    }
+
+    .global-tip.visible {
+        opacity: 1;
+    }
+
+    @media (max-width: 680px) {
+        body.with-ui #story {
+            padding-bottom: 60px;
+        }
+
+        #uiZone {
+            padding: 0 26px 140px;
+        }
+
+        #uiZone .ending-actions {
+            gap: 12px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #uiZone .review-actions {
+            position: static;
+            margin-top: 36px;
+            align-items: center;
+        }
+
+        #uiZone .review-btn {
+            font-size: 13px;
+            padding: 6px 12px !important;
+            letter-spacing: 0.15em;
+            align-items: center;
+            text-align: center;
+        }
+
+        #uiZone .review-note {
+            margin-left: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- 黑场遮罩 -->
+    <div id="blackout">
+        <div id="blackoutParticles"></div>
+    </div>
+
+    <!-- 暖光光束 -->
+    <div id="light-beam">
+        <div class="beam-core"></div>
+    </div>
+
+    <div class="music-toggle" id="musicToggle" title="点击静音 / 取消静音">
+        <svg class="svg-play" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="8" cy="18" rx="3" ry="2.5" fill="currentColor" stroke="none"/>
+            <line x1="11" y1="18" x2="11" y2="4"/>
+            <path d="M11 4 Q16.5 4.5 18.5 8.5"/>
+        </svg>
+        <svg class="svg-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9.5"/>
+            <line x1="5.28" y1="5.28" x2="18.72" y2="18.72"/>
+        </svg>
+    </div>
+
+    <div id="ash-layer"></div>
+    <div id="story"></div>
+    <div id="uiZone"></div>
+    <div id="whiteFlash"></div>
+    <div class="click-hint" id="clickHint">
+        点击 <span class="hint-word">[ 任意处 ]</span> 继续
+    </div>
+
+<script>
+/* ============================================================
+   灰烬
+   ============================================================ */
+(function initAsh() {
+    const layer = document.getElementById('ash-layer');
+    for (let i = 0; i < 60; i++) {
+        const ash = document.createElement('div');
+        ash.className = 'ash';
+        ash.style.left = (Math.random() * 100) + '%';
+        const size = (1.5 + Math.random() * 2.5).toFixed(1) + 'px';
+        ash.style.width = size;
+        ash.style.height = size;
+        const dur = 18 + Math.random() * 16;
+        ash.style.animationDuration = dur + 's';
+        ash.style.animationDelay = (-Math.random() * dur) + 's';
+        ash.style.opacity = (0.3 + Math.random() * 0.35).toFixed(2);
+        layer.appendChild(ash);
+    }
+})();
+
+/* ============================================================
+   音乐管理
+   ============================================================ */
+const MusicManager = (function() {
+    const tracks = {};
+    let activeName = null;
+    let muted = false;
+    const TARGET_VOLUME = 0.22;
+
+    function load(name) {
+        const audio = new Audio('/music/' + name + '.mp3');
+        audio.loop = true;
+        audio.volume = 0;
+        return audio;
+    }
+
+    function fadeTo(name, target, duration) {
+        const track = tracks[name];
+        if (!track) return;
+        if (track.raf) cancelAnimationFrame(track.raf);
+        const start = track.audio.volume;
+        const delta = target - start;
+        const startTime = performance.now();
+
+        function step(now) {
+            const t = Math.min(1, (now - startTime) / duration);
+            const eased = t * t * (3 - 2 * t);
+            track.audio.volume = Math.max(0, Math.min(1, start + delta * eased));
+            if (t < 1) {
+                track.raf = requestAnimationFrame(step);
+            } else {
+                track.raf = null;
+            }
+        }
+        track.raf = requestAnimationFrame(step);
+    }
+
+    function play(name, targetVolume) {
+        targetVolume = targetVolume === undefined ? TARGET_VOLUME : targetVolume;
+        if (!tracks[name]) {
+            tracks[name] = { audio: load(name), raf: null };
+        }
+        const track = tracks[name];
+        track.audio.volume = 0;
+        track.audio.muted = muted;
+        track.audio.play().catch(() => {});
+        fadeTo(name, targetVolume, 2000);
+    }
+
+    function stop(name, duration) {
+        duration = duration === undefined ? 1800 : duration;
+        const track = tracks[name];
+        if (!track) return;
+        fadeTo(name, 0, duration);
+        setTimeout(() => {
+            if (track.audio.volume < 0.01) {
+                track.audio.pause();
+            }
+        }, duration + 200);
+    }
+
+    function start(name) {
+        if (activeName === name) return;
+        activeName = name;
+        play(name);
+    }
+
+    function switchTo(name) {
+        if (activeName === name) return;
+        if (activeName) stop(activeName, 1800);
+        play(name);
+        activeName = name;
+    }
+
+    document.addEventListener('click', function resumeOnce() {
+        if (activeName && tracks[activeName] && tracks[activeName].audio.paused) {
+            tracks[activeName].audio.play().catch(() => {});
+        }
+    }, { once: true });
+
+    function toggleMute() {
+        muted = !muted;
+        Object.values(tracks).forEach(t => {
+            t.audio.muted = muted;
+        });
+        return muted;
+    }
+
+    function isMuted() { return muted; }
+
+    return { start, switchTo, toggleMute, isMuted };
+})();
+
+/* ============================================================
+   存档
+   ============================================================ */
+const STORAGE_KEY = 'prologue_progress';
+// 预设路径（玩家没走过对应结局时使用）
+const PRESET_PATHS = {
+    end03: { choiceA: 'A1' },
+    end04: { choiceA: 'A2', choiceB: 'B2' }
+};
+function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+let progress = Object.assign({
+    visitedChoiceA: false,
+    choiceA: null,
+    visitedChoiceB: false,
+    choiceB: null
+}, loadProgress());
+
+const examPassed = localStorage.getItem('exam_passed') === 'true';
+
+/* ============================================================
+   全局状态
+   ============================================================ */
+const storyEl = document.getElementById('story');
+const clickHint = document.getElementById('clickHint');
+const uiZone = document.getElementById('uiZone');
+const whiteFlash = document.getElementById('whiteFlash');
+
+let pendingQueue = [];
+let activeTyping = null;
+let choicesLocked = false;
+let choiceActive = false;
+let isAutoMode = false;
+
+let reviewExpanded = false;
+let reviewPlaying = false;
+let currentEndingKey = null;
+let isReviewMode = false;
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function showHint() { clickHint.classList.add('visible'); }
+function hideHint() { clickHint.classList.remove('visible'); }
+
+/* ============================================================
+   全局 hover 提示
+   ============================================================ */
+const globalTip = document.createElement('div');
+globalTip.className = 'global-tip';
+document.body.appendChild(globalTip);
+
+function showGlobalTip(btn, text) {
+    const rect = btn.getBoundingClientRect();
+    globalTip.textContent = text;
+    globalTip.style.left = (rect.left + rect.width / 2) + 'px';
+    globalTip.style.top = (rect.bottom + 10) + 'px';
+    globalTip.classList.add('visible');
+}
+
+function hideGlobalTip() {
+    globalTip.classList.remove('visible');
+}
+
+/* ============================================================
+   智能滚动
+   ============================================================ */
+function scrollBottom() {
+    if (isReviewMode) return;
+    const children = storyEl.children;
+    if (children.length === 0) return;
+    const last = children[children.length - 1];
+    const rect = last.getBoundingClientRect();
+    const absoluteBottom = window.scrollY + rect.bottom;
+    const target = absoluteBottom - window.innerHeight + 160;
+    window.scrollTo(0, Math.max(0, target));
+}
+
+/* ============================================================
+   打字机
+   ============================================================ */
+function animateElements(elements) {
+    let charIndex = 0;
+    const infos = [];
+    elements.forEach(el => {
+        const text = el.textContent;
+        el.textContent = '';
+        const startIdx = charIndex;
+        const frag = document.createDocumentFragment();
+        [...text].forEach(ch => {
+            const span = document.createElement('span');
+            span.className = 'char';
+            if (ch === ' ') span.innerHTML = '&nbsp;';
+            else span.textContent = ch;
+            span.style.animationDelay = (charIndex * 24) + 'ms';
+            frag.appendChild(span);
+            charIndex++;
+        });
+        el.appendChild(frag);
+        infos.push({ el, startIdx, charCount: charIndex - startIdx });
+    });
+    return { totalMs: charIndex * 24 + 900, infos };
+}
+
+function finishTyping(record) {
+    if (!record) return;
+    record.containers.forEach(c => c.classList.add('finished'));
+    if (activeTyping === record) activeTyping = null;
+}
+
+function waitForTyping() {
+    return new Promise(resolve => {
+        const check = () => {
+            if (!activeTyping) resolve();
+            else setTimeout(check, 80);
+        };
+        check();
+    });
+}
+
+/* ============================================================
+   元素构建
+   ============================================================ */
+function buildChapterEl(seg) {
+    const el = document.createElement('div');
+    el.className = 'chapter-title';
+    el.innerHTML = `
+        <svg class="title-hex" viewBox="0 0 32 36" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="16,1 31,10 31,26 16,35 1,26 1,10"/>
+            <polygon class="hex-inner" points="16,6 26,12 26,24 16,30 6,24 6,12"/>
+        </svg>
+        <span class="title-text">${seg.text}</span>
+    `;
+    return el;
+}
+
+function buildSceneEl(seg) {
+    const el = document.createElement('div');
+    el.className = 'scene-marker';
+    el.innerHTML = `
+        <span class="scene-time">${seg.time}</span>
+        <span class="scene-place">${seg.place}</span>
+    `;
+    return el;
+}
+
+function buildParaEl(seg) {
+    const wrap = document.createElement('div');
+    wrap.className = 'paragraph';
+    if (seg.isAnchor) wrap.id = 'anchor-point';
+    const lineEls = [];
+    seg.lines.forEach(line => {
+        const lineEl = document.createElement('span');
+        lineEl.className = 'line';
+        if (typeof line === 'object') {
+            if (line.dialog) lineEl.classList.add('dialog');
+            if (line.monumentInline) lineEl.classList.add('monument-inline');
+            lineEl.textContent = line.text;
+            lineEl.dataset.typing = 'true';
+        } else if (line === '') {
+            lineEl.classList.add('blank');
+            lineEl.dataset.blank = 'true';
+        } else {
+            lineEl.textContent = line;
+            lineEl.dataset.typing = 'true';
+        }
+        wrap.appendChild(lineEl);
+        lineEls.push(lineEl);
+    });
+    return { el: wrap, lineEls };
+}
+
+function buildBoldEl(seg) {
+    const el = document.createElement('div');
+    el.className = 'bold-line';
+    const lines = seg.lines || [seg.text];
+
+    const textWrap = document.createElement('span');
+    textWrap.className = 'bold-text';
+    const textLines = [];
+    lines.forEach(line => {
+        const span = document.createElement('span');
+        span.className = 'bold-text-line';
+        span.textContent = line;
+        textWrap.appendChild(span);
+        textLines.push(span);
+    });
+
+    const topMarker = document.createElement('span');
+    topMarker.className = 'bold-marker';
+    const bottomMarker = document.createElement('span');
+    bottomMarker.className = 'bold-marker-bottom';
+
+    el.appendChild(topMarker);
+    el.appendChild(textWrap);
+    el.appendChild(bottomMarker);
+
+    return { el, textLines };
+}
+
+function buildMonumentEl(seg) {
+    const el = document.createElement('div');
+    el.className = 'monument';
+    el.innerHTML = `
+        <span class="monument-name">${seg.name}</span>
+        <span class="monument-years"><span class="monument-line"></span>${seg.years}<span class="monument-line"></span></span>
+    `;
+    return el;
+}
+
+function buildEchoEl(seg) {
+    const el = document.createElement('div');
+    el.className = 'choice-echo';
+    el.textContent = seg.text;
+    return el;
+}
+
+/* ============================================================
+   结局解锁标记
+   ============================================================ */
+const ENDING_KEY_MAP = {
+    '结局 · 听话的丈夫':   'end03',
+    '结局 · 没有终点的调查': 'end04',
+    '结局 · 通往真相的路':  'end05'
+};
+
+function markEndingUnlocked(text) {
+    const key = ENDING_KEY_MAP[text];
+    if (!key) return;
+
+    let data = {};
+    try {
+        data = JSON.parse(localStorage.getItem('endings_unlocked') || '{}');
+    } catch (e) {
+        data = {};
+    }
+    if (!data[key]) {
+        data[key] = true;
+        localStorage.setItem('endings_unlocked', JSON.stringify(data));
+    }
+}
+
+/* ============================================================
+   播放器
+   ============================================================ */
+function scheduleInlineLines(infos) {
+    infos.forEach(info => {
+        if (info.el.classList.contains('monument-inline')) {
+            const t = (info.startIdx + info.charCount) * 24 + 500;
+            setTimeout(() => info.el.classList.add('lines-visible'), t);
+        }
+    });
+}
+
+function playChapter(seg) { storyEl.appendChild(buildChapterEl(seg)); }
+function playScene(seg) { storyEl.appendChild(buildSceneEl(seg)); }
+
+function playPara(seg) {
+    const { el, lineEls } = buildParaEl(seg);
+    storyEl.appendChild(el);
+    const typingEls = lineEls.filter(line => line.dataset.typing === 'true');
+    const { totalMs, infos } = animateElements(typingEls);
+    scheduleInlineLines(infos);
+    const record = { containers: [el], totalMs };
+    activeTyping = record;
+    setTimeout(() => finishTyping(record), totalMs);
+}
+
+function playBold(seg) {
+    const { el, textLines } = buildBoldEl(seg);
+    storyEl.appendChild(el);
+    const { totalMs } = animateElements(textLines);
+    setTimeout(() => el.classList.add('lines-visible'), totalMs - 300);
+    const record = { containers: [el], totalMs };
+    activeTyping = record;
+    setTimeout(() => finishTyping(record), totalMs);
+}
+
+function playMonument(seg) {
+    const el = buildMonumentEl(seg);
+    storyEl.appendChild(el);
+    const nameEl = el.querySelector('.monument-name');
+    const yearsEl = el.querySelector('.monument-years');
+    const { totalMs } = animateElements([nameEl, yearsEl]);
+    const record = { containers: [el], totalMs };
+    activeTyping = record;
+    setTimeout(() => finishTyping(record), totalMs);
+}
+
+function playEcho(seg) {
+    const el = buildEchoEl(seg);
+    storyEl.appendChild(el);
+    requestAnimationFrame(scrollBottom);
+    const record = { containers: [], totalMs: 1400 };
+    activeTyping = record;
+    setTimeout(() => { if (activeTyping === record) activeTyping = null; }, 1400);
+}
+
+function playCombo(seg) {
+    const allTypingEls = [];
+    const allContainers = [];
+    const boldEls = [];
+
+    seg.items.forEach(item => {
+        if (item.type === 'monument') {
+            const el = buildMonumentEl(item);
+            storyEl.appendChild(el);
+            const nameEl = el.querySelector('.monument-name');
+            const yearsEl = el.querySelector('.monument-years');
+            allTypingEls.push(nameEl, yearsEl);
+            allContainers.push(el);
+        } else if (item.type === 'bold') {
+            const { el, textLines } = buildBoldEl(item);
+            storyEl.appendChild(el);
+            allTypingEls.push(...textLines);
+            allContainers.push(el);
+            boldEls.push({ el, textLines });
+        } else if (item.type === 'para') {
+            const { el, lineEls } = buildParaEl(item);
+            storyEl.appendChild(el);
+            const typingEls = lineEls.filter(line => line.dataset.typing === 'true');
+            allTypingEls.push(...typingEls);
+            allContainers.push(el);
+        } else if (item.type === 'ending-title') {
+            playEndingTitle(item);
+        } else if (item.type === 'ending-actions') {
+            playEndingActions(item);
+        } else if (item.type === 'prologue-end') {
+            playPrologueEnd();
+        } else if (item.type === 'echo') {
+            playEcho(item);
+        }
+    });
+
+    const { totalMs, infos } = animateElements(allTypingEls);
+    scheduleInlineLines(infos);
+
+    boldEls.forEach(({ el, textLines }) => {
+        const lastLine = textLines[textLines.length - 1];
+        const info = infos.find(i => i.el === lastLine);
+        if (info) {
+            const t = (info.startIdx + info.charCount) * 24 + 500;
+            setTimeout(() => el.classList.add('lines-visible'), t);
+        }
+    });
+
+    const record = { containers: allContainers, totalMs };
+    activeTyping = record;
+    setTimeout(() => finishTyping(record), totalMs);
+}
+
+function playEndingTitle(seg) {
+    hideHint();
+    const el = document.createElement('div');
+    el.className = 'ending-title';
+    el.innerHTML = `
+        <svg class="ending-hex" viewBox="0 0 40 45" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="20,1 39,12 39,33 20,44 1,33 1,12"/>
+        </svg>
+        <span class="ending-label">${seg.text}</span>
+    `;
+    storyEl.appendChild(el);
+
+    markEndingUnlocked(seg.text);
+
+    // 通关标记：看到 end05 标题 = 成为天启探索者
+    if (ENDING_KEY_MAP[seg.text] === 'end05') {
+        localStorage.setItem('post_ending_mode', 'true');
+    }
+}
+
+function playPrologueEnd() {
+    const el = document.createElement('div');
+    el.className = 'prologue-end';
+    el.innerHTML = `
+        <span class="end-text">空 棺 · 完</span>
+        <span class="end-line"></span>
+    `;
+    storyEl.appendChild(el);
+}
+
+function playEndingActions(seg) {
+    showMainActions(seg);
+}
+
+/* ============================================================
+   队列
+   ============================================================ */
+function playItem(item) {
+    if (item.type === 'chapter') playChapter(item);
+    else if (item.type === 'scene') playScene(item);
+    else if (item.type === 'para') playPara(item);
+    else if (item.type === 'bold') playBold(item);
+    else if (item.type === 'monument') playMonument(item);
+    else if (item.type === 'combo') playCombo(item);
+    else if (item.type === 'ending-title') playEndingTitle(item);
+    else if (item.type === 'prologue-end') playPrologueEnd();
+    else if (item.type === 'ending-actions') playEndingActions(item);
+    else if (item.type === 'echo') playEcho(item);
+}
+
+function enqueue(items) {
+    pendingQueue = items.slice();
+    hideHint();
+    tick();
+}
+
+function tick() {
+    if (choiceActive) return;
+    if (activeTyping) return;
+    if (pendingQueue.length === 0) {
+        if (isAutoMode) {
+            isAutoMode = false;
+            hideHint();
+        } else if (uiZone.classList.contains('visible')) {
+            hideHint();
+        } else {
+            showHint();
+        }
+        return;
+    }
+
+    const item = pendingQueue.shift();
+
+    if (item.type === 'branch') {
+        const routeKey = item.decide();
+        const fn = routes[routeKey];
+        if (fn) fn();
+        return;
+    }
+
+    if (item.type === 'choice') {
+        choiceActive = true;
+        renderChoices(item, (choiceId) => {
+            choiceActive = false;
+            if (item.onPick) item.onPick(choiceId);
+        });
+        return;
+    }
+
+    playItem(item);
+    requestAnimationFrame(scrollBottom);
+
+    if (isAutoMode) {
+        waitForTyping().then(() => {
+            setTimeout(() => {
+                if (isAutoMode && !choiceActive) tick();
+            }, 600);
+        });
+    } else {
+        waitForTyping().then(() => {
+            if (pendingQueue.length > 0) showHint();
+        });
+    }
+}
+
+/* ============================================================
+   选项
+   ============================================================ */
+function renderChoices(seg, onPick) {
+    hideHint();
+    const wrap = document.createElement('div');
+    wrap.className = 'choices';
+    if (seg.choiceName) wrap.dataset.choiceName = seg.choiceName;
+
+    const prompt = document.createElement('div');
+    prompt.className = 'choices-prompt';
+    prompt.textContent = seg.prompt;
+    wrap.appendChild(prompt);
+
+    seg.options.forEach(opt => {
+        const el = document.createElement('div');
+        el.className = 'choice';
+        el.dataset.id = opt.id;
+        el.textContent = opt.text;
+        el.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (choicesLocked) return;
+            choicesLocked = true;
+
+            wrap.querySelectorAll('.choice').forEach(c => {
+                if (c.dataset.id === opt.id) c.classList.add('selected');
+                else c.classList.add('disabled');
+            });
+
+            await sleep(700);
+
+            wrap.style.animation = 'none';
+            wrap.style.opacity = '1';
+            void wrap.offsetWidth;
+            wrap.style.transition = 'opacity 0.7s ease';
+            wrap.style.opacity = '0';
+            await sleep(720);
+            wrap.remove();
+
+            choicesLocked = false;
+            onPick(opt.id);
+        });
+        wrap.appendChild(el);
+    });
+
+    storyEl.appendChild(wrap);
+    requestAnimationFrame(scrollBottom);
+}
+
+/* ============================================================
+   快速渲染（无动画）
+   ============================================================ */
+function renderFast(item) {
+    if (item.type === 'para') {
+        const { el } = buildParaEl(item);
+        el.classList.add('finished');
+        el.querySelectorAll('.monument-inline').forEach(mi => mi.classList.add('lines-visible'));
+        storyEl.appendChild(el);
+    } else if (item.type === 'echo') {
+        const el = buildEchoEl(item);
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        storyEl.appendChild(el);
+    } else if (item.type === 'bold') {
+        const { el, textLines } = buildBoldEl(item);
+        textLines.forEach(line => {
+            line.innerHTML = [...line.textContent].map(ch => {
+                if (ch === ' ') return '<span class="char" style="opacity:1;animation:none;">&nbsp;</span>';
+                return `<span class="char" style="opacity:1;animation:none;">${ch}</span>`;
+            }).join('');
+        });
+        el.classList.add('finished', 'lines-visible');
+        storyEl.appendChild(el);
+    } else if (item.type === 'monument') {
+        const el = buildMonumentEl(item);
+        el.classList.add('finished');
+        storyEl.appendChild(el);
+    } else if (item.type === 'chapter') {
+        const el = buildChapterEl(item);
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        storyEl.appendChild(el);
+    } else if (item.type === 'scene') {
+        const el = buildSceneEl(item);
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        storyEl.appendChild(el);
+    } else if (item.type === 'combo') {
+        item.items.forEach(sub => renderFast(sub));
+    } else if (item.type === 'ending-title') {
+        const el = document.createElement('div');
+        el.className = 'ending-title';
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.innerHTML = `
+            <svg class="ending-hex" viewBox="0 0 40 45" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="20,1 39,12 39,33 20,44 1,33 1,12"/>
+            </svg>
+            <span class="ending-label">${item.text}</span>
+        `;
+        storyEl.appendChild(el);
+
+        markEndingUnlocked(item.text);
+
+        if (ENDING_KEY_MAP[item.text] === 'end05') {
+            localStorage.setItem('post_ending_mode', 'true');
+        }
+    } else if (item.type === 'prologue-end') {
+        const el = document.createElement('div');
+        el.className = 'prologue-end';
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.innerHTML = `<span class="end-text">序 章 · 完</span><span class="end-line"></span>`;
+        storyEl.appendChild(el);
+    } else if (item.type === 'ending-actions') {
+        showMainActions(item);
+    }
+}
+
+/* ============================================================
+   ═══════════════════════════════════════════════════════════
+   ★ 所有文本常量（唯一数据源）
+   ═══════════════════════════════════════════════════════════
+   ============================================================ */
+
+const PRE_CHOICE_A = [
+    { type: 'chapter', text: '葬 礼' },
+    { type: 'scene', time: '2026年7月22日 上午8:00', place: '西延市金陵墓园' },
+    { type: 'para', lines: [
+        '天色阴沉，风裹着夏末的凉意，混着香烛和青草的味道。',
+        '墓园门口的坡道两旁，黑色轿车排成一条直线。',
+        '天启科技为丁文倩操办的葬礼，规整得像一场会议。'
+    ]},
+    { type: 'para', lines: [
+        '数十位安全合规部的人散在人群外围，清一色黑西装，神情严肃。',
+        '亲友三三两两地站着，说话声压得很低。',
+        '',
+        '你站在最前排，盯着墓碑上的字。'
+    ]},
+    { type: 'combo', items: [
+        { type: 'monument', name: '丁文倩', years: '1996 — 2026' },
+        { type: 'para', lines: [
+            '墓穴已经挖开，黑色的棺木静静地停在一旁。',
+            '司仪捧着悼词，嘴唇开合，声音飘得很远。',
+            '你眼里只有那口棺木。'
+        ]}
+    ]},
+    { type: 'combo', items: [
+        { type: 'bold', lines: ['你不知道，丁文倩到底在不在里面。'] },
+        { type: 'para', lines: [
+            '脑子里反复闪着匿名账号发来的照片：',
+            '冰冷的钢罐注满不明液体，她环抱着腿悬浮其中，身上插满了管子，',
+            '像一个在ICU里等待苏醒的婴儿。'
+        ]}
+    ]},
+    { type: 'para', lines: [
+        { text: '“韩老师？”', dialog: true },
+        '你回过神。司仪关切地看着你，像是已经叫了好几声。',
+        { text: '“您可以致悼词了。”', dialog: true },
+        '他递过话筒，侧身示意你上前。',
+        '',
+        '所有目光都聚拢过来。',
+        '你知道，自己必须做点什么。'
+    ]},
+    { type: 'para', lines: [
+        '你往前走，没接话筒，越过司仪，径直朝棺木走。',
+        '一名安保立刻跨上来，伸手拦在你身前。',
+        { text: '“韩老师，请留步。”', dialog: true }
+    ]},
+    { type: 'para', isAnchor: true, lines: [
+        '你从口袋里抽出右手，松开紧攥了一路的拳。',
+        '掌心里躺着那枚婚戒，内壁磨得发亮，刻字依稀可见：',
+        { text: 'dwq & hx', monumentInline: true },
+        '这是她走之前特意留下的，放在了书房的抽屉里。',
+        '',
+        '安保见你不说话，又冷声问了一遍：',
+        { text: '“你想干什么？”', dialog: true }
+    ]}
+];
+
+const PATH_A1_POST = [
+    { type: 'para', lines: [
+        '你盯着棺木看了几秒，慢慢收回手。',
+        '你没理会安保，转身接过司仪手里的话筒，开始念悼词。'
+    ]},
+    { type: 'para', lines: [
+        '稿子是你一字一句写的，此刻读着却格外陌生。',
+        '你念着她的生平，她的成就，你们的相遇，她的离开。',
+        '语气平得像在上一节物理课。',
+        '',
+        '语毕，人群里传来低低的啜泣声。'
+    ]}
+];
+
+const PATH_A2_POST = [
+    { type: 'para', lines: [
+        { text: '“我要把戒指留给文倩。”', dialog: true },
+        '你声音不大，却很坚定。'
+    ]},
+    { type: 'para', lines: [
+        { text: '“韩老师，公司有规定，不能开棺。”', dialog: true },
+        '',
+        { text: '“这是她的遗物！”', dialog: true },
+        '',
+        { text: '“请您遵守规定。”', dialog: true },
+        '安保的语气不容置喙。',
+        '',
+        { text: '“滚开！”', dialog: true },
+        '你猛地挥开他的胳膊，伸手就去推棺盖。',
+        '安保反应极快，一把扣住你的手腕。周围的安保也立刻围了上来。'
+    ]}
+];
+
+const PATH_B1_POST = [
+    { type: 'para', lines: [
+        '你被架在原地，肩膀被攥得生疼。',
+        '亲友赶上来，连拉带劝地将你们拉开。',
+        '你盯着棺盖的缝隙，眼眶发涨，终究没再挣扎。'
+    ]}
+];
+
+const PATH_B2_POST = [
+    { type: 'para', lines: [
+        '你猛地拧身，挣开肩上的手。',
+        '更多安保围上来，死死拽住你。你奋力挣脱向外撞去，场面瞬间乱了。',
+        '推搡间，你肩膀撞在棺木侧面，发出一声闷响。',
+        '人群惊叫起来，亲友纷纷涌过来，惊呼声、劝架声搅成一团。'
+    ]}
+];
+
+const ENDING_03 = [
+    { type: 'para', lines: [
+        '葬礼顺利的结束了。',
+        '',
+        '你拿到了六百万的赔偿金。',
+        '丁文倩的离世在学术界掀了一点波澜，很快就平息了。',
+        '',
+        '你不再追问她的死因，努力忘记调查的一切，也不再和别人提起她。',
+        '戒指被你锁进了书房抽屉的最底层，再也没打开过。'
+    ]},
+    { type: 'para', lines: [
+        '八月的旅行，你一个人去了。',
+        '新西兰的海，和四年前一模一样。',
+        '你一个人住进海景套房，一个人吃完了私人晚宴，一个人沿着当年走过的海岸线走了很久很久。',
+        '',
+        '坐在礁石上等到了天黑。',
+        '你把那些线索打印了出来，一沓沓卷成筒，扔进了海里。'
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: ['你看着远去的海浪，喃喃道：'] },
+        { type: 'bold', lines: [
+            '文倩，我听了你的话，按你说的做了。',
+            '你应该找到你的真相了吧。'] }
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            '风卷着浪声盖过你的声音。',
+            '还有句话，你始终没敢问出口：'
+        ]},
+        { type: 'bold', lines: ['如果重来一次，你会留在我身边吗？'] },
+        { type: 'ending-title', text: '结局 · 听话的丈夫' },
+        { type: 'ending-actions' }
+    ]}
+];
+
+const ENDING_04 = [
+    { type: 'para', lines: [
+        '推搡间，棺木被撞倒在地。',
+        '棺盖重重地落在地上，滑开半幅。',
+        '里面铺着平整的白色丝绒，空空如也。'
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            { text: '“丁教授呢？”', dialog: true },
+            { text: '“怎么是空的！”', dialog: true },
+            '',
+            '有人惊呼，有人议论，有人举着手机拍照。',
+            '安保立刻冲上去挡镜头，剩下几个把你死死按在地上。',
+            '戒指滚进了草丛，转眼就没了踪影。'
+        ]},
+        { type: 'para', lines: [
+            '你的脸贴着湿冷的泥地，看着眼前乱成一团的一切，心里反倒释然。'
+        ]},
+        { type: 'bold', lines: ['你猜的没错，丁文倩果然不在这里。'] }
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            '一场葬礼，草草收场。'
+        ]},
+        { type: 'para', lines: ['第二天，天启科技发布了官方声明：'] },
+        { type: 'bold', lines: ['「应丁文倩教授生前意愿，我司已按规程对其遗体进行特殊保存，相关处置已获家属知情同意。」'] },
+        { type: 'para', lines: [
+            '你盯着屏幕，只觉得可笑。',
+            '当初你为了调查签下的协议，如今成了刺向你的刀。'
+        ]}
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            '天启科技以葬礼现场滋事为由，扣下全部的赔偿金。',
+            '你不在乎。',
+            '你退掉了旅行，辞掉了工作。',
+            '天天守在电脑前，不肯放过有关天启科技的任何一条消息。',
+            '可他们像只密不透风的铁桶，',
+            '你再也没有找到丁文倩的任何消息。',
+            '你找媒体、报警、甚至闹到相关单位，也无济于事。',
+            '一切都石沉大海。'
+        ]},
+        { type: 'bold', lines: ['谁会相信一个情绪失控的鳏夫的疯话呢？'] }
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            '可你知道，丁文倩就在那。',
+            '在天启科技的某个实验室里。',
+            '你会用余生去找她。',
+            '但你也清楚，或许永远都不会有答案了。'
+        ]},
+        { type: 'ending-title', text: '结局 · 没有终点的调查' },
+        { type: 'ending-actions' }
+    ]}
+];
+
+const ENDING_05 = [
+    { type: 'para', lines: [
+        '此时，一辆黑色的轿车缓缓驶入墓园。',
+        '车门打开，走下来一个身穿深灰西装，身形挺拔的男人。',
+        '现场一下子安静下来。'
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            '你认得这张脸。',
+            '在天启科技的官网、媒体新闻里、物理研究部的资料库里、天启通的通讯记录里，你见过无数次了。'
+        ]},
+        { type: 'bold', lines: ['他是天启科技的总裁，罗建立。'] }
+    ]},
+    { type: 'para', lines: [
+        '他径直朝你走过来，神色疲惫，笑却很得体。',
+        { text: '“韩老师，不好意思，我来晚了。”', dialog: true },
+        '他伸出手，要和你握手。'
+    ]},
+    { type: 'para', lines: [
+        '你没动。',
+        '这个之前只存在于屏幕里的人，此刻站在你面前，让你有些恍惚。',
+        '愤怒、恨意、委屈堵在喉咙口，半天只挤出一句：',
+        { text: '“文倩到底在哪里？”', dialog: true }
+    ]},
+    { type: 'para', lines: [
+        '罗建立不尴尬，顺势拍了拍你的肩。',
+        { text: '“韩老师，请节哀。”', dialog: true },
+        '',
+        { text: '“丁教授的事在业内影响很大，这几天一直在处理后续，没及时登门拜访，实在抱歉。”', dialog: true }
+    ]},
+    { type: 'para', lines: [
+        '你刚要开口追问，他打断了你。',
+        { text: '“韩老师，我知道您有很多问题。等葬礼结束后，我们可以坐下来慢慢谈。”', dialog: true },
+        '',
+        { text: '“什么话不能在这里说？”', dialog: true },
+        '压了很久的火气往上涌，你几乎是吼出来的。',
+        '',
+        { text: '“你是不想说，还是根本就不敢说？”', dialog: true },
+        '',
+        '现场鸦雀无声。'
+    ]},
+    { type: 'combo', items: [
+        { type: 'para', lines: [
+            { text: '“韩老师，您不愧是丁教授的丈夫。”', dialog: true },
+            '罗建立神色自若，嘴角微扬，看你的眼神流露出些许欣赏。',
+            '',
+            { text: '“我听人力部门说，您已经投递了简历。”', dialog: true },
+            { text: '“如果您愿意成为我们的一员，我会告诉您所有的真相。”', dialog: true },
+            '罗建立再次向你伸出了手。'
+        ]},
+        { type: 'bold', lines: [
+            '“韩老师，欢迎加入天启科技”'
+        ]},
+        { type: 'ending-title', text: '结局 · 通往真相的路' },
+        { type: 'ending-actions', buttons: [
+            { label: '继 续 前 行', action: 'continue' },
+            { label: '全 部 结 局', action: 'review' }
+        ]}
+    ]}
+];
+
+/* ============================================================
+   分支路由
+   ============================================================ */
+const routes = {
+    'route-A1-passed': () => runEnding05(),
+    'route-A1-failed': () => runEnding03(),
+    'route-B1-passed': () => runEnding05(),
+    'route-B1-failed': () => runEnding03(),
+    'route-B2-passed': () => runEnding05(),
+    'route-B2-failed': () => runEnding04()
+};
+
+function runPathA1() {
+    enqueue(PATH_A1_POST.concat([
+        { type: 'branch', decide: () => examPassed ? 'route-A1-passed' : 'route-A1-failed' }
+    ]));
+}
+
+function runPathA2() {
+    enqueue(PATH_A2_POST.concat([
+        { type: 'choice',
+          choiceName: 'choiceB',
+          prompt: '你想怎么做',
+          options: [
+              { id: 'B1', text: '不再挣扎。' },
+              { id: 'B2', text: '大打出手。' }
+          ],
+          onPick: (choiceId) => {
+              progress.choiceB = choiceId;
+              progress.visitedChoiceB = true;
+              saveProgress(progress);
+              if (choiceId === 'B1') runPathB1();
+              else runPathB2();
+          }
+        }
+    ]));
+}
+
+function runPathB1() {
+    enqueue(PATH_B1_POST.concat([
+        { type: 'branch', decide: () => examPassed ? 'route-B1-passed' : 'route-B1-failed' }
+    ]));
+}
+
+function runPathB2() {
+    enqueue(PATH_B2_POST.concat([
+        { type: 'branch', decide: () => examPassed ? 'route-B2-passed' : 'route-B2-failed' }
+    ]));
+}
+
+function runEnding03() {
+    recordEndingPath('end03');
+    enqueue(ENDING_03.slice());
+}
+function runEnding04() {
+    recordEndingPath('end04');
+    enqueue(ENDING_04.slice());
+}
+function runEnding05() {
+    recordEndingPath('end05');
+    enqueue(ENDING_05.slice());
+}
+
+// 记录当前会话的选择路径到 progress.ending_paths
+function recordEndingPath(key) {
+    progress.ending_paths = progress.ending_paths || {};
+    progress.ending_paths[key] = {
+        choiceA: progress.choiceA,
+        choiceB: progress.choiceB || null
+    };
+    saveProgress(progress);
+}
+
+/* ============================================================
+   重选结局：保留开场，从选项 A 重开
+   ============================================================ */
+function restartFromChoiceA() {
+    reviewExpanded = false;
+    currentEndingKey = null;
+    isAutoMode = false;
+    isReviewMode = false;
+    uiZone.innerHTML = '';
+    uiZone.classList.remove('visible');
+    document.body.classList.remove('with-ui');
+
+    const choiceAEl = storyEl.querySelector('.choices[data-choice-name="choiceA"]');
+
+    if (choiceAEl) {
+        let next = choiceAEl.nextElementSibling;
+        while (next) {
+            const toRemove = next;
+            next = next.nextElementSibling;
+            toRemove.remove();
+        }
+        choiceAEl.remove();
+
+        progress.choiceA = null;
+        progress.choiceB = null;
+        progress.visitedChoiceB = false;
+        saveProgress(progress);
+
+        resumeChoiceA();
+    } else {
+        progress.choiceA = null;
+        progress.choiceB = null;
+        progress.visitedChoiceB = false;
+        saveProgress(progress);
+        storyEl.innerHTML = '';
+        initFromProgress();
+    }
+}
+
+function resumeChoiceA() {
+    const existing = storyEl.querySelector('.choices[data-choice-name="choiceA"]');
+    if (existing) return;
+
+    const choiceAItem = {
+        type: 'choice',
+        choiceName: 'choiceA',
+        prompt: '你想怎么做',
+        options: [
+            { id: 'A1', text: '什么也不做，转身接过话筒，发表悼词。' },
+            { id: 'A2', text: '坚持开棺，把戒指放进棺木。' }
+        ],
+        onPick: (choiceId) => {
+            progress.choiceA = choiceId;
+            progress.visitedChoiceA = true;
+            saveProgress(progress);
+            if (choiceId === 'A1') runPathA1();
+            else runPathA2();
+        }
+    };
+
+    choiceActive = true;
+    renderChoices(choiceAItem, (choiceId) => {
+        choiceActive = false;
+        choiceAItem.onPick(choiceId);
+    });
+}
+
+function resumeChoiceB() {
+    const choiceBItem = {
+        type: 'choice',
+        choiceName: 'choiceB',
+        prompt: '你想怎么做',
+        options: [
+            { id: 'B1', text: '不再挣扎。' },
+            { id: 'B2', text: '大打出手。' }
+        ],
+        onPick: (choiceId) => {
+            progress.choiceB = choiceId;
+            progress.visitedChoiceB = true;
+            saveProgress(progress);
+            if (choiceId === 'B1') runPathB1();
+            else runPathB2();
+        }
+    };
+
+    choiceActive = true;
+    renderChoices(choiceBItem, (choiceId) => {
+        choiceActive = false;
+        choiceBItem.onPick(choiceId);
+    });
+}
+
+/* ============================================================
+   进度恢复
+   ============================================================ */
+function initFromProgress() {
+    if (!progress.visitedChoiceA) {
+        playOpeningFull();
+        return;
+    }
+
+    PRE_CHOICE_A.forEach(item => renderFast(item));
+
+    if (!progress.choiceA) {
+        resumeChoiceA();
+        return;
+    }
+
+    if (progress.choiceA === 'A1') {
+        PATH_A1_POST.forEach(item => renderFast(item));
+        runEndingByChoice('A1', null);
+    } else {
+        PATH_A2_POST.forEach(item => renderFast(item));
+
+        if (!progress.choiceB) {
+            resumeChoiceB();
+            return;
+        }
+
+        if (progress.choiceB === 'B1') {
+            PATH_B1_POST.forEach(item => renderFast(item));
+            runEndingByChoice('A2', 'B1');
+        } else {
+            PATH_B2_POST.forEach(item => renderFast(item));
+            runEndingByChoice('A2', 'B2');
+        }
+    }
+}
+
+function runEndingByChoice(choiceA, choiceB) {
+    if (examPassed) {
+        renderFastEnding(ENDING_05);
+    } else {
+        if (choiceB === 'B2') {
+            renderFastEnding(ENDING_04);
+        } else {
+            renderFastEnding(ENDING_03);
+        }
+    }
+}
+
+function renderFastEnding(data) {
+    data.forEach(item => renderFast(item));
+    requestAnimationFrame(scrollBottom);
+    showHint();
+}
+
+/* ============================================================
+   完整播放开场
+   ============================================================ */
+async function playOpeningFull() {
+    progress.visitedChoiceA = true;
+    saveProgress(progress);
+
+    const AUTO_COUNT = 3;
+    for (let i = 0; i < AUTO_COUNT && i < PRE_CHOICE_A.length; i++) {
+        const item = PRE_CHOICE_A[i];
+
+        if (i === 1 && item.type === 'scene') {
+            MusicManager.start('end01');
+        }
+
+        playItem(item);
+        requestAnimationFrame(scrollBottom);
+
+        if (item.type === 'chapter' || item.type === 'scene') {
+            await sleep(1800);
+        } else {
+            await waitForTyping();
+            await sleep(1000);
+        }
+    }
+
+    const remaining = PRE_CHOICE_A.slice(AUTO_COUNT).concat([{
+        type: 'choice',
+        choiceName: 'choiceA',
+        prompt: '你想怎么做',
+        options: [
+            { id: 'A1', text: '什么也不做，转身接过话筒，发表悼词。' },
+            { id: 'A2', text: '坚持开棺，把戒指放进棺木。' }
+        ],
+        onPick: (choiceId) => {
+            progress.choiceA = choiceId;
+            saveProgress(progress);
+            if (choiceId === 'A1') runPathA1();
+            else runPathA2();
+        }
+    }]);
+
+    pendingQueue = remaining;
+    showHint();
+}
+
+/* ============================================================
+   点击推进
+   ============================================================ */
+document.addEventListener('click', (e) => {
+    if (choicesLocked) return;
+    if (choiceActive) return;
+    if (e.target.closest('.choice')) return;
+    if (e.target.closest('.ending-btn')) return;
+    if (e.target.closest('#uiZone')) return;
+
+    if (activeTyping) {
+        finishTyping(activeTyping);
+        return;
+    }
+
+    if (isReviewMode) return;
+    if (isAutoMode) return;
+
+    tick();
+});
+
+/* ============================================================
+   UI 区：主按钮 + 结局选择
+   ============================================================ */
+const DEFAULT_MAIN_ACTIONS = [
+    { label: '时 光 回 溯', action: 'back', tip: '回到桌面重新开始测试' },
+    { label: '重 选 结 局', action: 'reselect' }
+];
+
+function showMainActions(seg) {
+    document.body.classList.add('with-ui');
+    uiZone.innerHTML = '';
+
+    const row = document.createElement('div');
+    row.className = 'ui-row';
+
+    const mainActions = document.createElement('div');
+    mainActions.className = 'ending-actions';
+
+    const buttons = (seg && seg.buttons) ? seg.buttons : DEFAULT_MAIN_ACTIONS;
+
+    buttons.forEach(btnConfig => {
+        const btn = document.createElement('div');
+        btn.className = 'ending-btn';
+
+        const labelSpan = document.createElement('span');
+        labelSpan.textContent = btnConfig.label;
+        btn.appendChild(labelSpan);
+
+        if (btnConfig.tip) {
+            btn.addEventListener('mouseenter', () => showGlobalTip(btn, btnConfig.tip));
+            btn.addEventListener('mouseleave', hideGlobalTip);
+        }
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleButtonAction(btnConfig.action);
+        });
+
+        mainActions.appendChild(btn);
+    });
+
+    row.appendChild(mainActions);
+    uiZone.appendChild(row);
+
+    if (reviewExpanded) renderReviewActions();
+
+    uiZone.classList.add('visible');
+}
+
+function handleButtonAction(action) {
+    if (action === 'back') {
+        localStorage.removeItem('exam_answers');
+        localStorage.removeItem('exam_passed');
+
+        // 保留 ending_paths，清空其他进度
+        const preserved = {};
+        try {
+            const old = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (old.ending_paths) preserved.ending_paths = old.ending_paths;
+        } catch {}
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(preserved));
+
+        localStorage.setItem('achievement_hint_pending', 'true');
+        window.location.href = '../desktop/index-hanxiu.html';
+    } else if (action === 'reselect') {
+        restartFromChoiceA();
+    } else if (action === 'continue') {
+        window.location.href = 'prelude-watercell.html';
+    } else if (action === 'review') {
+        reviewExpanded = !reviewExpanded;
+        if (reviewExpanded) {
+            renderReviewActions();
+        } else {
+            const el = uiZone.querySelector('.review-actions');
+            if (el) el.remove();
+        }
+    } else if (typeof action === 'function') {
+        action();
+    }
+}
+
+function renderReviewActions() {
+    uiZone.classList.add('visible');
+
+    const existing = uiZone.querySelector('.review-actions');
+    if (existing) existing.remove();
+
+    const anchor = uiZone.querySelector('.ending-actions');
+    if (!anchor) return;
+
+    const reviewEl = document.createElement('div');
+    reviewEl.className = 'review-actions';
+
+    const endings = [
+        { key: 'e03', label: '结局 · 听话的丈夫' },
+        { key: 'e04', label: '结局 · 没有终点的调查' },
+        { key: 'e05', label: '结局 · 通往真相的路' }
+    ];
+
+    endings.forEach(e => {
+        const btn = document.createElement('div');
+        btn.className = 'ending-btn review-btn';
+        btn.dataset.endingKey = e.key;
+
+        const textWrap = document.createElement('span');
+        textWrap.className = 'review-text';
+        textWrap.textContent = e.label;
+        btn.appendChild(textWrap);
+
+        btn.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            playReviewEnding(e.key);
+        });
+
+        reviewEl.appendChild(btn);
+    });
+
+    anchor.appendChild(reviewEl);
+
+    if (currentEndingKey) updateReviewSelection(currentEndingKey);
+}
+
+function updateReviewSelection(key) {
+    uiZone.querySelectorAll('.review-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.endingKey === key);
+    });
+}
+
+/* ============================================================
+   回顾模式：清空动态区 / 滚动 / 切换
+   ============================================================ */
+function clearDynamicZone() {
+    const anchor = document.getElementById('anchor-point');
+    if (!anchor) return;
+
+    // 锁定当前高度，避免清空时页面骤降
+    const currentHeight = storyEl.offsetHeight;
+    storyEl.style.minHeight = currentHeight + 'px';
+
+    let next = anchor.nextElementSibling;
+    while (next) {
+        const toRemove = next;
+        next = next.nextElementSibling;
+        toRemove.remove();
+    }
+
+    pendingQueue = [];
+    activeTyping = null;
+    choiceActive = false;
+    choicesLocked = false;
+    hideHint();
+}
+
+function scrollToAnchorCenter() {
+    const anchor = document.getElementById('anchor-point');
+    if (!anchor) return;
+
+    const rect = anchor.getBoundingClientRect();
+    const anchorTop = window.scrollY + rect.top;
+    const target = anchorTop - window.innerHeight / 2 + rect.height / 2;
+    window.scrollTo(0, Math.max(0, target));
+}
+
+async function playReviewEnding(key) {
+    if (reviewPlaying) return;
+    reviewPlaying = true;
+
+    if (!reviewExpanded) {
+        reviewExpanded = true;
+        renderReviewActions();
+    }
+
+    isReviewMode = true;
+
+    whiteFlash.classList.add('active');
+
+    await sleep(460);
+
+    clearDynamicZone();
+    scrollToAnchorCenter();
+
+    currentEndingKey = key;
+    updateReviewSelection(key);
+
+    await sleep(160);
+
+    whiteFlash.classList.remove('active');
+
+    await new Promise(resolve => {
+        const onEnd = (e) => {
+            if (e.propertyName !== 'opacity') return;
+            whiteFlash.removeEventListener('transitionend', onEnd);
+            resolve();
+        };
+        whiteFlash.addEventListener('transitionend', onEnd);
+        // 保险：最多等 700ms，防止 transitionend 没触发
+        setTimeout(resolve, 700);
+    });
+
+    playReviewContent(key);
+
+    reviewPlaying = false;
+}
+
+function playReviewContent(key) {
+    // key: 'e03' / 'e04' / 'e05' → 'end03' / 'end04' / 'end05'
+    const targetKey = 'end' + key.slice(1);
+
+    // 侧栏模式：不含葬礼开场（已有的屏幕内容保留）
+    const items = buildPath(targetKey, false);
+    const filtered = filterEndingActions(items);
+
+    isAutoMode = false;
+    filtered.forEach(item => renderFast(item));
+
+    // 释放高度锁定
+    requestAnimationFrame(() => {
+        storyEl.style.minHeight = '';
+    });
+
+    // 锚点之后的所有新内容整体淡入
+    const anchor = document.getElementById('anchor-point');
+    if (anchor) {
+        let next = anchor.nextElementSibling;
+        while (next) {
+            next.classList.add('review-fade-in');
+            next = next.nextElementSibling;
+        }
+    }
+}
+
+// 构建某个结局的完整内容
+// includeOpening: 是否包含葬礼开场（PRE_CHOICE_A）
+function buildPath(targetKey, includeOpening) {
+    // 从 ending_paths 取，取不到用预设
+    const path = (progress.ending_paths && progress.ending_paths[targetKey])
+        || PRESET_PATHS[targetKey];
+
+    if (!path) return [];
+
+    const items = [];
+
+    // 是否包含葬礼开场
+    if (includeOpening) {
+        items.push(...PRE_CHOICE_A);
+    }
+
+    // 选项 A 的回声 + 后续
+    if (path.choiceA === 'A1') {
+        items.push({ type: 'echo', text: '你选择了：什么也不做，转身接过话筒，发表悼词。' });
+        items.push(...PATH_A1_POST);
+    } else if (path.choiceA === 'A2') {
+        items.push({ type: 'echo', text: '你选择了：坚持开棺，把戒指放进棺木。' });
+        items.push(...PATH_A2_POST);
+        if (path.choiceB === 'B1') {
+            items.push({ type: 'echo', text: '你选择了：不再挣扎。' });
+            items.push(...PATH_B1_POST);
+        } else if (path.choiceB === 'B2') {
+            items.push({ type: 'echo', text: '你选择了：大打出手。' });
+            items.push(...PATH_B2_POST);
+        }
+    }
+
+    // 结局
+    if (targetKey === 'end03') items.push(...ENDING_03);
+    else if (targetKey === 'end04') items.push(...ENDING_04);
+    else if (targetKey === 'end05') items.push(...ENDING_05);
+
+    return items;
+}
+
+function filterEndingActions(items) {
+    return items.map(item => {
+        if (item.type === 'ending-actions') return null;
+        if (item.type === 'combo') {
+            const newItems = item.items.filter(sub => sub.type !== 'ending-actions');
+            return Object.assign({}, item, { items: newItems });
+        }
+        return item;
+    }).filter(Boolean);
+}
+
+/* ============================================================
+   黑场粒子生成
+   ============================================================ */
+function initBlackoutParticles() {
+    const container = document.getElementById('blackoutParticles');
+    if (!container) return;
+
+    for (let i = 0; i < 60; i++) {
+        const p = document.createElement('div');
+        p.className = 'bp';
+        p.style.left = (Math.random() * 100) + '%';
+        const dur = 18 + Math.random() * 16;
+        p.style.animationDuration = dur + 's';
+        p.style.animationDelay = (-Math.random() * dur) + 's';
+        const size = (1.5 + Math.random() * 2.5).toFixed(1) + 'px';
+        p.style.width = size;
+        p.style.height = size;
+        container.appendChild(p);
+    }
+
+    requestAnimationFrame(() => {
+        container.classList.add('visible');
+    });
+}
+
+/* ============================================================
+   开场过渡
+   ============================================================ */
+async function playIntro() {
+    const blackout = document.getElementById('blackout');
+    const lightBeam = document.getElementById('light-beam');
+    const beamCore = lightBeam.querySelector('.beam-core');
+
+    initBlackoutParticles();
+
+    await sleep(2600);
+
+    lightBeam.style.opacity = '1';
+    beamCore.classList.add('expanding');
+
+    await sleep(400);
+    blackout.classList.add('fade-out');
+
+    await sleep(1200);
+
+    lightBeam.style.opacity = '0';
+
+    await sleep(200);
+
+    setTimeout(() => {
+        blackout.style.display = 'none';
+    }, 1100);
+
+    setTimeout(() => {
+        lightBeam.style.display = 'none';
+    }, 1400);
+}
+
+// ============================================================
+// 回顾模式（从成就面板打开，?review=endXX）
+// ============================================================
+
+function renderReviewMode(targetKey) {
+    // 隐藏底部 UI
+    document.getElementById('uiZone').style.display = 'none';
+    document.getElementById('clickHint').style.display = 'none';
+
+    // 清空 story
+    storyEl.innerHTML = '';
+
+    // 构建完整内容（含葬礼开场）
+    const items = buildPath(targetKey, true);
+    const filtered = filterEndingActions(items);
+
+    // 直接渲染（无动画）
+    isAutoMode = false;
+    isReviewMode = true;
+
+    filtered.forEach(item => renderFast(item));
+
+    // 滚到顶部
+    window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   音乐开关按钮
+   ============================================================ */
+(function bindMusicToggle() {
+    const el = document.getElementById('musicToggle');
+    if (!el) return;
+
+    if (localStorage.getItem('music_muted') === 'true') {
+        MusicManager.toggleMute();
+        el.classList.add('muted');
+    }
+
+    el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const muted = MusicManager.toggleMute();
+        el.classList.toggle('muted', muted);
+        localStorage.setItem('music_muted', muted ? 'true' : 'false');
+    });
+})();
+
+/* ============================================================
+   启动
+   ============================================================ */
+window.addEventListener('load', async () => {
+    // ========== 回顾模式 ==========
+    const params = new URLSearchParams(window.location.search);
+    const reviewTarget = params.get('review');   // 'end03' / 'end04' / 'end05'
+
+    if (reviewTarget && ['end03', 'end04', 'end05'].includes(reviewTarget)) {
+        document.getElementById('blackout').style.display = 'none';
+        document.getElementById('light-beam').style.display = 'none';
+
+        MusicManager.start('end01');
+        renderReviewMode(reviewTarget);
+        return;
+    }
+
+    // ========== 正常模式 ==========
+    if (progress.visitedChoiceA) {
+        document.getElementById('blackout').style.display = 'none';
+        document.getElementById('light-beam').style.display = 'none';
+
+        MusicManager.start('end01');
+        initFromProgress();
+        return;
+    }
+
+    await playIntro();
+    initFromProgress();
+});
+</script>
+</body>
+</html>
